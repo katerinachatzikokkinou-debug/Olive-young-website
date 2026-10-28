@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Concept skin-scan prototype for Olive Young Singapore: selfie scan, quiz and a routine built from Olive Young skincare and supplements.">
+<title>OY Skin Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dermatology report slip clipped beside a K-beauty shelf. Flow panel left, report card right, product shelf grid below. */
+:root{
+  --paper:#F4F7EC; --surface:#FFFFFF; --sunken:#EAEFDD; --ink:#17200E; --muted:#56603F; --line:#D5DCC6;
+  --lime:#B6DC33; --lime-hover:#A7CD25; --lime-ink:#172005; --lime-wash:#EDF6CF; --olive:#486810;
+  --amber:#B97A0F; --coral:#CF5A3A; --moss:#5C7C27; --sky:#36809F;
+  --cap:#2C3424; --vf:#0F140A; --vf-ink:#E6EEDA; --vf-line:rgba(182,220,51,.9); --vf-dim:rgba(230,238,218,.6);
+  --shadow:0 1px 0 rgba(23,32,14,.05), 0 22px 44px -26px rgba(23,32,14,.38);
+  --f-display:"Archivo","Arial Black",system-ui,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1209; --surface:#161C10; --sunken:#1D2516; --ink:#E7EEDB; --muted:#A3AD93; --line:#2D3722;
+    --lime:#BCE23E; --lime-hover:#CBEC5A; --lime-ink:#141B05; --lime-wash:#243010; --olive:#B5D763;
+    --amber:#E6AE47; --coral:#F08A6D; --moss:#9CC25A; --sky:#7CB9D8;
+    --cap:#5A6450; --vf:#070A04; --vf-ink:#E6EEDA; --vf-line:rgba(188,226,62,.9); --vf-dim:rgba(230,238,218,.6);
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 22px 44px -26px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1209; --surface:#161C10; --sunken:#1D2516; --ink:#E7EEDB; --muted:#A3AD93; --line:#2D3722;
+  --lime:#BCE23E; --lime-hover:#CBEC5A; --lime-ink:#141B05; --lime-wash:#243010; --olive:#B5D763;
+  --amber:#E6AE47; --coral:#F08A6D; --moss:#9CC25A; --sky:#7CB9D8;
+  --cap:#5A6450; --vf:#070A04; --vf-ink:#E6EEDA; --vf-line:rgba(188,226,62,.9); --vf-dim:rgba(230,238,218,.6);
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 22px 44px -26px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--olive);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px var(--lime-wash)}
+
+/* Prototype strip + header */
+.proto{background:var(--ink);color:var(--paper)}
+.proto .wrap{padding-block:7px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;display:flex;gap:6px 14px;flex-wrap:wrap}
+.proto b{font-weight:500;color:var(--lime)}
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{padding-block:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.wordmark b{font-family:var(--f-display);font-stretch:125%;font-weight:850;font-size:19px;letter-spacing:.01em}
+.wordmark span{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--lime);color:var(--lime-ink);padding:4px 8px;border-radius:999px}
+.top nav{display:flex;gap:18px;margin-left:auto;align-items:center}
+.top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.top nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.forecast{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:flex;gap:10px;border-left:1px solid var(--line);padding-left:16px}
+.forecast b{color:var(--ink);font-weight:500}
+@media (max-width:720px){.forecast{display:none}.top nav{gap:14px}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:650;font-size:15px;line-height:1.1;padding:14px 22px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;text-decoration:none;transition:background .15s, transform .15s;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--lime);color:var(--lime-ink)}
+.btn-primary:hover{background:var(--lime-hover)}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--sunken)}
+.btn-link{background:none;border:0;padding:8px 2px;color:var(--muted);text-decoration:underline;text-underline-offset:4px;font-weight:500;cursor:pointer}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn-sm{padding:9px 14px;font-size:13.5px}
+
+/* Stepper */
+main{padding-block:40px 56px}
+.stepper{list-style:none;margin:0 0 28px;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+.stepper li{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;gap:8px}
+.stepper li i{font-style:normal;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--sunken);font-size:11px}
+.stepper li.on{border-color:var(--ink);color:var(--ink)}
+.stepper li.on i{background:var(--lime);color:var(--lime-ink)}
+.stepper li.done i{background:var(--ink);color:var(--paper)}
+
+/* Intro */
+.intro{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:48px;align-items:center}
+.intro h1{font-family:var(--f-display);font-stretch:125%;font-weight:850;font-size:clamp(34px,5.2vw,62px);line-height:.98;letter-spacing:-.01em;margin-top:18px}
+.intro h1 em{font-style:normal;background:linear-gradient(transparent 62%, var(--lime) 62%, var(--lime) 92%, transparent 92%)}
+.lede{font-size:18px;color:var(--muted);max-width:56ch;margin-top:20px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:36px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+.facts dt{font-weight:700;font-size:14.5px}
+.facts dd{margin:4px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.intro-card{position:relative;display:flex;justify-content:center;padding:12px 0}
+.intro-card .rcard{transform:rotate(1.6deg)}
+.example-tag{position:absolute;top:0;right:8%;z-index:2;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 10px;border-radius:999px;transform:rotate(-4deg)}
+@media (max-width:900px){.intro{grid-template-columns:1fr;gap:36px}.facts{grid-template-columns:1fr;gap:12px}}
+
+/* Report card */
+.rcard{container-type:inline-size;width:100%;max-width:370px;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.rc-top{background:var(--lime);color:var(--lime-ink);padding:16px 20px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.rc-top b{font-family:var(--f-display);font-stretch:125%;font-weight:850;font-size:15px}
+.rc-top span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.rc-body{padding:18px 20px 6px;display:flex;flex-direction:column;gap:14px}
+.rc-meta{font-family:var(--f-mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.rc-label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.rc-type{font-family:var(--f-display);font-stretch:125%;font-weight:850;text-transform:uppercase;line-height:.95;font-size:30px;font-size:min(46px, calc(88cqi / (var(--n) * .86)));letter-spacing:-.005em}
+.rc-type small{font-size:.42em;letter-spacing:.02em;margin-left:2px;vertical-align:.55em}
+.rc-sub{font-size:14px;color:var(--muted);margin-top:6px}
+.meters{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.meters li{display:grid;grid-template-columns:92px minmax(0,1fr) 30px;align-items:center;gap:10px;font-size:13px}
+.meters li span{font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+.meters li em{font-style:normal;font-family:var(--f-mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:var(--sunken);position:relative;overflow:hidden}
+.bar::after{content:"";position:absolute;inset:0 auto 0 0;width:calc(var(--v) * 1%);background:var(--mc);border-radius:99px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--lime-wash);color:var(--ink)}
+.pill-line{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:500}
+.rc-twin{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--sunken)}
+.av{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--f-display);font-stretch:125%;font-weight:850;font-size:16px;background:var(--ink);color:var(--lime)}
+.rc-twin small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rc-twin b{font-size:14.5px}
+.rc-foot{padding:12px 20px 16px;font-family:var(--f-mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;border-top:1px dashed var(--line);margin-top:14px}
+
+/* Scan */
+.scan{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:44px;align-items:start}
+.viewfinder{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:26px;overflow:hidden;background:var(--vf);color:var(--vf-ink);box-shadow:var(--shadow)}
+.viewfinder video,.viewfinder canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.viewfinder video{transform:scaleX(-1)}
+.oval{position:absolute;left:50%;top:47%;width:62%;aspect-ratio:3/4;transform:translate(-50%,-50%);border:2px dashed var(--vf-line);border-radius:50%;pointer-events:none}
+.vf-empty{position:absolute;inset:auto 0 18%;text-align:center;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--vf-dim)}
+.vf-hud{position:absolute;inset:14px 14px auto;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--vf-ink);pointer-events:none}
+.vf-hud span{background:rgba(7,10,4,.55);padding:5px 9px;border-radius:999px;backdrop-filter:blur(6px)}
+.vf-hud .live{display:inline-flex;align-items:center;gap:6px}
+.vf-hud .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--vf-line)}
+.corner{position:absolute;width:26px;height:26px;border-color:var(--vf-line);border-style:solid;pointer-events:none}
+.c1{left:16px;top:52px;border-width:2px 0 0 2px;border-top-left-radius:8px}
+.c2{right:16px;top:52px;border-width:2px 2px 0 0;border-top-right-radius:8px}
+.c3{left:16px;bottom:16px;border-width:0 0 2px 2px;border-bottom-left-radius:8px}
+.c4{right:16px;bottom:16px;border-width:0 2px 2px 0;border-bottom-right-radius:8px}
+.sweep{position:absolute;left:0;right:0;height:22%;top:-22%;background:linear-gradient(180deg, transparent, rgba(182,220,51,.28) 70%, rgba(182,220,51,.85) 100%);animation:sweep 1.6s cubic-bezier(.45,0,.55,1) infinite;pointer-events:none}
+@keyframes sweep{to{top:100%}}
+.scan-side h2,.quiz-head h2,.res-summary h2,.routine-head h2,.shelf h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(26px,3.2vw,36px);line-height:1.02}
+.scan-side{display:flex;flex-direction:column;gap:20px;padding-top:6px}
+.checklist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.checklist li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14.5px;line-height:1.4}
+.checklist b{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive);font-weight:500;margin-bottom:3px}
+.scan-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.status{font-size:14.5px;color:var(--muted);min-height:1.5em}
+.status.warn{color:var(--coral)}
+.readings{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.readings-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.readings-head h3{font-size:17px}
+.readings .meters li{grid-template-columns:120px minmax(0,1fr) 36px}
+.light{font-size:14px;display:flex;gap:8px;align-items:flex-start;color:var(--muted)}
+.light::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;margin-top:6px;background:var(--moss)}
+.light.warn::before{background:var(--amber)}
+.read-actions{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:860px){.scan{grid-template-columns:1fr;gap:28px}.viewfinder{max-width:420px;margin:0 auto;width:100%}}
+@media (max-width:480px){.checklist{grid-template-columns:1fr}}
+
+/* Quiz */
+.quiz{max-width:860px}
+.quiz-head{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
+.quiz-head p{color:var(--muted);max-width:60ch}
+.q{border-top:1px solid var(--line);padding:22px 0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:20px}
+.q h3{font-size:18px;line-height:1.3}
+.q .hint{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:6px;letter-spacing:.03em}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px 13px 40px;cursor:pointer;position:relative;font-size:15px;font-weight:600;line-height:1.3}
+.opt small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px}
+.opt::before{content:"";position:absolute;left:14px;top:15px;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--muted)}
+.opt.multi::before{border-radius:5px}
+.opt[aria-pressed="true"],.opt[aria-checked="true"]{border-color:var(--ink);background:var(--lime-wash)}
+.opt[aria-pressed="true"]::before,.opt[aria-checked="true"]::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--lime-wash)}
+.opt:hover{border-color:var(--muted)}
+.quiz-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px;align-items:center}
+.quiz-foot p{font-size:14px;color:var(--muted)}
+@media (max-width:700px){.q{grid-template-columns:1fr;gap:12px}.opts{grid-template-columns:1fr}}
+
+/* Results */
+.res-top{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:48px;align-items:start}
+.res-card{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.card-actions{display:flex;gap:10px;flex-wrap:wrap}
+.res-summary{display:flex;flex-direction:column;gap:18px}
+.res-summary h2 span{display:block;font-size:.5em;font-stretch:100%;font-weight:600;color:var(--muted);margin-top:8px;letter-spacing:0}
+.res-lede{font-size:17px;max-width:60ch}
+.humid{border-left:4px solid var(--lime);background:var(--surface);padding:14px 18px;border-radius:0 14px 14px 0}
+.humid p:first-child{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive);margin-bottom:4px}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0}
+.notes div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;border-top:3px solid var(--mc)}
+.notes dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.notes dt b{color:var(--ink);font-weight:500}
+.notes dd{margin:6px 0 0;font-size:14px;line-height:1.45}
+.src-note{font-size:13px;color:var(--muted)}
+@media (max-width:900px){.res-top{grid-template-columns:1fr;gap:32px}.res-card{align-items:center}}
+@media (max-width:520px){.notes{grid-template-columns:1fr}}
+
+.routine{margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;align-items:start}
+.routine-head{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.routine-head p{color:var(--muted);margin-top:6px}
+.seg-row{display:flex;gap:10px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--sunken);border-radius:999px;padding:4px;gap:2px}
+.seg button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:34px 60px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.step-n{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.shelf-tile{width:60px;height:76px;border-radius:12px;background:var(--sunken);display:grid;place-items:end center;padding-bottom:2px}
+.step-k{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive)}
+.p-brand{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.p-name{font-size:16px;font-weight:700;line-height:1.25;margin-top:1px}
+.p-name small{font-weight:500;color:var(--muted);font-size:13px;margin-left:4px;white-space:nowrap}
+.p-note{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
+.why{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.why span{font-size:12px;padding:3px 8px;border-radius:999px;background:var(--lime-wash);font-weight:600}
+.why span.k{background:transparent;border:1px solid var(--line);font-weight:500;color:var(--muted)}
+.award{display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--amber);margin-top:6px}
+.step-side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.price{font-family:var(--f-mono);font-size:14.5px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.swap{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.swap:hover{border-color:var(--ink)}
+@media (max-width:640px){
+  .step{grid-template-columns:52px minmax(0,1fr);gap:12px;padding:14px}
+  .step-n{display:none}
+  .shelf-tile{width:52px;height:68px}
+  .step-side{grid-column:2;flex-direction:row;justify-content:space-between;align-items:center}
+}
+.bundle{position:sticky;top:16px;background:var(--ink);color:var(--paper);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.bundle h3{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:20px}
+.bundle .sub{font-size:13.5px;opacity:.75}
+.bundle ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.bundle li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed rgba(127,140,110,.45);padding-bottom:6px}
+.bundle li span:last-child{font-family:var(--f-mono);white-space:nowrap;opacity:.85}
+.total{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono)}
+.total b{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.refill{border-top:1px solid rgba(127,140,110,.45);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.refill h4{font-size:15px}
+.refill p{font-size:13px;opacity:.78;line-height:1.45}
+.refill .seg{background:rgba(127,140,110,.22)}
+.refill .seg button{color:var(--paper);opacity:.8}
+.refill .seg button[aria-pressed="true"]{background:var(--lime);color:var(--lime-ink);opacity:1}
+.bundle .btn-ghost{border-color:var(--paper);color:var(--paper)}
+.bundle .btn-ghost:hover{background:rgba(127,140,110,.2)}
+.confirm{font-size:13px;background:rgba(182,220,51,.16);border-radius:12px;padding:10px 12px;line-height:1.45}
+@media (max-width:900px){.routine{grid-template-columns:1fr}.bundle{position:static}}
+
+.duo{margin-top:56px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.panel h3{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:22px;line-height:1.08}
+.panel > p{color:var(--muted);font-size:15px}
+.twin-id{display:flex;gap:14px;align-items:center}
+.twin-id .av{width:58px;height:58px;font-size:22px}
+.twin-id p{font-size:13px;color:var(--muted);margin-top:3px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--ink);color:var(--lime)}
+.charter{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.charter li{font-size:13.5px;display:flex;gap:8px;align-items:baseline}
+.charter li::before{content:"\2713";color:var(--olive);font-weight:700}
+.overlap{display:flex;align-items:center;gap:14px;background:var(--sunken);border-radius:14px;padding:12px 14px}
+.overlap b{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:26px;font-variant-numeric:tabular-nums}
+.overlap span{font-size:14px;line-height:1.35}
+.slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.day{display:flex;flex-direction:column;gap:6px}
+.day p{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:center}
+.slot{border:1.5px solid var(--line);background:transparent;border-radius:10px;padding:8px 2px;font-family:var(--f-mono);font-size:12.5px;cursor:pointer;font-variant-numeric:tabular-nums}
+.slot:hover:not([disabled]){border-color:var(--ink)}
+.slot[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.slot[disabled]{text-decoration:line-through;opacity:.4;cursor:not-allowed}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.45}
+.book-foot{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.book-foot span{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.panel .confirm{background:var(--lime-wash)}
+@media (max-width:900px){.duo{grid-template-columns:1fr}}
+@media (max-width:460px){.slots{grid-template-columns:repeat(3,minmax(0,1fr))}.charter{grid-template-columns:1fr}}
+
+.journey{margin-top:56px}
+.journey h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(22px,2.6vw,28px);margin-bottom:6px}
+.journey > p{color:var(--muted);margin-bottom:20px}
+.timeline{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative}
+.timeline li{padding:22px 18px 0 0;position:relative;border-top:2px solid var(--line)}
+.timeline li::before{content:"";position:absolute;top:-8px;left:0;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--line)}
+.timeline li.done{border-top-color:var(--ink)}
+.timeline li.done::before{background:var(--lime);border-color:var(--ink)}
+.timeline .wk{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive)}
+.timeline h4{font-size:16px;margin-top:4px}
+.timeline p{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.45}
+@media (max-width:760px){.timeline{grid-template-columns:1fr}.timeline li{border-top:0;border-left:2px solid var(--line);padding:0 0 22px 22px}.timeline li.done{border-left-color:var(--ink)}.timeline li::before{top:0;left:-8px}}
+
+/* Packaging illustrations */
+.pack{position:relative;width:52px;height:72px;flex:none}
+.pack i{position:absolute;display:block}
+.pack .body{background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0) 35%,rgba(0,0,0,0) 72%,rgba(0,0,0,.09)),var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.09)}
+.pack .body::after{content:"";position:absolute;left:20%;right:20%;top:42%;height:16%;background:rgba(255,255,255,.62);border-radius:2px}
+.pack .cap{background:var(--cap)}
+.pack-bottle .body{left:10px;right:10px;bottom:0;height:54px;border-radius:9px 9px 6px 6px}
+.pack-bottle .cap{left:18px;right:18px;top:4px;height:15px;border-radius:4px 4px 2px 2px}
+.pack-dropper .body{left:12px;right:12px;bottom:0;height:42px;border-radius:7px}
+.pack-dropper .cap{left:19px;right:19px;top:2px;height:29px;border-radius:9px 9px 3px 3px}
+.pack-tube .body{left:13px;right:13px;top:2px;bottom:12px;border-radius:3px 3px 11px 11px}
+.pack-tube .cap{left:17px;right:17px;bottom:0;height:13px;border-radius:2px 2px 4px 4px}
+.pack-jar .body{left:3px;right:3px;bottom:0;height:34px;border-radius:9px}
+.pack-jar .cap{left:2px;right:2px;bottom:33px;height:14px;border-radius:6px 6px 2px 2px}
+.pack-pump .body{left:11px;right:11px;bottom:0;height:46px;border-radius:8px}
+.pack-pump .cap{left:21px;right:21px;top:9px;height:17px;border-radius:2px}
+.pack-pump .cap::after{content:"";position:absolute;top:-6px;left:-6px;width:24px;height:6px;background:var(--cap);border-radius:3px}
+.pack-pouch .body{left:5px;right:5px;bottom:6px;height:44px;border-radius:7px}
+.pack-pouch .cap{display:none}
+
+/* Shelf */
+.shelf{border-top:1px solid var(--line);background:var(--sunken)}
+.shelf .wrap{padding-block:52px 60px}
+.shelf-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.shelf-head p{color:var(--muted);margin-top:6px;max-width:62ch}
+.filters{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:13.5px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip-k{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);align-self:center;margin-right:4px;min-width:62px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;position:relative}
+.card.mine{border-color:var(--ink);box-shadow:0 0 0 2px var(--lime)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .tile{width:100%;height:96px;border-radius:12px;background:var(--sunken);display:grid;place-items:end center;padding-bottom:6px}
+.card .p-name{font-size:15px}
+.card-meta{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.card-meta span{font-size:12.5px;color:var(--muted)}
+.mine-tag{position:absolute;top:10px;left:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--lime);color:var(--lime-ink);padding:3px 7px;border-radius:999px}
+.spf{font-family:var(--f-mono);font-size:11px;color:var(--sky)}
+.oy-link{font-size:13px;font-weight:600;color:var(--olive);text-underline-offset:3px}
+.price a{color:var(--olive);font-size:13px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+
+/* Footer */
+.foot .wrap{padding-block:36px 48px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;font-size:13.5px;color:var(--muted);line-height:1.55}
+.foot h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:500;margin-bottom:8px}
+@media (max-width:800px){.foot .wrap{grid-template-columns:1fr;gap:20px}}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:14px;font-size:14px;z-index:20;max-width:min(520px, calc(100vw - 32px));box-shadow:var(--shadow)}
+.fade-in{animation:fadeIn .45s ease both}
+</head>
+<body>
+@keyframes fadeIn{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+
+<div class="proto"><div class="wrap"><b>Concept prototype</b><span>Student campaign project for Olive Young Singapore</span><span>Not an official Olive Young site · No real orders or bookings</span></div></div>
+
+<header class="top"><div class="wrap">
+  <a class="wordmark" href="#top" aria-label="Olive Young Skin Check home"><b>OLIVE YOUNG</b><span>Skin Check</span></a>
+  <nav aria-label="Page"><a href="#top" id="navScan">Skin scan</a><a href="#shelf">The shelf</a></nav>
+  <div class="forecast" aria-label="Singapore skin conditions"><span>SG avg humidity <b>84%</b></span><span>Midday UV <b>11+</b></span></div>
+</div></header>
+
+<main class="wrap" id="top">
+  <ol class="stepper" id="stepper" hidden>
+    <li data-s="scan"><i>1</i>Scan</li>
+    <li data-s="quiz"><i>2</i>Questions</li>
+    <li data-s="results"><i>3</i>Your routine</li>
+  </ol>
+
+  <!-- INTRO -->
+  <section class="view intro" id="view-intro" aria-labelledby="introTitle">
+    <div class="intro-copy">
+      <p class="eyebrow"><span class="dot"></span>Skin Check by OY · Curated for SG skin</p>
+      <h1 id="introTitle">Scan your skin. Get your <em>SG routine.</em></h1>
+      <p class="lede">One bare-skin selfie reads shine, redness, texture and tone. Four questions cover what a camera can't see. Then you get a routine from Olive Young's shelf, built for Singapore's humidity, and the skin twin whose skin is most like yours.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" id="btnStart" type="button">Start my skin scan</button>
+        <a class="btn btn-ghost" href="#shelf">Browse the shelf</a>
+      </div>
+      <dl class="facts">
+        <div><dt>Stays on your device</dt><dd>Your photo is read in this browser and never uploaded.</dd></div>
+        <div><dt>Six skin twins</dt><dd>Unfiltered creators, one for each skin type.</dd></div>
+        <div><dt>Dermatologist check</dt><dd>Book a free 20-minute Skin Check to confirm your result.</dd></div>
+      </dl>
+    </div>
+    <div class="intro-card"><span class="example-tag">Example card</span><div id="exampleCard" style="width:100%;display:flex;justify-content:center"></div></div>
+  </section>
+
+  <!-- SCAN -->
+  <section class="view scan" id="view-scan" hidden aria-labelledby="scanTitle">
+    <div class="viewfinder" id="viewfinder">
+      <video id="video" playsinline muted autoplay hidden></video>
+      <canvas id="photo" hidden></canvas>
+      <canvas id="overlay"></canvas>
+      <div class="oval" id="oval"></div>
+      <div class="sweep" id="sweep" hidden></div>
+      <i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i>
+      <div class="vf-hud"><span id="hudMode">Skin scan</span><span id="hudState">Ready</span></div>
+      <p class="vf-empty" id="vfEmpty">Fit your face inside the oval</p>
+    </div>
+    <div class="scan-side">
+      <h2 id="scanTitle">Take a bare-skin selfie</h2>
+      <ul class="checklist">
+        <li><b>Light</b>Face a window. Natural light reads colour most accurately.</li>
+        <li><b>Bare skin</b>No makeup, filters or beauty mode.</li>
+        <li><b>Clear view</b>Pull hair off your forehead and cheeks.</li>
+        <li><b>Distance</b>Hold the camera at eye level, about an arm's length away.</li>
+      </ul>
+      <div class="scan-actions" id="scanActions">
+        <button class="btn btn-primary" id="btnLive" type="button">Open camera</button>
+        <button class="btn btn-primary" id="btnCapture" type="button" hidden>Capture</button>
+        <label class="btn btn-primary" id="lblSelfie" for="fileSelfie" hidden>Take a selfie</label>
+        <input type="file" id="fileSelfie" accept="image/*" capture="user" class="sr-only" tabindex="-1">
+        <label class="btn btn-ghost" id="lblUpload" for="fileUpload" tabindex="0" role="button">Upload a photo</label>
+        <input type="file" id="fileUpload" accept="image/*" class="sr-only" tabindex="-1">
+        <button class="btn-link" id="btnDemo" type="button">Skip and use demo readings</button>
+      </div>
+      <p class="status" id="scanStatus" role="status" aria-live="polite"></p>
+      <div class="readings fade-in" id="readings" hidden>
+        <div class="readings-head"><h3>Scan readings</h3><span class="eyebrow" id="readSrc">From your photo</span></div>
+        <ul class="meters" id="readMeters"></ul>
+        <p class="light" id="lightNote"></p>
+        <div class="read-actions">
+          <button class="btn btn-primary" id="btnToQuiz" type="button">Next: 4 quick questions</button>
+          <button class="btn btn-ghost" id="btnRetake" type="button">Retake</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="view quiz" id="view-quiz" hidden aria-labelledby="quizTitle">
+    <div class="quiz-head">
+      <h2 id="quizTitle">Four questions the camera can't answer</h2>
+      <p>A photo shows the surface. How your skin feels by afternoon and how it reacts to new products tell us the rest.</p>
+    </div>
+    <div id="questions"></div>
+    <div class="quiz-foot">
+      <button class="btn btn-ghost" id="btnBackScan" type="button">Back to scan</button>
+      <p id="quizHint">Answer questions 1, 3 and 4 to continue.</p>
+      <button class="btn btn-primary" id="btnResults" type="button" disabled>See my routine</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="view results" id="view-results" hidden aria-labelledby="resTitle">
+    <div class="res-top">
+      <div class="res-card">
+        <div id="myCard" style="width:100%;display:flex;justify-content:center"></div>
+        <div class="card-actions">
+          <button class="btn btn-dark btn-sm" id="btnSave" type="button">Save Report Card</button>
+          <button class="btn btn-ghost btn-sm" id="btnRescan" type="button">Rescan</button>
+        </div>
+      </div>
+      <div class="res-summary">
+        <p class="eyebrow"><span class="dot"></span>Your Skin Check result</p>
+        <h2 id="resTitle"></h2>
+        <p class="res-lede" id="resLede"></p>
+        <div class="humid"><p>Singapore note</p><p id="resHumid"></p></div>
+        <dl class="notes" id="notes"></dl>
+        <p class="src-note" id="srcNote"></p>
+      </div>
+    </div>
+
+    <div class="routine" id="routineWrap">
+      <div class="routine-head">
+        <div><h2>Your routine</h2><p id="routineSub"></p></div>
+        <div class="seg-row">
+          <div class="seg" role="group" aria-label="Time of day" id="segTab">
+            <button type="button" data-v="am" aria-pressed="true">AM</button>
+            <button type="button" data-v="pm" aria-pressed="false">PM</button>
+          </div>
+          <div class="seg" role="group" aria-label="Routine length" id="segMode">
+            <button type="button" data-v="full">Full</button>
+            <button type="button" data-v="minimal">Minimal</button>
+          </div>
+        </div>
+      </div>
+      <ol class="steps" id="steps"></ol>
+      <aside class="bundle" id="bundle" aria-label="Routine bundle"></aside>
+    </div>
+
+    <div class="duo">
+      <section class="panel" id="twin" aria-label="Your skin twin"></section>
+      <section class="panel" id="book" aria-labelledby="bookTitle">
+        <p class="eyebrow"><span class="dot"></span>Skin Check by OY · Free</p>
+        <h3 id="bookTitle">Confirm it with a dermatologist</h3>
+        <p>Your scan is a starting point. In a 20-minute Skin Check, a dermatologist assesses your skin type, main concerns and how humidity affects your skin. Olive Young advisors use the results to fine-tune your routine, and you take home a free trial bundle.</p>
+        <div class="seg" role="group" aria-label="Consultation format" id="segFormat">
+          <button type="button" data-v="video" aria-pressed="true">Video call</button>
+          <button type="button" data-v="person" aria-pressed="false">In person, Somerset</button>
+        </div>
+        <div class="slots" id="slots"></div>
+        <div class="book-foot"><span id="slotsLeft"></span><button class="btn btn-primary btn-sm" id="btnReserve" type="button" disabled>Reserve this slot</button></div>
+        <div id="bookConfirm"></div>
+        <p class="fine">Dermatologists give factual skin advice only and do not promote specific products, in line with Singapore Medical Council guidelines. Slots are limited each week.</p>
+      </section>
+    </div>
+
+    <section class="journey" aria-labelledby="journeyTitle">
+      <h2 id="journeyTitle">Your first eight weeks</h2>
+      <p>Consistency matters more than any single product. Here's what happens after today.</p>
+      <ol class="timeline">
+        <li class="done"><p class="wk">Week 0 · Today</p><h4>Scan and Report Card</h4><p>Post your card and a bare-skin photo with #OYConsistencyCheck.</p></li>
+        <li><p class="wk">Week 2</p><h4>Skin-Sider check-in</h4><p>A quick check-in on the OY Skin-Sider Telegram channel. Adjust anything that stings.</p></li>
+        <li><p class="wk">Week 4</p><h4>Progress photo</h4><p>Same light, same angle. Compare it against week 0.</p></li>
+        <li><p class="wk">Week 8</p><h4>Follow-up Skin Check</h4><p>A free dermatologist follow-up for Routine Refill members. Keep, swap or pause.</p></li>
+      </ol>
+    </section>
+  </section>
+</main>
+
+<section class="shelf" id="shelf" aria-labelledby="shelfTitle"><div class="wrap">
+  <div class="shelf-head">
+    <div><h2 id="shelfTitle">The shelf</h2><p>Every product the Skin Check can recommend: skincare from Olive Young's bestseller lists and Awards, plus inner-care supplements from the Olive Young Global Supplements category. Each is tagged by the skin types and concerns it suits. Supplements don't replace sunscreen, and anyone pregnant, nursing or on medication should check with a doctor first.</p></div>
+    <span class="eyebrow" id="shelfCount"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" id="fType"><span class="chip-k">Skin type</span></div>
+    <div class="chips" id="fStep"><span class="chip-k">Step</span></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div><h4>How the scan works</h4><p>The scan finds skin-coloured pixels, maps five zones, then measures bright highlights (shine), the red-to-green balance on your cheeks (redness), pixel-to-pixel contrast (texture) and brightness spread (tone). Light, camera and skin tone all affect these readings. This prototype is not a medical or diagnostic tool.</p></div>
+  <div><h4>About the products</h4><p>Products come from Olive Young's bestseller lists and the Olive Young Awards. Skincare prices are approximate Singapore-dollar figures from Olive Young Global listings and Singapore beauty press. Supplements link to their live Olive Young Global pages for current prices.</p></div>
+  <div><h4>About this prototype</h4><p>A concept for a student campaign proposal featuring Skin Check by OY and #UnfilteredRoutine. Not affiliated with or endorsed by CJ Olive Young. Skin twins are placeholder concepts, not real creators.</p></div>
+</div></footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, reduceMotion ? 0 : ms));
+
+/* ---------- Data ---------- */
+const TYPES = {
+  oily:        { label: "Oily",               word: "Oily",         suffix: "" },
+  dry:         { label: "Dry",                word: "Dry",          suffix: "" },
+  combination: { label: "Combination",        word: "Combination",  suffix: "" },
+  sensitive:   { label: "Sensitive",          word: "Sensitive",    suffix: "" },
+  acne:        { label: "Acne-prone",         word: "Acne",         suffix: "-prone" },
+  pigment:     { label: "Pigmentation-prone", word: "Pigmentation", suffix: "-prone" }
+};
+const CONCERNS = { breakouts: "Breakouts", redness: "Redness", spots: "Dark spots & marks", dehydration: "Dehydration", pores: "Large pores & oil", dull: "Dullness" };
+const STEP_LABEL = { oil: "Oil cleanse", cleanse: "Cleanse", tone: "Tone", serum: "Serum", moist: "Moisturise", spf: "Sunscreen", spot: "Spot care", supp: "Inner care" };
+const METRICS = [
+  { k: "shine",   label: "Shine",        long: "T-zone shine",  color: "var(--amber)" },
+  { k: "redness", label: "Redness",      long: "Visible redness", color: "var(--coral)" },
+  { k: "texture", label: "Texture",      long: "Texture",       color: "var(--moss)" },
+  { k: "uneven",  label: "Uneven tone",  long: "Uneven tone",   color: "var(--sky)" }
+];
+
+const P = [
+  { id:"manyo-oil", brand:"ma:nyo", name:"Pure Cleansing Oil", size:"200ml", step:"oil", pack:"pump", color:"#E9D8A6", price:30, types:["oily","combination","pigment","acne"], concerns:["pores","dull"], key:"Light plant oils", note:"Melts sunscreen and sebum before your second cleanse." },
+  { id:"banila-zero", brand:"BANILA CO", name:"Clean it Zero Cleansing Balm Original", size:"100ml", step:"oil", pack:"jar", color:"#F3B7C3", price:33, types:["dry","sensitive","combination"], concerns:["dehydration"], key:"Sherbet-to-oil balm", note:"Turns to oil on contact and rinses off milky. Kind to dry patches." },
+  { id:"anua-foam", brand:"Anua", name:"Heartleaf Quercetinol Pore Deep Cleansing Foam", size:"150ml", step:"cleanse", pack:"tube", color:"#D7E7C9", price:22, types:["oily","acne","combination"], concerns:["pores","breakouts"], key:"Heartleaf + quercetinol", note:"Dense foam that clears pores without a squeaky finish." },
+  { id:"roundlab-cleanser", brand:"ROUND LAB", name:"1025 Dokdo Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#CFE4F2", price:20, types:["combination","pigment","dry","oily"], concerns:["dull"], key:"Deep-sea minerals", note:"Low-foam and mildly acidic. An everyday pick for most skin." },
+  { id:"cosrx-gel", brand:"COSRX", name:"Low pH Good Morning Gel Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#EFEBDD", price:16, types:["sensitive","acne","dry"], concerns:["redness","breakouts"], key:"Low pH + tea tree", note:"A gentle gel that leaves your barrier intact." },
+  { id:"roundlab-toner", brand:"ROUND LAB", name:"1025 Dokdo Toner", size:"200ml", step:"tone", pack:"bottle", color:"#BBD9EC", price:22, types:["combination","oily","pigment"], concerns:["dull","pores"], key:"Deep-sea water + mild exfoliation", note:"Smooths and preps without stripping.", award:"OY Awards 2025 · #1 toner" },
+  { id:"anua-toner", brand:"Anua", name:"Heartleaf 77% Soothing Toner", size:"350ml", step:"tone", pack:"bottle", color:"#E2EDD4", price:41, types:["sensitive","acne","oily","combination"], concerns:["redness","breakouts"], key:"77% heartleaf extract", note:"Calms heat-flushed skin. Light enough for humid days.", award:"OY Awards 2025 · #2 toner" },
+  { id:"isntree-toner", brand:"Isntree", name:"Hyaluronic Acid Toner", size:"400ml", step:"tone", pack:"bottle", color:"#D3E6F1", price:29, types:["dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid", note:"A watery hydration layer for air-con-dried skin." },
+  { id:"cosrx-propolis", brand:"COSRX", name:"Full Fit Propolis Synergy Toner", size:"280ml", step:"tone", pack:"bottle", color:"#EFC35A", price:38, types:["dry","sensitive","acne"], concerns:["dehydration","dull"], key:"Propolis + honey", note:"A bouncy, nourishing toner for dry and reactive skin." },
+  { id:"bringgreen-toner", brand:"BRING GREEN", name:"Tea Tree Cica Soothing Toner", size:"500ml", step:"tone", pack:"bottle", color:"#B9D7AE", price:39, types:["acne","oily"], concerns:["breakouts","redness"], key:"Tea tree + cica", note:"A big-bottle calming toner for breakout-prone skin." },
+  { id:"torriden-serum", brand:"Torriden", name:"DIVE-IN Low Molecular Hyaluronic Acid Serum", size:"50ml", step:"serum", role:"hydrate", pack:"dropper", color:"#A6D6EC", price:34, types:["dry","sensitive","combination","oily"], concerns:["dehydration"], key:"5 types of hyaluronic acid", note:"Weightless hydration that sinks in fast in the heat." },
+  { id:"skin1004-ampoule", brand:"SKIN1004", name:"Madagascar Centella Ampoule", size:"55ml", step:"serum", role:"soothe", pack:"dropper", color:"#E7DCC4", price:25, types:["sensitive","acne","oily","combination"], concerns:["redness","breakouts"], key:"Centella asiatica extract", note:"A single-hero calmer for red, reactive days." },
+  { id:"iunik-betaglucan", brand:"iUNIK", name:"Beta-Glucan Power Moisture Serum", size:"50ml", step:"serum", role:"hydrate", pack:"dropper", color:"#ECE8DC", price:27, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Beta-glucan", note:"Plumps dry skin and eases tightness." },
+  { id:"aestura-ampoule", brand:"AESTURA", name:"Atobarrier365 Hydro Cera-HA Ampoule", step:"serum", role:"hydrate", pack:"dropper", color:"#DCE7F2", price:39, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramides + hyaluronic acid", note:"Barrier-first hydration from a derma brand." },
+  { id:"goodal-vitac", brand:"Goodal", name:"Green Tangerine Vita C Dark Spot Care Serum", size:"40ml", step:"serum", role:"treat", pack:"dropper", color:"#B5D36A", price:33, types:["pigment","combination","dry","oily"], concerns:["spots","dull"], key:"Green tangerine + vitamin C", note:"Fades marks gradually and brightens dull skin.", award:"OY Awards 2024 · #1 serum" },
+  { id:"anua-niacinamide", brand:"Anua", name:"Niacinamide 10% + TXA 4% Serum", size:"30ml", step:"serum", role:"treat", pack:"dropper", color:"#EDEDE6", price:35, strong:true, types:["pigment","oily","combination","acne"], concerns:["spots","pores","dull"], key:"Niacinamide + tranexamic acid", note:"Targets post-acne marks and uneven tone." },
+  { id:"bringgreen-zinc", brand:"BRING GREEN", name:"Zinc Teca Trouble Serum", step:"serum", role:"treat", pack:"dropper", color:"#C5DFA8", price:28, types:["oily","acne"], concerns:["breakouts","pores"], key:"Zinc + centella", note:"Keeps shine down and calms active breakouts." },
+  { id:"medicube-pdrn", brand:"medicube", name:"PDRN Pink Peptide Serum", size:"30ml", step:"serum", role:"treat", pack:"dropper", color:"#F4B9C8", price:32, types:["dry","combination","pigment"], concerns:["dull","dehydration"], key:"PDRN + peptides", note:"A glow-boosting serum for tired-looking skin." },
+  { id:"aestura-cream", brand:"AESTURA", name:"Atobarrier 365 Cream", size:"80ml", step:"moist", pack:"jar", color:"#E2EAF4", price:54, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramide capsules", note:"Repairs a stressed barrier without feeling heavy.", award:"OY Awards 2024–25 · #1 cream" },
+  { id:"drg-red", brand:"Dr.G", name:"R.E.D Blemish Clear Soothing Cream", size:"70ml", step:"moist", pack:"jar", color:"#F2C9C4", price:30, types:["acne","sensitive","oily","combination"], concerns:["breakouts","redness"], key:"Cica + madecassoside", note:"A gel-cream that soothes without clogging." },
+  { id:"torriden-cream", brand:"Torriden", name:"DIVE-IN Soothing Cream", size:"100ml", step:"moist", pack:"jar", color:"#CDE7F3", price:30, types:["combination","dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid + panthenol", note:"Light cream that hydrates without adding shine." },
+  { id:"isntree-gel", brand:"Isntree", name:"Hyaluronic Acid Aqua Gel Cream", size:"100ml", step:"moist", pack:"jar", color:"#CFE9F0", price:27, types:["oily","combination","acne"], concerns:["pores","dehydration"], key:"Hyaluronic acid gel", note:"A water-gel texture made for humid weather." },
+  { id:"roundlab-birch-cream", brand:"ROUND LAB", name:"Birch Juice Moisturizing Cream", size:"80ml", step:"moist", pack:"jar", color:"#E5EEDF", price:30, types:["dry","combination","pigment"], concerns:["dehydration","dull"], key:"Birch sap", note:"A comfortable everyday cream with a dewy finish." },
+  { id:"boj-relief", brand:"Beauty of Joseon", name:"Relief Sun: Rice + Probiotics", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#F1E7CF", price:24, types:["dry","combination","pigment","sensitive"], concerns:["spots","dull"], key:"Rice extract + probiotics", note:"Creamy with no white cast. Daily defence against new marks." },
+  { id:"roundlab-birch-sun", brand:"ROUND LAB", name:"Birch Juice Moisturizing Sun Cream", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#E3EDDA", price:27, types:["dry","combination"], concerns:["dehydration"], key:"Birch sap", note:"A hydrating SPF that sits well under makeup." },
+  { id:"torriden-sun", brand:"Torriden", name:"DIVE-IN Mild Sun Cream", size:"60ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D7ECF6", price:30, types:["sensitive","dry"], concerns:["redness"], key:"Gentle formula + hyaluronic acid", note:"Made for reactive skin. Comfortable around the eyes." },
+  { id:"isntree-sungel", brand:"Isntree", name:"Hyaluronic Acid Watery Sun Gel", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D6ECF5", price:25, types:["oily","combination","acne"], concerns:["pores"], key:"Watery gel texture", note:"A sheer gel that stays fresh through sweaty afternoons." },
+  { id:"drg-mildup", brand:"Dr.G", name:"Green Mild Up Sun+", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#CFE6C8", price:28, types:["sensitive","acne"], concerns:["redness","breakouts"], key:"Mineral filters", note:"A mineral SPF for skin that reacts to chemical filters." },
+  { id:"skin1004-sunserum", brand:"SKIN1004", name:"Hyalu-Cica Water-fit Sun Serum", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#E9E1CB", price:25, types:["oily","combination","acne"], concerns:["pores","redness"], key:"Hyaluronic acid + centella", note:"Serum-light SPF that leaves no greasy film." },
+  { id:"cosrx-patch", brand:"COSRX", name:"Acne Pimple Master Patch", size:"24 patches", step:"spot", pack:"pouch", color:"#F4D8CF", price:8, types:["acne"], concerns:["breakouts"], key:"Hydrocolloid", note:"Overnight patch for active spots. Stops you picking." },
+  /* Inner care: real supplement listings from Olive Young Global (Supplements category). Prices change often, so they link out instead of showing a figure. */
+  { id:"vitalbeautie-28", brand:"VITALBEAUTIE", name:"Super Collagen", size:"28 vials · 28 days", step:"supp", pack:"dropper", color:"#F2C6CF", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA260439714", types:["dry","combination","pigment","sensitive"], concerns:["dull","dehydration"], key:"Drinkable collagen", note:"A one-a-day drinkable collagen vial. Easy to keep up with alongside your AM routine." },
+  { id:"bblab-white", brand:"BB LAB", name:"White Collagen", size:"30 packs · 30 days", step:"supp", pack:"pouch", color:"#F4EEE6", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA260237587", types:["pigment","combination","oily"], concerns:["spots","dull"], key:"Collagen powder stick", note:"A daily collagen stick from one of Olive Young's best-selling inner-beauty brands." },
+  { id:"evercollagen-plus", brand:"EVER COLLAGEN", name:"In And UP Plus", size:"30 pills · 15 days", step:"supp", pack:"bottle", color:"#E8D2E6", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA230618920", types:["dry","sensitive","combination"], concerns:["dehydration","dull"], key:"Collagen tablets", note:"Collagen in tablet form, for anyone who'd rather not drink a sachet." },
+  { id:"evercollagen-biotin", brand:"EVER COLLAGEN", name:"In And Up Biotin Cell", size:"56 tablets · 28 days", step:"supp", pack:"bottle", color:"#DCD3EE", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA230619194", types:["oily","acne","combination"], concerns:["breakouts","pores"], key:"Collagen + biotin", note:"Collagen with added biotin, two tablets a day." },
+  { id:"beautybiotics-gyeol", brand:"Beauty Biotics", name:"Gyeol Collagen", size:"100 sticks · 100 days", step:"supp", pack:"pouch", color:"#F0E3C8", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA221116688", types:["dry","combination","oily","acne"], concerns:["dehydration","dull"], key:"Collagen powder stick", note:"A 100-day supply, so it lasts past the week 8 Skin Check." },
+  { id:"truerx-glutathione", brand:"TRUERX", name:"Rich White Glutathione", size:"14 sticks · 14 days", step:"supp", pack:"pouch", color:"#E6EEF4", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA241227177", types:["pigment","combination"], concerns:["spots","dull"], key:"Glutathione", note:"A two-week glutathione stick. A small first try before committing to a month." },
+  { id:"fitamin-glutathione", brand:"FITAMIN", name:"Easy Pack Glutathione", size:"15 tablets · 15 days", step:"supp", pack:"bottle", color:"#F3E7B8", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA250228547", types:["pigment","oily","acne"], concerns:["spots"], key:"Glutathione tablets", note:"A once-a-day glutathione tablet in an individually sealed pack." },
+  { id:"dearqueen-film", brand:"Dear Queen", name:"Liposome Glutathione Film", size:"30 sheets · 1 month", step:"supp", pack:"pouch", color:"#F5D3DC", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA250128265", types:["pigment","combination","dry"], concerns:["spots","dull"], key:"Liposomal glutathione film", note:"A film that dissolves on the tongue, with no water needed. Easy on the go." },
+  { id:"healthyplace-glutathione", brand:"HEALTHY PLACE", name:"Double Toning White Liposome Glutathione", size:"30 sticks · 1 month", step:"supp", pack:"pouch", color:"#EDE9F5", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA251236250", types:["pigment","sensitive"], concerns:["spots","redness"], key:"Liposomal glutathione", note:"A month of daily liposomal glutathione sticks." }
+];
+
+const COPY = {
+  oily:        { lede: "Your skin makes plenty of oil, and Singapore's humidity adds to it. The goal is hydration without weight and pores that stay clear.",
+                 humid: "Singapore averages around 84% relative humidity, so sweat and sebum build up fast. Keep layers watery, skip heavy creams in the morning, and pick a gel SPF you'll actually reapply." },
+  combination: { lede: "Your T-zone runs oilier than your cheeks. You need light hydration everywhere and oil control only where it shows.",
+                 humid: "Humidity makes your T-zone shine while office and MRT air-con dries out your cheeks. Use a light gel cream all over and add a second layer only where you feel tight." },
+  dry:         { lede: "Your skin is short on oil and water, even in humid weather. The goal is to rebuild your barrier and keep moisture in.",
+                 humid: "It's humid outdoors, but hours in air-con pull water from your skin. Layer a hydrating toner and seal it with a barrier cream at night." },
+  sensitive:   { lede: "Your skin reacts quickly to heat, friction and new products. The goal is a short, calming routine that strengthens your barrier.",
+                 humid: "Heat, sweat and sudden switches between outdoor heat and air-con are common flare triggers. Keep the routine short and introduce one new product at a time." },
+  acne:        { lede: "Your skin tends to break out. The goal is to keep pores clear, calm active spots and avoid stripping, which can trigger more oil.",
+                 humid: "Sweat trapped under masks, helmets and phone screens can clog pores. Cleanse after workouts, keep your moisturiser light, and don't skip it." },
+  pigment:     { lede: "Marks and uneven tone linger on your skin. The goal is daily UV protection plus brightening ingredients used consistently.",
+                 humid: "Singapore's midday UV index regularly reaches the extreme range, so marks darken quickly. A daily SPF50+ PA++++ matters more than any serum." }
+};
+
+const TWINS = {
+  oily:        { initial: "O", title: "The Oily Twin" },
+  dry:         { initial: "D", title: "The Dry Twin" },
+  combination: { initial: "C", title: "The Combination Twin" },
+  sensitive:   { initial: "S", title: "The Sensitive Twin" },
+  acne:        { initial: "A", title: "The Acne-prone Twin" },
+  pigment:     { initial: "P", title: "The Pigmentation Twin" }
+};
+
+const DEMO = { shine: 71, redness: 39, texture: 46, uneven: 52, blemish: 58, tzone: 66 };
+const EXAMPLE = { primary: "combination", secondary: "acne", metrics: { shine: 72, redness: 38, texture: 44, uneven: 51 }, concerns: ["breakouts", "pores"], example: true };
+
+/* ---------- State ---------- */
+const state = {
+  metrics: null, source: null, light: null,
+  answers: { feel: null, concerns: [], react: null, length: null },
+  result: null, tab: "am", mode: "full", swap: {}, refill: 8,
+  format: "video", slot: null,
+  shelfType: "all", shelfStep: "all", mine: new Set()
+};
+
+/* ---------- Helpers ---------- */
+const fmtDate = d => d.toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" });
+const word = v => v < 35 ? "Low" : v < 65 ? "Moderate" : "High";
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, 3600);
+}
+function packHTML(p) { return `<div class="pack pack-${p.pack}" style="--c:${p.color}" aria-hidden="true"><i class="cap"></i><i class="body"></i></div>`; }
+function typeName(t) { return TYPES[t].label; }
+const priced = p => typeof p.price === "number";
+function priceHTML(p) { return priced(p) ? `≈S$${p.price}` : `<a href="${p.url}" target="_blank" rel="noopener">See price</a>`; }
+const sumPrice = list => list.reduce((s, p) => s + (priced(p) ? p.price : 0), 0);
+
+/* ---------- Report card ---------- */
+function cardHTML(d) {
+  const t = TYPES[d.primary];
+  const n = t.word.length;
+  const date = fmtDate(new Date());
+  const meters = METRICS.map(m => `<li><span>${m.label}</span><b class="bar" style="--v:${d.metrics[m.k]};--mc:${m.color}"></b><em>${d.metrics[m.k]}</em></li>`).join("");
+  const conc = (d.concerns.length ? d.concerns : ["dehydration"]).map(c => `<span class="pill">${CONCERNS[c]}</span>`).join("");
+  const sub = d.secondary ? `Leaning ${TYPES[d.secondary].label.toLowerCase()}` : "Steady across zones";
+  const tw = TWINS[d.primary];
+  return `<article class="rcard" aria-label="Skin Report Card">
+    <header class="rc-top"><b>OLIVE YOUNG</b><span>Skin Report Card</span></header>
+    <div class="rc-body">
+      <p class="rc-meta"><span>Week 0 · ${date}</span><span>SG · RH 84%</span></p>
+      <div><p class="rc-label">Skin type</p><h3 class="rc-type" style="--n:${n}">${t.word}${t.suffix ? `<small>${t.suffix}</small>` : ""}</h3><p class="rc-sub">${sub}</p></div>
+      <ul class="meters">${meters}</ul>
+      <div><p class="rc-label">Working on</p><div class="pills">${conc}</div></div>
+      <div class="rc-twin"><span class="av">${tw.initial}</span><span><small>Skin twin</small><b>${tw.title}</b></span></div>
+    </div>
+    <footer class="rc-foot"><span>#OYConsistencyCheck</span><span>${d.example ? "Example" : "Skin Check by OY"}</span></footer>
+  </article>`;
+}
+
+/* ---------- Image analysis (runs on this device) ---------- */
+const ZDEF = [
+  { key: "forehead", label: "Forehead", x: .28, y: .08, w: .44, h: .17 },
+  { key: "nose",     label: "T-zone",   x: .41, y: .36, w: .18, h: .26 },
+  { key: "lcheek",   label: "Cheek",    x: .11, y: .46, w: .23, h: .22 },
+  { key: "rcheek",   label: "Cheek",    x: .66, y: .46, w: .23, h: .22 },
+  { key: "chin",     label: "Chin",     x: .37, y: .80, w: .26, h: .13 }
+];
+const sig = (x, mid, sc) => 100 / (1 + Math.exp(-(x - mid) / sc));
+const clampScore = v => Math.round(Math.min(94, Math.max(6, v)));
+
+function analyze(cv) {
+  const W = cv.width, H = cv.height;
+  const d = cv.getContext("2d", { willReadFrequently: true }).getImageData(0, 0, W, H).data;
+  const N = W * H;
+  const L = new Float32Array(N), RED = new Float32Array(N), SAT = new Float32Array(N), M = new Uint8Array(N);
+  let n = 0, sx = 0, sy = 0, sxx = 0, syy = 0, sr = 0, sb = 0;
+  const ax0 = W * .08, ax1 = W * .92, ay0 = H * .04, ay1 = H * .96;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const p = y * W + x, i = p * 4, r = d[i], g = d[i + 1], b = d[i + 2];
+    const Y = .299 * r + .587 * g + .114 * b;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    L[p] = Y; RED[p] = (r - g) / (r + g + 1); SAT[p] = (mx - mn) / (mx + 1);
+    if (x < ax0 || x > ax1 || y < ay0 || y > ay1) continue;
+    const cb = 128 - .168736 * r - .331264 * g + .5 * b;
+    const cr = 128 + .5 * r - .418688 * g - .081312 * b;
+    if (cb >= 74 && cb <= 135 && cr >= 132 && cr <= 182 && Y > 35 && r >= g) {
+      M[p] = 1; n++; sx += x; sy += y; sxx += x * x; syy += y * y; sr += r; sb += b;
+    }
+  }
+  if (n < N * .04) return { error: "noface" };
+  const cx = sx / n, cy = sy / n;
+  const stdx = Math.sqrt(Math.max(0, sxx / n - cx * cx)), stdy = Math.sqrt(Math.max(0, syy / n - cy * cy));
+  if (stdx < W * .05 || stdy < H * .05) return { error: "noface" };
+  const fw = Math.min(W * .95, Math.max(W * .28, stdx * 3.3));
+  const fh = Math.min(H * .95, Math.max(H * .28, stdy * 3.1));
+  const fx = Math.min(W - fw, Math.max(0, cx - fw / 2));
+  const fy = Math.min(H - fh, Math.max(0, cy - fh * .52));
+  const box = { x: fx, y: fy, w: fw, h: fh };
+  const zones = ZDEF.map(z => ({ ...z, px: fx + z.x * fw, py: fy + z.y * fh, pw: z.w * fw, ph: z.h * fh }));
+
+  const stats = {};
+  for (const z of zones) {
+    const xs = Math.max(0, Math.round(z.px)), xe = Math.min(W - 2, Math.round(z.px + z.pw));
+    const ys = Math.max(0, Math.round(z.py)), ye = Math.min(H - 2, Math.round(z.py + z.ph));
+    let c = 0, sL = 0, sL2 = 0, sR = 0, sR2 = 0;
+    for (let y = ys; y <= ye; y++) for (let x = xs; x <= xe; x++) {
+      const p = y * W + x; if (!M[p]) continue;
+      c++; sL += L[p]; sL2 += L[p] * L[p]; sR += RED[p]; sR2 += RED[p] * RED[p];
+    }
+    if (c < 25) { stats[z.key] = null; continue; }
+    const mL = sL / c, dL = Math.sqrt(Math.max(0, sL2 / c - mL * mL));
+    const mR = sR / c, dR = Math.sqrt(Math.max(0, sR2 / c - mR * mR));
+    const thr = Math.max(mL + 1.6 * dL, mL * 1.16);
+    let tot = 0, spec = 0, blem = 0, g = 0, gn = 0, nn = 0, nL = 0, nL2 = 0;
+    for (let y = ys; y <= ye; y++) for (let x = xs; x <= xe; x++) {
+      const p = y * W + x;
+      const bright = L[p] > thr && SAT[p] < .32;
+      if (!M[p] && !bright) continue;
+      tot++;
+      if (bright) { spec++; continue; }
+      if (RED[p] > mR + 2.2 * dR && L[p] < mL) blem++;
+      nn++; nL += L[p]; nL2 += L[p] * L[p];
+      if (M[p + 1]) { g += Math.abs(L[p] - L[p + 1]); gn++; }
+      if (M[p + W]) { g += Math.abs(L[p] - L[p + W]); gn++; }
+    }
+    const m2 = nn ? nL / nn : mL;
+    stats[z.key] = {
+      mL, mR, spec: tot ? spec / tot : 0, blem: nn ? blem / nn : 0,
+      tex: gn ? (g / gn) / Math.max(1, mL) : 0,
+      cv: nn ? Math.sqrt(Math.max(0, nL2 / nn - m2 * m2)) / Math.max(1, m2) : 0
+    };
+  }
+  const avg = (keys, f) => { const v = keys.map(k => stats[k]).filter(Boolean).map(f); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const all = ["forehead", "nose", "lcheek", "rcheek", "chin"];
+  const shineT = avg(["forehead", "nose"], s => s.spec);
+  const shineC = avg(["lcheek", "rcheek"], s => s.spec);
+  const redC = avg(["lcheek", "rcheek"], s => s.mR);
+  const redF = avg(["forehead"], s => s.mR);
+  if (shineT == null || redC == null) return { error: "noface" };
+  const tex = avg(all, s => s.tex), toneCV = avg(["forehead", "lcheek", "rcheek"], s => s.cv), blem = avg(all, s => s.blem);
+  const meanL = avg(all, s => s.mL);
+
+  const metrics = {
+    shine: clampScore(sig(shineT, .025, .012)),
+    redness: clampScore(.5 * sig(redC, .20, .03) + .5 * sig(redC - (redF == null ? redC : redF), .008, .012)),
+    texture: clampScore(sig(tex, .03, .01)),
+    uneven: clampScore(sig(toneCV, .10, .025)),
+    blemish: clampScore(sig(blem, .014, .006)),
+    tzone: clampScore(sig(shineT - (shineC == null ? shineT : shineC), .01, .01))
+  };
+  let light = { warn: false, note: "Good light. Readings should be reliable." };
+  if (meanL < 75) light = { warn: true, note: "Low light. Texture and tone may read higher than they are. Try facing a window." };
+  else if (meanL > 215) light = { warn: true, note: "Very bright light. Shine may read higher than it is." };
+  else if (sb / n > (sr / n) * .92) light = { warn: true, note: "Cool, bluish light. Redness may read lower than it is." };
+  return { metrics, light, box, zones };
+}
+
+/* ---------- Overlay drawing ---------- */
+function vfColors() {
+  const cs = getComputedStyle(document.documentElement);
+  return { line: cs.getPropertyValue("--vf-line").trim() || "rgba(182,220,51,.9)", ink: cs.getPropertyValue("--vf-ink").trim() || "#E6EEDA" };
+}
+function drawOverlay(cv, res, upto, schematic) {
+  const ctx = cv.getContext("2d"), W = cv.width, H = cv.height, c = vfColors();
+  ctx.clearRect(0, 0, W, H);
+  const u = Math.max(1, W / 220);
+  if (schematic) {
+    ctx.save(); ctx.strokeStyle = c.line; ctx.lineWidth = 2 * u; ctx.setLineDash([6 * u, 6 * u]);
+    ctx.beginPath(); ctx.ellipse(res.box.x + res.box.w / 2, res.box.y + res.box.h / 2, res.box.w / 2, res.box.h / 2, 0, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+  } else {
+    ctx.save(); ctx.strokeStyle = c.line; ctx.globalAlpha = .55; ctx.lineWidth = 1.2 * u; ctx.setLineDash([5 * u, 5 * u]);
+    ctx.strokeRect(res.box.x, res.box.y, res.box.w, res.box.h); ctx.restore();
+  }
+  ctx.font = `500 ${Math.round(7.5 * u)}px "IBM Plex Mono", ui-monospace, monospace`;
+  ctx.textBaseline = "middle";
+  res.zones.slice(0, upto).forEach(z => {
+    ctx.save();
+    ctx.fillStyle = "rgba(182,220,51,.16)"; ctx.strokeStyle = c.line; ctx.lineWidth = 1.6 * u;
+    rr(ctx, z.px, z.py, z.pw, z.ph, 5 * u); ctx.fill(); ctx.stroke();
+    const label = z.label.toUpperCase(), tw = ctx.measureText(label).width + 8 * u, th = 12 * u;
+    const lx = z.px + z.pw / 2 - tw / 2, ly = z.py - th - 3 * u;
+    ctx.fillStyle = "rgba(7,10,4,.72)"; rr(ctx, lx, ly, tw, th, th / 2); ctx.fill();
+    ctx.fillStyle = c.ink; ctx.textAlign = "center"; ctx.fillText(label, z.px + z.pw / 2, ly + th / 2 + .5);
+    ctx.restore();
+  });
+}
+function rr(ctx, x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+
+/* ---------- Views ---------- */
+const ORDER = ["scan", "quiz", "results"];
+function setView(name) {
+  $$(".view").forEach(v => { v.hidden = v.id !== "view-" + name; });
+  const st = $("#stepper"); st.hidden = name === "intro";
+  $$("li", st).forEach(li => {
+    const i = ORDER.indexOf(li.dataset.s), cur = ORDER.indexOf(name);
+    li.classList.toggle("on", i === cur); li.classList.toggle("done", i < cur);
+    li.querySelector("i").textContent = i < cur ? "✓" : String(i + 1);
+    if (i === cur) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+  });
+  if (name !== "scan") stopLive();
+  $("#top").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+}
+
+/* ---------- Scan ---------- */
+const video = $("#video"), photo = $("#photo"), overlay = $("#overlay");
+let stream = null, busy = false;
+const coarse = matchMedia("(pointer: coarse)").matches;
+let canLive = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+function status(msg, warn) { const s = $("#scanStatus"); s.textContent = msg || ""; s.classList.toggle("warn", !!warn); }
+function hud(t) { $("#hudState").textContent = t; }
+function setupScanButtons() {
+  const live = !!stream;
+  $("#btnLive").hidden = !canLive || live;
+  $("#btnCapture").hidden = !live;
+  $("#lblSelfie").hidden = live || !coarse;
+  const upPrimary = !canLive && !coarse;
+  $("#lblUpload").classList.toggle("btn-primary", upPrimary);
+  $("#lblUpload").classList.toggle("btn-ghost", !upPrimary);
+  if (!canLive && !coarse && !state.metrics) status("Live camera preview isn't available in this view. Upload a recent bare-skin selfie, or open this page on your phone to use the camera.");
+}
+function resetScan() {
+  stopLive();
+  photo.hidden = true; $("#readings").hidden = true; $("#scanActions").hidden = false;
+  $("#vfEmpty").hidden = false; $("#oval").hidden = false; $("#sweep").hidden = true;
+  overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+  $("#hudMode").textContent = "Skin scan"; hud("Ready"); status("");
+  state.metrics = null; state.source = null;
+  setupScanButtons();
+}
+async function startLive() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
+    video.srcObject = stream; video.hidden = false;
+    try { await video.play(); } catch (e) {}
+    photo.hidden = true; $("#vfEmpty").hidden = true; $("#oval").hidden = false;
+    overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+    $("#hudMode").textContent = "Live"; $("#hudMode").classList.add("live"); hud("Align face");
+    status("Fill the oval with your face, then tap Capture.");
+    setupScanButtons();
+    $("#btnCapture").focus();
+  } catch (e) {
+    stream = null; canLive = false; setupScanButtons();
+    status(e && e.name === "NotAllowedError"
+      ? "Camera access was blocked. Allow the camera in your browser's site settings (the camera icon in the address bar) and try again, or " + (coarse ? "tap Take a selfie to use your phone camera." : "upload a recent bare-skin selfie.")
+      : e && e.name === "NotFoundError" ? "No camera was found on this device. Upload a photo instead."
+      : "The camera couldn't start in this view. " + (coarse ? "Tap Take a selfie to use your phone camera." : "Upload a photo, or open this page on your phone."), true);
+  }
+}
+function stopLive() {
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  video.hidden = true; video.srcObject = null;
+  $("#hudMode").textContent = "Skin scan"; $("#hudMode").classList.remove("live");
+}
+function capture() {
+  const vw = video.videoWidth, vh = video.videoHeight;
+  if (!vw) { status("The camera isn't ready yet. Wait a moment and try again.", true); return; }
+  const s = Math.min(1, 480 / Math.max(vw, vh));
+  photo.width = Math.round(vw * s); photo.height = Math.round(vh * s);
+  const ctx = photo.getContext("2d", { willReadFrequently: true });
+  ctx.save(); ctx.translate(photo.width, 0); ctx.scale(-1, 1); ctx.drawImage(video, 0, 0, photo.width, photo.height); ctx.restore();
+  stopLive(); runScan();
+}
+function loadFile(file) {
+  if (!file) return;
+  if (file.type && !file.type.startsWith("image/")) { status("That file isn't an image. Choose a JPG or PNG selfie.", true); return; }
+  const url = URL.createObjectURL(file), img = new Image();
+  img.onload = () => {
+    const s = Math.min(1, 480 / Math.max(img.naturalWidth, img.naturalHeight));
+    photo.width = Math.max(1, Math.round(img.naturalWidth * s)); photo.height = Math.max(1, Math.round(img.naturalHeight * s));
+    photo.getContext("2d", { willReadFrequently: true }).drawImage(img, 0, 0, photo.width, photo.height);
+    URL.revokeObjectURL(url); stopLive(); runScan();
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); status("That photo couldn't be opened. HEIC photos may need converting to JPG first.", true); };
+  img.src = url;
+}
+async function runScan() {
+  if (busy) return; busy = true;
+  $("#scanActions").hidden = true; $("#readings").hidden = true;
+  photo.hidden = false; $("#vfEmpty").hidden = true; $("#oval").hidden = true;
+  overlay.width = photo.width; overlay.height = photo.height;
+  overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+  $("#sweep").hidden = reduceMotion;
+  hud("Checking light"); status("Reading your photo on this device…");
+  await wait(550);
+  let res;
+  try { res = analyze(photo); } catch (e) { res = { error: "fail" }; }
+  if (res.error) {
+    $("#sweep").hidden = true; hud("No face found"); busy = false;
+    $("#scanActions").hidden = false; setupScanButtons();
+    status("We couldn't find enough skin in the frame. Face the light, fill the oval with your face, and try again. Or skip and use demo readings.", true);
+    return;
+  }
+  const phases = ["Mapping forehead", "Reading T-zone shine", "Reading left cheek", "Reading right cheek", "Reading chin"];
+  for (let i = 0; i < res.zones.length; i++) { drawOverlay(overlay, res, i + 1, false); hud(phases[i]); await wait(420); }
+  $("#sweep").hidden = true; hud("Done");
+  state.metrics = res.metrics; state.source = "photo"; state.light = res.light;
+  showReadings(); busy = false;
+}
+function useDemo() {
+  stopLive();
+  photo.hidden = true; $("#vfEmpty").hidden = true; $("#oval").hidden = true;
+  overlay.width = 360; overlay.height = 480;
+  const box = { x: 82, y: 78, w: 196, h: 290 };
+  const zones = ZDEF.map(z => ({ ...z, px: box.x + z.x * box.w, py: box.y + z.y * box.h, pw: z.w * box.w, ph: z.h * box.h }));
+  drawOverlay(overlay, { box, zones }, zones.length, true);
+  $("#hudMode").textContent = "Demo"; hud("No photo used");
+  state.metrics = { ...DEMO }; state.source = "demo"; state.light = { warn: false, note: "Demo readings for a combination-skin example. No photo was used." };
+  $("#scanActions").hidden = true; showReadings();
+}
+function showReadings() {
+  $("#readSrc").textContent = state.source === "demo" ? "Demo readings" : "From your photo";
+  const ul = $("#readMeters");
+  ul.innerHTML = METRICS.map(m => `<li><span>${m.long}</span><b class="bar" style="--v:0;--mc:${m.color}"></b><em>${state.metrics[m.k]}</em></li>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    $$("li", ul).forEach((li, i) => li.querySelector(".bar").style.setProperty("--v", state.metrics[METRICS[i].k]));
+  }));
+  const ln = $("#lightNote"); ln.textContent = state.light.note; ln.classList.toggle("warn", !!state.light.warn);
+  status(state.source === "demo" ? "" : "Scan complete. Your photo stayed on this device.");
+  $("#readings").hidden = false;
+  $("#btnToQuiz").focus({ preventScroll: true });
+}
+
+/* ---------- Quiz ---------- */
+const QUESTIONS = [
+  { k: "feel", n: 1, q: "By 2pm on a humid day, your skin feels…", opts: [
+    ["allover", "Shiny all over", "Forehead, nose, cheeks and chin"],
+    ["tzone", "Shiny T-zone, normal cheeks", "Mostly forehead and nose"],
+    ["comfy", "Comfortable", "Neither oily nor tight"],
+    ["tight", "Tight or flaky in places", "Especially after air-con"]] },
+  { k: "concerns", n: 2, multi: 2, q: "What bothers you most right now?", hint: "Pick up to two, or none.", opts: Object.entries(CONCERNS).map(([k, v]) => [k, v, ""]) },
+  { k: "react", n: 3, q: "When you try a new product, your skin…", opts: [
+    ["rarely", "Rarely reacts", "New products are usually fine"],
+    ["sometimes", "Sometimes stings or reddens", "Certain ingredients bother it"],
+    ["often", "Often stings, itches or flares", "Most new products cause trouble"]] },
+  { k: "length", n: 4, q: "How many steps will you really do?", opts: [
+    ["minimal", "3 steps", "Minimal, morning and night"],
+    ["full", "5 or more steps", "The full K-beauty routine"]] }
+];
+function renderQuiz() {
+  $("#questions").innerHTML = QUESTIONS.map(Q => `
+    <div class="q" data-k="${Q.k}">
+      <div><h3><span class="mono" style="color:var(--muted);font-size:13px;margin-right:6px">${String(Q.n).padStart(2, "0")}</span>${Q.q}</h3>${Q.hint ? `<p class="hint">${Q.hint}</p>` : ""}</div>
+      <div class="opts" role="${Q.multi ? "group" : "radiogroup"}" aria-label="${Q.q}">
+        ${Q.opts.map(([v, t, s]) => Q.multi
+          ? `<button type="button" class="opt multi" data-v="${v}" aria-pressed="false">${t}${s ? `<small>${s}</small>` : ""}</button>`
+          : `<button type="button" class="opt" role="radio" data-v="${v}" aria-checked="false">${t}${s ? `<small>${s}</small>` : ""}</button>`).join("")}
+      </div>
+    </div>`).join("");
+  $$(".q").forEach(qe => {
+    const k = qe.dataset.k, Q = QUESTIONS.find(x => x.k === k);
+    qe.addEventListener("click", e => {
+      const b = e.target.closest(".opt"); if (!b) return;
+      const v = b.dataset.v;
+      if (Q.multi) {
+        const arr = state.answers.concerns, i = arr.indexOf(v);
+        if (i >= 0) arr.splice(i, 1);
+        else { if (arr.length >= Q.multi) arr.shift(); arr.push(v); }
+        $$(".opt", qe).forEach(o => o.setAttribute("aria-pressed", String(arr.includes(o.dataset.v))));
+      } else {
+        state.answers[k] = v;
+        $$(".opt", qe).forEach(o => o.setAttribute("aria-checked", String(o.dataset.v === v)));
+      }
+      updateQuizState();
+    });
+  });
+}
+function syncQuiz() {
+  $$(".q").forEach(qe => {
+    const k = qe.dataset.k;
+    $$(".opt", qe).forEach(o => {
+      if (k === "concerns") o.setAttribute("aria-pressed", String(state.answers.concerns.includes(o.dataset.v)));
+      else o.setAttribute("aria-checked", String(state.answers[k] === o.dataset.v));
+    });
+  });
+  updateQuizState();
+}
+function updateQuizState() {
+  const a = state.answers, missing = [];
+  if (!a.feel) missing.push(1); if (!a.react) missing.push(3); if (!a.length) missing.push(4);
+  $("#btnResults").disabled = missing.length > 0;
+  $("#quizHint").textContent = missing.length ? `Answer question${missing.length > 1 ? "s" : ""} ${missing.join(", ").replace(/, (\d)$/, " and $1")} to continue.` : "All set.";
+}
+
+/* ---------- Matching ---------- */
+function classify(m, a) {
+  const s = { oily: 0, dry: 0, combination: 0, sensitive: 0, acne: 0, pigment: 0 };
+  const C = a.concerns;
+  if (a.feel === "allover") s.oily += 4;
+  if (a.feel === "tzone") { s.combination += 4; s.oily += 1; }
+  if (a.feel === "comfy") s.combination += 1.5;
+  if (a.feel === "tight") s.dry += 4;
+  s.oily += (m.shine - 50) / 20;
+  s.combination += (m.tzone - 50) / 25;
+  s.dry += (50 - m.shine) / 25;
+  if (a.react === "often") s.sensitive += 4; else if (a.react === "sometimes") s.sensitive += 1.5;
+  s.sensitive += (m.redness - 50) / 20;
+  if (C.includes("redness")) s.sensitive += 2.5;
+  if (C.includes("breakouts")) s.acne += 4;
+  s.acne += (m.blemish - 50) / 25;
+  if (C.includes("spots")) s.pigment += 4;
+  s.pigment += (m.uneven - 50) / 20;
+  if (C.includes("dull")) s.pigment += 1;
+  if (C.includes("dehydration")) s.dry += 2;
+  if (C.includes("pores")) { s.oily += 1.5; s.combination += .5; }
+  const ranked = Object.entries(s).sort((x, y) => y[1] - x[1]);
+  const primary = ranked[0][0];
+  const second = ranked[1];
+  const secondary = second[1] > 2 && second[1] >= ranked[0][1] * .6 ? second[0] : null;
+  const soft = [];
+  if (m.redness >= 65 && !C.includes("redness")) soft.push("redness");
+  if (m.uneven >= 65 && !C.includes("spots")) soft.push("spots");
+  if (m.shine >= 65 && !C.includes("pores")) soft.push("pores");
+  if (m.blemish >= 70 && !C.includes("breakouts")) soft.push("breakouts");
+  return { primary, secondary, concerns: C.slice(), soft, react: a.react };
+}
+function scoreP(p, ctx) {
+  let s = 0;
+  if (p.types.includes(ctx.primary)) s += 4;
+  if (ctx.secondary && p.types.includes(ctx.secondary)) s += 2;
+  ctx.concerns.forEach(c => { if (p.concerns.includes(c)) s += 2.5; });
+  ctx.soft.forEach(c => { if (p.concerns.includes(c)) s += 1; });
+  if (ctx.react === "often" && p.strong) s -= 3;
+  return s;
+}
+function buildRoutine(ctx, mode, swaps) {
+  const rank = (step, f) => P.filter(p => p.step === step && (!f || f(p)))
+    .map((p, i) => ({ p, s: scoreP(p, ctx), i })).sort((a, b) => b.s - a.s || a.i - b.i).map(o => o.p);
+  const L = {
+    oil: rank("oil"), cleanse: rank("cleanse"), tone: rank("tone"),
+    serumAM: rank("serum", p => p.role !== "treat"), moist: rank("moist"), spf: rank("spf"), spot: rank("spot"), supp: rank("supp")
+  };
+  const idx = k => (swaps[k] || 0) % L[k].length;
+  const ch = {};
+  ["oil", "cleanse", "tone", "serumAM", "moist", "spf", "spot", "supp"].forEach(k => { ch[k] = L[k][idx(k)]; });
+  const needsTreat = ["acne", "pigment", "oily"].includes(ctx.primary) || ["acne", "pigment"].includes(ctx.secondary) ||
+    ctx.concerns.some(c => ["spots", "breakouts", "dull", "pores"].includes(c));
+  L.serumPM = needsTreat ? rank("serum", p => p.role === "treat") : rank("serum", p => p.role !== "treat" && p.id !== ch.serumAM.id);
+  ch.serumPM = L.serumPM[idx("serumPM")];
+  const drySide = ["dry", "sensitive"].includes(ctx.primary);
+  const wantSpot = ctx.primary === "acne" || ctx.secondary === "acne" || ctx.concerns.includes("breakouts");
+  let am, pm;
+  if (mode === "full") {
+    am = ["cleanse", "tone", "serumAM", "moist", "spf", "supp"];
+    pm = ["oil", "cleanse", "tone", "serumPM", "moist"];
+    if (wantSpot) pm.push("spot");
+  } else {
+    am = drySide ? ["cleanse", "moist", "spf"] : ["cleanse", "serumAM", "spf"];
+    pm = ["cleanse", "serumPM", "moist"];
+  }
+  const ids = []; [...am, ...pm].forEach(k => { if (!ids.includes(ch[k].id)) ids.push(ch[k].id); });
+  return { L, ch, am, pm, needsTreat, bundle: ids.map(id => P.find(p => p.id === id)) };
+}
+const SLOT_LABEL = (k, r) => ({ oil: "Oil cleanse", cleanse: "Cleanse", tone: "Tone", serumAM: "Serum", serumPM: r.needsTreat ? "Treatment serum" : "Serum", moist: "Moisturise", spf: "Sunscreen", spot: "Spot care", supp: "Inner care · optional" })[k];
+
+/* ---------- Results ---------- */
+function noteFor(k, v) {
+  const N = {
+    shine:   ["Very few highlights. Surface oil looks low right now.", "Some T-zone shine, which is typical for SG afternoons.", "Strong highlights on your forehead and nose suggest active oil production."],
+    redness: ["Colour looks even across your cheeks and forehead.", "Mild redness, mostly on the cheeks.", "Your cheeks read redder than your forehead, a common sign of irritation or flushing."],
+    texture: ["A smooth surface with little visible texture.", "Some visible texture, often pores around the nose.", "Higher pixel-to-pixel contrast, which can mean visible pores, bumps or flaking."],
+    uneven:  ["Tone looks even across zones.", "Slight variation in tone between zones.", "Brightness varies across your face, which can come from marks or pigmentation."]
+  };
+  return N[k][v < 35 ? 0 : v < 65 ? 1 : 2];
+}
+function showResults() {
+  const ctx = classify(state.metrics, state.answers);
+  state.result = ctx; state.mode = state.answers.length === "minimal" ? "minimal" : "full"; state.tab = "am"; state.swap = {};
+  const card = { primary: ctx.primary, secondary: ctx.secondary, metrics: state.metrics, concerns: ctx.concerns.length ? ctx.concerns : ctx.soft.slice(0, 2) };
+  state.card = card;
+  $("#myCard").innerHTML = cardHTML(card);
+  $("#resTitle").innerHTML = `${typeName(ctx.primary)} skin${ctx.secondary ? `<span>leaning ${typeName(ctx.secondary).toLowerCase()}</span>` : ""}`;
+  $("#resLede").textContent = COPY[ctx.primary].lede;
+  $("#resHumid").textContent = COPY[ctx.primary].humid;
+  $("#notes").innerHTML = METRICS.map(m => `<div style="--mc:${m.color}"><dt>${m.long}<b>${state.metrics[m.k]} · ${word(state.metrics[m.k])}</b></dt><dd>${noteFor(m.k, state.metrics[m.k])}</dd></div>`).join("");
+  $("#srcNote").textContent = state.source === "demo"
+    ? "Based on demo readings and your answers. Scan a real photo for a personal result."
+    : "Based on your photo and answers. A dermatologist Skin Check can confirm this.";
+  renderRoutine(); renderBook(); renderShelf();
+  setView("results");
+}
+function renderRoutine() {
+  const ctx = state.result, r = buildRoutine(ctx, state.mode, state.swap);
+  state.routine = r;
+  $$("#segTab button").forEach(b => {
+    b.setAttribute("aria-pressed", String(b.dataset.v === state.tab));
+    b.textContent = `${b.dataset.v.toUpperCase()} · ${(b.dataset.v === "am" ? r.am : r.pm).length} steps`;
+  });
+  $$("#segMode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.mode)));
+  $("#routineSub").textContent = `Matched to ${typeName(ctx.primary).toLowerCase()} skin${ctx.secondary ? ` with ${typeName(ctx.secondary).toLowerCase()} tendencies` : ""}${ctx.concerns.length ? `, focused on ${ctx.concerns.map(c => CONCERNS[c].toLowerCase()).join(" and ")}` : ""}.`;
+  const keys = state.tab === "am" ? r.am : r.pm;
+  $("#steps").innerHTML = keys.map((k, i) => {
+    const p = r.ch[k], list = r.L[k], at = list.indexOf(p);
+    const why = [];
+    if (p.types.includes(ctx.primary)) why.push(`For ${typeName(ctx.primary).toLowerCase()} skin`);
+    else if (ctx.secondary && p.types.includes(ctx.secondary)) why.push(`For ${typeName(ctx.secondary).toLowerCase()} skin`);
+    ctx.concerns.filter(c => p.concerns.includes(c)).slice(0, 2).forEach(c => why.push(CONCERNS[c]));
+    return `<li class="step fade-in">
+      <span class="step-n">${String(i + 1).padStart(2, "0")}</span>
+      <div class="shelf-tile">${packHTML(p)}</div>
+      <div style="min-width:0">
+        <p class="step-k">${SLOT_LABEL(k, r)}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p>
+        <p class="p-brand">${p.brand}</p>
+        <h4 class="p-name">${p.name}${p.size ? `<small>${p.size}</small>` : ""}</h4>
+        <p class="p-note">${p.note}</p>
+        <div class="why">${why.map(w => `<span>${w}</span>`).join("")}<span class="k">Key: ${p.key}</span></div>
+        ${p.award ? `<span class="award">${p.award}</span>` : ""}
+      </div>
+      <div class="step-side"><span class="price">${priceHTML(p)}</span>${list.length > 1 ? `<button class="swap" type="button" data-k="${k}" aria-label="Swap ${SLOT_LABEL(k, r).toLowerCase()} product, option ${at + 1} of ${list.length}">Swap · ${at + 1}/${list.length}</button>` : ""}</div>
+    </li>`;
+  }).join("");
+  renderBundle(); renderTwin();
+  state.mine = new Set(r.bundle.map(p => p.id));
+  renderShelf();
+}
+function renderBundle() {
+  const r = state.routine, total = sumPrice(r.bundle);
+  $("#bundle").innerHTML = `
+    <div><p class="eyebrow" style="color:inherit;opacity:.7">One-click bundle</p><h3>Your ${state.mode === "full" ? "full" : "minimal"} routine</h3><p class="sub">${r.bundle.length} products cover both AM and PM.</p></div>
+    <ul>${r.bundle.map(p => `<li><span>${p.brand} ${p.name}</span><span>${priced(p) ? `≈S$${p.price}` : "Price on OY"}</span></li>`).join("")}</ul>
+    <div class="total"><span>Approx. total${r.bundle.some(p => !priced(p)) ? " excl. inner care" : ""}</span><b>S$${total}</b></div>
+    <button class="btn btn-primary" type="button" id="btnBag">Shop this routine</button>
+    <div class="refill">
+      <h4>Routine Refill</h4>
+      <p>The same products, delivered on your schedule. Includes a free dermatologist follow-up at week 8. Pause or cancel anytime.</p>
+      <div class="seg" role="group" aria-label="Refill frequency" id="segRefill">
+        ${[6, 8, 10].map(w => `<button type="button" data-v="${w}" aria-pressed="${state.refill === w}">Every ${w} wks</button>`).join("")}
+      </div>
+      <button class="btn btn-ghost btn-sm" type="button" id="btnRefill">Start Routine Refill</button>
+      <div id="refillConfirm"></div>
+    </div>`;
+}
+function renderTwin() {
+  const ctx = state.result, tw = TWINS[ctx.primary];
+  const twinR = buildRoutine({ primary: ctx.primary, secondary: null, concerns: [], soft: [], react: "rarely" }, state.mode, {});
+  const twinIds = new Set(twinR.bundle.map(p => p.id));
+  const shared = state.routine.bundle.filter(p => twinIds.has(p.id)).length;
+  $("#twin").innerHTML = `
+    <p class="eyebrow"><span class="dot"></span>#UnfilteredRoutine · Your skin twin</p>
+    <div class="twin-id"><span class="av">${tw.initial}</span><div><h3>${tw.title}</h3><p>Concept creator, to be cast · 10k–50k followers</p></div></div>
+    <p>Your twin has ${typeName(ctx.primary).toLowerCase()} skin like yours and posts their exact routine: a weekly Routine Drop, a monthly 30-Day Check-in, and an honest update when a product stops working.</p>
+    <div class="overlap"><b>${shared}/${twinR.bundle.length}</b><span>products in your routine match your twin's current routine.</span></div>
+    <div><span class="badge">Unfiltered ✓</span></div>
+    <ul class="charter"><li>No filters or retouching</li><li>Natural light only</li><li>Bare-skin opening shot</li><li>Honest when a product isn't working</li></ul>
+    <div><button class="btn btn-ghost btn-sm" type="button" id="btnTwin">Watch the latest Routine Drop</button></div>`;
+}
+function weekdays(count) {
+  const out = [], d = new Date(); d.setHours(12, 0, 0, 0);
+  while (out.length < count) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) out.push(new Date(d)); }
+  return out;
+}
+function renderBook() {
+  const days = weekdays(5);
+  const times = state.format === "video" ? ["11:00", "14:30", "18:00"] : ["12:00", "15:00", "19:00"];
+  let open = 0, totalSlots = 0;
+  $("#slots").innerHTML = days.map((d, di) => `<div class="day"><p>${d.toLocaleDateString("en-SG", { weekday: "short", day: "numeric" })}</p>${times.map((t, ti) => {
+    const full = ((di * 3 + ti + (state.format === "video" ? 0 : 2)) % 4) === 1;
+    totalSlots++; if (!full) open++;
+    const id = `${d.toISOString().slice(0, 10)} ${t}`;
+    return `<button type="button" class="slot" data-id="${id}" data-label="${d.toLocaleDateString("en-SG", { weekday: "long", day: "numeric", month: "long" })}, ${t}" ${full ? "disabled aria-label=\"" + t + " fully booked\"" : ""} aria-pressed="${state.slot === id}">${t}</button>`;
+  }).join("")}</div>`).join("");
+  $("#slotsLeft").textContent = `${open} of ${totalSlots} slots open this week`;
+  $("#btnReserve").disabled = !state.slot;
+  $$("#segFormat button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.format)));
+}
+
+/* ---------- Shelf ---------- */
+function renderShelfFilters() {
+  const tChips = [["all", "All"], ...Object.entries(TYPES).map(([k, v]) => [k, v.label])];
+  const sChips = [["all", "All steps"], ["oil", "Oil cleanse"], ["cleanse", "Cleanse"], ["tone", "Tone"], ["serum", "Serum"], ["moist", "Moisturise"], ["spf", "Sunscreen"], ["spot", "Spot care"], ["supp", "Supplements"]];
+  $("#fType").insertAdjacentHTML("beforeend", tChips.map(([k, v]) => `<button type="button" class="chip" data-v="${k}" aria-pressed="${k === "all"}">${v}</button>`).join(""));
+  $("#fStep").insertAdjacentHTML("beforeend", sChips.map(([k, v]) => `<button type="button" class="chip" data-v="${k}" aria-pressed="${k === "all"}">${v}</button>`).join(""));
+  $("#fType").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.shelfType = b.dataset.v; $$("#fType .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); renderShelf(); });
+  $("#fStep").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.shelfStep = b.dataset.v; $$("#fStep .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); renderShelf(); });
+}
+function renderShelf() {
+  const items = P.filter(p => (state.shelfType === "all" || p.types.includes(state.shelfType)) && (state.shelfStep === "all" || p.step === state.shelfStep));
+  $("#shelfCount").textContent = `${items.length} of ${P.length} products`;
+  $("#grid").innerHTML = items.length ? items.map(p => {
+    const mine = state.mine.has(p.id);
+    return `<article class="card${mine ? " mine" : ""}">
+      ${mine ? `<span class="mine-tag">In your routine</span>` : ""}
+      <div class="tile">${packHTML(p)}</div>
+      <div><p class="step-k">${STEP_LABEL[p.step]}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p><p class="p-brand">${p.brand}</p><h4 class="p-name">${p.name}${p.size ? `<small>${p.size}</small>` : ""}</h4></div>
+      <p class="p-note">${p.note}</p>
+      ${p.award ? `<span class="award" style="margin-top:0">${p.award}</span>` : ""}
+      <div class="card-meta"><span>${p.types.map(t => TYPES[t].label).join(" · ")}</span><b class="price">${priceHTML(p)}</b></div>${p.url ? `<a class="oy-link" href="${p.url}" target="_blank" rel="noopener">View on Olive Young ↗</a>` : ""}
+    </article>`;
+  }).join("") : `<p class="empty">No products match both filters. Try another step or skin type.</p>`;
+}
+
+/* ---------- Report card export ---------- */
+let downloadsNS = null, saveMode = "none";
+(async () => {
+  if (window.claude && typeof window.claude.use === "function") {
+    try { downloadsNS = await window.claude.use("downloads"); } catch (e) { downloadsNS = null; }
+    saveMode = downloadsNS ? "cap" : "none";
+  } else { saveMode = "link"; }
+  $("#btnSave").hidden = saveMode === "none";
+})();
+async function drawCardPNG(d) {
+  try { await document.fonts.ready; } catch (e) {}
+  const W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  const K = { paper: "#F4F7EC", surface: "#FFFFFF", ink: "#17200E", muted: "#56603F", lime: "#B6DC33", track: "#E3E9D4", wash: "#EDF6CF",
+    amber: "#B97A0F", coral: "#CF5A3A", moss: "#5C7C27", sky: "#36809F" };
+  const disp = '"Archivo", "Arial Black", sans-serif', body = '"Hanken Grotesk", system-ui, sans-serif', mono = '"IBM Plex Mono", ui-monospace, monospace';
+  const expand = on => { try { x.fontStretch = on ? "expanded" : "normal"; } catch (e) {} };
+  x.fillStyle = K.paper; x.fillRect(0, 0, W, H);
+  x.fillStyle = K.lime; x.fillRect(0, 0, W, 300);
+  x.fillStyle = K.ink; x.textBaseline = "alphabetic";
+  expand(true); x.font = `800 66px ${disp}`; x.fillText("OLIVE YOUNG", 84, 150); expand(false);
+  x.font = `500 32px ${mono}`; x.fillText("SKIN REPORT CARD", 84, 220);
+  x.textAlign = "right"; x.fillText("WEEK 0 · " + fmtDate(new Date()).toUpperCase(), W - 84, 220); x.textAlign = "left";
+  x.fillStyle = K.muted; x.font = `500 30px ${mono}`; x.fillText("SKIN TYPE", 84, 420);
+  const t = TYPES[d.primary];
+  expand(true); let fs = 170; x.font = `800 ${fs}px ${disp}`;
+  while (x.measureText(t.word.toUpperCase()).width > W - 168 && fs > 60) { fs -= 4; x.font = `800 ${fs}px ${disp}`; }
+  x.fillStyle = K.ink; x.fillText(t.word.toUpperCase(), 80, 420 + fs * .95);
+  let y = 420 + fs * .95;
+  if (t.suffix) { x.font = `800 ${Math.round(fs * .42)}px ${disp}`; y += fs * .5; x.fillText(t.suffix.toUpperCase(), 84, y); }
+  expand(false);
+  y += 70; x.fillStyle = K.muted; x.font = `500 40px ${body}`;
+  x.fillText(d.secondary ? `Leaning ${TYPES[d.secondary].label.toLowerCase()}` : "Steady across zones", 84, y);
+  y += 110;
+  const MC = { shine: K.amber, redness: K.coral, texture: K.moss, uneven: K.sky };
+  METRICS.forEach(m => {
+    const v = d.metrics[m.k];
+    x.fillStyle = K.muted; x.font = `500 30px ${mono}`; x.fillText(m.long.toUpperCase(), 84, y);
+    x.fillStyle = K.ink; x.textAlign = "right"; x.fillText(`${v} · ${word(v).toUpperCase()}`, W - 84, y); x.textAlign = "left";
+    x.fillStyle = K.track; rr(x, 84, y + 24, W - 168, 26, 13); x.fill();
+    x.fillStyle = MC[m.k]; rr(x, 84, y + 24, Math.max(26, (W - 168) * v / 100), 26, 13); x.fill();
+    y += 128;
+  });
+  y += 20; x.fillStyle = K.muted; x.font = `500 30px ${mono}`; x.fillText("WORKING ON", 84, y); y += 34;
+  let px = 84; x.font = `600 34px ${body}`;
+  (d.concerns.length ? d.concerns : ["dehydration"]).forEach(cn => {
+    const label = CONCERNS[cn], w = x.measureText(label).width + 56;
+    if (px + w > W - 84) { px = 84; y += 92; }
+    x.fillStyle = K.wash; rr(x, px, y, w, 76, 38); x.fill();
+    x.fillStyle = K.ink; x.fillText(label, px + 28, y + 50); px += w + 16;
+  });
+  y += 140;
+  x.fillStyle = K.surface; rr(x, 84, y, W - 168, 170, 34); x.fill();
+  x.fillStyle = K.ink; x.beginPath(); x.arc(84 + 95, y + 85, 54, 0, Math.PI * 2); x.fill();
+  x.fillStyle = K.lime; expand(true); x.font = `800 50px ${disp}`; x.textAlign = "center"; x.fillText(TWINS[d.primary].initial, 84 + 95, y + 103); x.textAlign = "left"; expand(false);
+  x.fillStyle = K.muted; x.font = `500 28px ${mono}`; x.fillText("SKIN TWIN", 84 + 180, y + 68);
+  x.fillStyle = K.ink; x.font = `700 44px ${body}`; x.fillText(TWINS[d.primary].title, 84 + 180, y + 122);
+  x.fillStyle = K.ink; x.fillRect(0, H - 170, W, 170);
+  x.fillStyle = K.lime; x.font = `500 34px ${mono}`; x.fillText("#OYConsistencyCheck", 84, H - 74);
+  x.fillStyle = K.paper; x.textAlign = "right"; x.font = `500 26px ${mono}`; x.fillText("CONCEPT PROTOTYPE", W - 84, H - 74); x.textAlign = "left";
+  return new Promise(res => c.toBlob(res, "image/png"));
+}
+async function saveCard() {
+  if (!state.card) return;
+  const blob = await drawCardPNG(state.card);
+  if (!blob) { toast("The card image couldn't be created in this browser."); return; }
+  if (saveMode === "cap" && downloadsNS) {
+    try { await downloadsNS.save({ filename: "oy-skin-report-card.png", data: blob }); toast("Report Card saved. Share it to your Story with #OYConsistencyCheck."); }
+    catch (e) {
+      if (e && e.code === "declined") toast("Not saved.");
+      else if (e && e.code === "rate_limited") toast("A save prompt is already open. Try again in a moment.");
+      else { toast("Saving isn't available in this view."); $("#btnSave").hidden = true; }
+    }
+  } else if (saveMode === "link") {
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "oy-skin-report-card.png";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast("Report Card downloaded.");
+  }
+}
+
+/* ---------- Wiring ---------- */
+$("#exampleCard").innerHTML = cardHTML(EXAMPLE);
+renderQuiz(); renderShelfFilters(); renderShelf(); setupScanButtons();
+
+const goScan = e => { if (e) e.preventDefault(); setView("scan"); if (!state.metrics) resetScan(); };
+$("#btnStart").addEventListener("click", goScan);
+$("#navScan").addEventListener("click", e => {
+  e.preventDefault();
+  const cur = $$(".view").find(v => !v.hidden);
+  if (cur && cur.id === "view-intro") setView("scan"); else $("#top").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+});
+$("#btnLive").addEventListener("click", startLive);
+$("#btnCapture").addEventListener("click", capture);
+$("#fileSelfie").addEventListener("change", e => { loadFile(e.target.files[0]); e.target.value = ""; });
+$("#fileUpload").addEventListener("change", e => { loadFile(e.target.files[0]); e.target.value = ""; });
+$("#lblUpload").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("#fileUpload").click(); } });
+$("#btnDemo").addEventListener("click", useDemo);
+$("#btnRetake").addEventListener("click", resetScan);
+$("#btnToQuiz").addEventListener("click", () => { setView("quiz"); syncQuiz(); });
+$("#btnBackScan").addEventListener("click", () => setView("scan"));
+$("#btnResults").addEventListener("click", showResults);
+$("#btnRescan").addEventListener("click", () => { setView("scan"); resetScan(); });
+$("#btnSave").addEventListener("click", saveCard);
+
+$("#segTab").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; state.tab = b.dataset.v; renderRoutine(); });
+$("#segMode").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; state.mode = b.dataset.v; renderRoutine(); });
+$("#steps").addEventListener("click", e => {
+  const b = e.target.closest(".swap"); if (!b) return;
+  const k = b.dataset.k; state.swap[k] = ((state.swap[k] || 0) + 1);
+  renderRoutine();
+  const nb = $(`#steps .swap[data-k="${k}"]`); if (nb) nb.focus();
+});
+$("#bundle").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.id === "btnBag") toast("Prototype: the bundle would go to your bag here. No order was placed.");
+  if (b.closest("#segRefill")) { state.refill = Number(b.dataset.v); $$("#segRefill button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); $("#refillConfirm").innerHTML = ""; }
+  if (b.id === "btnRefill") {
+    const total = sumPrice(state.routine.bundle);
+    $("#refillConfirm").innerHTML = `<p class="confirm">Prototype preview: Routine Refill every ${state.refill} weeks, about S$${total} per box, with a free follow-up Skin Check at week 8. Nothing was ordered.</p>`;
+  }
+});
+$("#twin").addEventListener("click", e => { if (e.target.closest("#btnTwin")) toast("Prototype: Routine Drops start at the month 3 brand reveal."); });
+$("#segFormat").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; state.format = b.dataset.v; state.slot = null; $("#bookConfirm").innerHTML = ""; renderBook(); });
+$("#slots").addEventListener("click", e => {
+  const b = e.target.closest(".slot"); if (!b || b.disabled) return;
+  state.slot = b.dataset.id; state.slotLabel = b.dataset.label;
+  $$("#slots .slot").forEach(s => s.setAttribute("aria-pressed", String(s === b)));
+  $("#btnReserve").disabled = false; $("#bookConfirm").innerHTML = "";
+});
+$("#btnReserve").addEventListener("click", () => {
+  if (!state.slot) return;
+  const where = state.format === "video" ? "a 20-minute video Skin Check" : "an in-person Skin Check at the Discovery Preview in Somerset";
+  $("#bookConfirm").innerHTML = `<p class="confirm">Prototype preview: ${where} on ${state.slotLabel}. In the live version you'd get a confirmation and a reminder. No booking was made.</p>`;
+});
+})();
+</script>
+</body>
+</html>
