@@ -349,22 +349,25 @@ main{padding-block:40px 56px}
 .recs-head p{color:var(--muted);margin-top:6px}
 .checkout{width:min(640px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:1px solid var(--line);border-radius:22px;padding:0;background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
 .checkout::backdrop{background:rgba(10,14,6,.55)}
-.checkout[open]{display:flex;flex-direction:column}
+.checkout[open]{display:block;overflow-y:auto;overscroll-behavior:contain}
 .co-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:20px 20px 0}
 .co-head h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:24px;margin-top:6px}
 .co-x{border:1px solid var(--line);background:transparent;border-radius:50%;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
 .co-intro{padding:10px 20px 0;color:var(--muted);font-size:14.5px}
-.co-list{list-style:none;margin:14px 0 0;padding:0 20px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.co-steps{margin:10px 0 0;padding:0 20px 0 40px;font-size:14px;line-height:1.45;display:flex;flex-direction:column;gap:4px}
+.co-fine{padding:12px 20px 0}
+.co-steps li::marker{font-family:var(--f-mono);color:var(--olive)}
+.co-list{list-style:none;margin:14px 0 0;padding:0 20px;display:flex;flex-direction:column;gap:8px}
 .co-list li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
 .co-list li.done{background:var(--lime-wash)}
 .co-list .shelf-tile{width:52px;height:64px}
 .co-name{font-weight:700;font-size:15px;line-height:1.25}
 .co-name small{font-weight:500;color:var(--muted);font-size:12.5px}
 .co-price{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin-top:2px}
-.co-foot{padding:14px 20px 20px;border-top:1px solid var(--line);margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.co-foot{position:sticky;bottom:0;background:var(--surface);padding:14px 20px calc(16px + env(safe-area-inset-bottom, 0px));border-top:1px solid var(--line);margin-top:14px;display:flex;flex-direction:column;gap:10px}
 .co-foot > p:first-child{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
 .co-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-@media (max-width:520px){.co-list li{grid-template-columns:44px minmax(0,1fr)}.co-list li .btn{grid-column:1/-1}.co-list .shelf-tile{width:44px;height:56px}}
+@media (max-width:520px){.co-list li{grid-template-columns:44px minmax(0,1fr)}.co-list li .btn{grid-column:1/-1}.co-list .shelf-tile{width:44px;height:56px}.co-head h2{font-size:21px}.co-actions{flex-direction:column-reverse;align-items:stretch}.co-actions .btn{width:100%}}
 .qc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:13.5px}
 .qc li{display:flex;gap:8px;align-items:baseline}
 .qc li::before{content:"\2713";color:var(--olive);font-weight:700}
@@ -520,7 +523,7 @@ main{padding-block:40px 56px}
     <section class="recs" id="recs" aria-labelledby="recsTitle">
       <div class="recs-head">
         <div><h2 id="recsTitle">All your recommended products</h2><p id="recsSub"></p></div>
-        <button class="btn btn-primary" type="button" id="btnCheckoutTop">Checkout on Olive Young</button>
+        <button class="btn btn-primary" type="button" id="btnCheckoutTop">Shop this routine on Olive Young</button>
       </div>
       <div class="grid" id="recGrid"></div>
     </section>
@@ -575,18 +578,24 @@ main{padding-block:40px 56px}
 
 <dialog class="checkout" id="checkout" aria-labelledby="coTitle">
   <div class="co-head">
-    <div><p class="eyebrow"><span class="dot"></span>Olive Young Global</p><h2 id="coTitle">Check out on Olive Young</h2></div>
+    <div><p class="eyebrow"><span class="dot"></span>Olive Young Global</p><h2 id="coTitle">Add your routine to your Olive Young bag</h2></div>
     <button class="co-x" type="button" id="coClose" aria-label="Close">×</button>
   </div>
-  <p class="co-intro">Olive Young doesn't let other websites fill your bag, so add each product from its official page. Each one opens in a new tab. Tap <b>Add to Cart</b> there, then come back for the next.</p>
+  <p class="co-intro">Your Olive Young bag starts empty. Olive Young doesn't let other websites add products to it, so add each one from its Olive Young page.</p>
+  <ol class="co-steps">
+    <li>Tap <b>Open next product</b>. It opens on Olive Young in a new tab.</li>
+    <li>Tap <b>Add to Cart</b> on Olive Young, then come back to this tab.</li>
+    <li>Repeat for each product, then open your bag and check out.</li>
+  </ol>
   <ol class="co-list" id="coList"></ol>
+  <p class="fine co-fine">On Olive Young, tap <b>Bag</b> at the top right to check out. Prices, stock and shipping to Singapore are set by Olive Young Global.</p>
   <div class="co-foot">
     <p id="coProgress" aria-live="polite"></p>
     <div class="co-actions">
       <button class="btn btn-ghost btn-sm" type="button" id="coCopy">Copy product list</button>
-      <a class="btn btn-primary" id="coGo" href="https://global.oliveyoung.com/" target="_blank" rel="noopener">Go to Olive Young to pay</a>
+      <a class="btn btn-ghost" id="coGo" href="https://global.oliveyoung.com/" target="_blank" rel="noopener">Go to my Olive Young bag ↗</a>
+      <a class="btn btn-primary" id="coNext" href="https://global.oliveyoung.com/" target="_blank" rel="noopener">Open next product ↗</a>
     </div>
-    <p class="fine">Prices, stock and shipping to Singapore are set by Olive Young Global at checkout.</p>
   </div>
 </dialog>
 
@@ -1419,7 +1428,7 @@ function renderBundle() {
     <div><p class="eyebrow" style="color:inherit;opacity:.7">One-click bundle</p><h3>Your ${state.mode === "full" ? "full" : "minimal"} routine</h3><p class="sub">${r.bundle.length} products cover both AM and PM.</p></div>
     <ul>${r.bundle.map(p => `<li><a href="${oyUrl(p)}" target="_blank" rel="noopener">${p.brand} ${p.name}</a><span>${priced(p) ? `≈S$${p.price}` : "Price on OY"}</span></li>`).join("")}</ul>
     <div class="total"><span>Approx. total${r.bundle.some(p => !priced(p)) ? " excl. inner care" : ""}</span><b>S$${total}</b></div>
-    <button class="btn btn-primary" type="button" id="btnBag">Checkout on Olive Young</button>
+    <button class="btn btn-primary" type="button" id="btnBag">Shop this routine on Olive Young</button>
     <div class="refill">
       <h4>Routine Refill</h4>
       <p>The same products, delivered on your schedule. Includes a free dermatologist follow-up at week 8. Pause or cancel anytime.</p>
@@ -1493,8 +1502,14 @@ function renderCheckout() {
       <div style="min-width:0"><p class="p-brand">${p.brand} · ${routineUse(r, p.id)}</p><p class="co-name">${p.name}${p.size ? ` <small>${p.size}</small>` : ""}</p><p class="co-price">${priced(p) ? `≈S$${p.price}` : "Price on Olive Young"}</p></div>
       <a class="btn btn-sm ${opened.has(p.id) ? "btn-ghost" : "btn-dark"}" href="${oyUrl(p)}" target="_blank" rel="noopener" data-id="${p.id}">${opened.has(p.id) ? "Opened ✓" : "Add on OY ↗"}</a>
     </li>`).join("");
-  const n = r.bundle.filter(p => opened.has(p.id)).length;
-  $("#coProgress").textContent = `${n} of ${r.bundle.length} products opened on Olive Young`;
+  const n = r.bundle.filter(p => opened.has(p.id)).length, next = r.bundle.find(p => !opened.has(p.id));
+  $("#coProgress").textContent = next
+    ? `${n} of ${r.bundle.length} products opened. Tap Add to Cart on each one.`
+    : `All ${r.bundle.length} products opened. Check they're in your Olive Young bag, then check out there.`;
+  const nb = $("#coNext"), go = $("#coGo");
+  nb.hidden = !next;
+  if (next) { nb.href = oyUrl(next); nb.dataset.id = next.id; nb.textContent = `Open next product (${r.bundle.indexOf(next) + 1} of ${r.bundle.length}) ↗`; }
+  go.classList.toggle("btn-primary", !next); go.classList.toggle("btn-ghost", !!next);
 }
 function openCheckout() {
   if (!state.routine) return;
@@ -1502,6 +1517,7 @@ function openCheckout() {
   const d = $("#checkout");
   if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
 }
+$("#coNext").addEventListener("click", e => { const id = e.currentTarget.dataset.id; if (id) { opened.add(id); setTimeout(renderCheckout, 50); } });
 $("#coList").addEventListener("click", e => { const a = e.target.closest("a[data-id]"); if (!a) return; opened.add(a.dataset.id); setTimeout(renderCheckout, 50); });
 $("#coClose").addEventListener("click", () => { const d = $("#checkout"); if (d.close) d.close(); else d.removeAttribute("open"); });
 $("#checkout").addEventListener("click", e => { if (e.target.id === "checkout" && e.target.close) e.target.close(); });
