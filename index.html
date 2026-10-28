@@ -335,7 +335,45 @@ main{padding-block:40px 56px}
 .card-meta span{font-size:12.5px;color:var(--muted)}
 .mine-tag{position:absolute;top:10px;left:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--lime);color:var(--lime-ink);padding:3px 7px;border-radius:999px}
 .spf{font-family:var(--f-mono);font-size:11px;color:var(--sky)}
-.oy-link{font-size:13px;font-weight:600;color:var(--olive);text-underline-offset:3px}
+.oy-link{font-size:13px;font-weight:600;color:var(--olive)}
+.card .stretch{color:inherit;text-decoration:none}
+.card .stretch::after{content:"";position:absolute;inset:0;border-radius:18px}
+.card:hover{border-color:var(--ink)}
+.card:hover .oy-link{text-decoration:underline;text-underline-offset:3px}
+.p-name a{color:inherit;text-decoration-color:var(--line);text-underline-offset:3px}
+.p-name a:hover{text-decoration-color:currentColor}
+.bundle li a{color:inherit;text-decoration:underline;text-decoration-color:rgba(127,140,110,.6);text-underline-offset:3px}
+.recs{margin-top:56px}
+.recs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.recs-head h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(24px,3vw,32px);line-height:1.05}
+.recs-head p{color:var(--muted);margin-top:6px}
+.checkout{width:min(640px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:1px solid var(--line);border-radius:22px;padding:0;background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.checkout::backdrop{background:rgba(10,14,6,.55)}
+.checkout[open]{display:flex;flex-direction:column}
+.co-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:20px 20px 0}
+.co-head h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:24px;margin-top:6px}
+.co-x{border:1px solid var(--line);background:transparent;border-radius:50%;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+.co-intro{padding:10px 20px 0;color:var(--muted);font-size:14.5px}
+.co-list{list-style:none;margin:14px 0 0;padding:0 20px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.co-list li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.co-list li.done{background:var(--lime-wash)}
+.co-list .shelf-tile{width:52px;height:64px}
+.co-name{font-weight:700;font-size:15px;line-height:1.25}
+.co-name small{font-weight:500;color:var(--muted);font-size:12.5px}
+.co-price{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin-top:2px}
+.co-foot{padding:14px 20px 20px;border-top:1px solid var(--line);margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.co-foot > p:first-child{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.co-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:520px){.co-list li{grid-template-columns:44px minmax(0,1fr)}.co-list li .btn{grid-column:1/-1}.co-list .shelf-tile{width:44px;height:56px}}
+.qc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:13.5px}
+.qc li{display:flex;gap:8px;align-items:baseline}
+.qc li::before{content:"\2713";color:var(--olive);font-weight:700}
+.qc li.warn{color:var(--muted)}
+.qc li.warn::before{content:"!";color:var(--amber)}
+@media (max-width:480px){.qc{grid-template-columns:1fr}}
+.conf-badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--lime-wash);color:var(--ink)}
+.conf-badge[data-level="medium"]{background:transparent;border:1px solid var(--amber);color:var(--amber)}
+.is-off{opacity:.45;pointer-events:none}
 .price a{color:var(--olive);font-size:13px}
 .empty{padding:30px;text-align:center;color:var(--muted)}
 
@@ -346,10 +384,10 @@ main{padding-block:40px 56px}
 
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:14px;font-size:14px;z-index:20;max-width:min(520px, calc(100vw - 32px));box-shadow:var(--shadow)}
 .fade-in{animation:fadeIn .45s ease both}
-</head>
-<body>
 @keyframes fadeIn{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
+</head>
+<body>
 
 <div class="proto"><div class="wrap"><b>Concept prototype</b><span>Student campaign project for Olive Young Singapore</span><span>Not an official Olive Young site · No real orders or bookings</span></div></div>
 
@@ -412,12 +450,12 @@ main{padding-block:40px 56px}
         <input type="file" id="fileSelfie" accept="image/*" capture="user" class="sr-only" tabindex="-1">
         <label class="btn btn-ghost" id="lblUpload" for="fileUpload" tabindex="0" role="button">Upload a photo</label>
         <input type="file" id="fileUpload" accept="image/*" class="sr-only" tabindex="-1">
-        <button class="btn-link" id="btnDemo" type="button">Skip and use demo readings</button>
       </div>
       <p class="status" id="scanStatus" role="status" aria-live="polite"></p>
       <div class="readings fade-in" id="readings" hidden>
-        <div class="readings-head"><h3>Scan readings</h3><span class="eyebrow" id="readSrc">From your photo</span></div>
+        <div class="readings-head"><h3>Scan readings</h3><span class="conf-badge" id="readSrc"></span></div>
         <ul class="meters" id="readMeters"></ul>
+        <ul class="qc" id="qcList"></ul>
         <p class="light" id="lightNote"></p>
         <div class="read-actions">
           <button class="btn btn-primary" id="btnToQuiz" type="button">Next: 4 quick questions</button>
@@ -479,6 +517,14 @@ main{padding-block:40px 56px}
       <aside class="bundle" id="bundle" aria-label="Routine bundle"></aside>
     </div>
 
+    <section class="recs" id="recs" aria-labelledby="recsTitle">
+      <div class="recs-head">
+        <div><h2 id="recsTitle">All your recommended products</h2><p id="recsSub"></p></div>
+        <button class="btn btn-primary" type="button" id="btnCheckoutTop">Checkout on Olive Young</button>
+      </div>
+      <div class="grid" id="recGrid"></div>
+    </section>
+
     <div class="duo">
       <section class="panel" id="twin" aria-label="Your skin twin"></section>
       <section class="panel" id="book" aria-labelledby="bookTitle">
@@ -522,10 +568,27 @@ main{padding-block:40px 56px}
 </div></section>
 
 <footer class="foot"><div class="wrap">
-  <div><h4>How the scan works</h4><p>The scan finds skin-coloured pixels, maps five zones, then measures bright highlights (shine), the red-to-green balance on your cheeks (redness), pixel-to-pixel contrast (texture) and brightness spread (tone). Light, camera and skin tone all affect these readings. This prototype is not a medical or diagnostic tool.</p></div>
+  <div><h4>How the scan works</h4><p>A face-mapping model (MediaPipe Face Landmarker) places 478 points on your face in this browser. The scan resizes every face to the same scale, then reads five zones in CIELAB colour: specular highlights (shine), red balance and red spots (redness), fine luminance detail (texture) and mid-scale brightness variation and dark spots (tone). It won't give readings if the face is too small, turned, blurry, badly exposed or lit from one side, and live scans must agree across 5 frames. Scores are relative indicators, not clinical measurements. Light and camera still affect them. Not a medical or diagnostic tool.</p></div>
   <div><h4>About the products</h4><p>Products come from Olive Young's bestseller lists and the Olive Young Awards. Skincare prices are approximate Singapore-dollar figures from Olive Young Global listings and Singapore beauty press. Supplements link to their live Olive Young Global pages for current prices.</p></div>
   <div><h4>About this prototype</h4><p>A concept for a student campaign proposal featuring Skin Check by OY and #UnfilteredRoutine. Not affiliated with or endorsed by CJ Olive Young. Skin twins are placeholder concepts, not real creators.</p></div>
 </div></footer>
+
+<dialog class="checkout" id="checkout" aria-labelledby="coTitle">
+  <div class="co-head">
+    <div><p class="eyebrow"><span class="dot"></span>Olive Young Global</p><h2 id="coTitle">Check out on Olive Young</h2></div>
+    <button class="co-x" type="button" id="coClose" aria-label="Close">×</button>
+  </div>
+  <p class="co-intro">Olive Young doesn't let other websites fill your bag, so add each product from its official page. Each one opens in a new tab. Tap <b>Add to Cart</b> there, then come back for the next.</p>
+  <ol class="co-list" id="coList"></ol>
+  <div class="co-foot">
+    <p id="coProgress" aria-live="polite"></p>
+    <div class="co-actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="coCopy">Copy product list</button>
+      <a class="btn btn-primary" id="coGo" href="https://global.oliveyoung.com/" target="_blank" rel="noopener">Go to Olive Young to pay</a>
+    </div>
+    <p class="fine">Prices, stock and shipping to Singapore are set by Olive Young Global at checkout.</p>
+  </div>
+</dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
@@ -555,37 +618,39 @@ const METRICS = [
   { k: "uneven",  label: "Uneven tone",  long: "Uneven tone",   color: "var(--sky)" }
 ];
 
+const OY_HOME = "https://global.oliveyoung.com/";
+const oySearch = q => "https://global.oliveyoung.com/global/search/results?query=" + encodeURIComponent(q);
 const P = [
   { id:"manyo-oil", brand:"ma:nyo", name:"Pure Cleansing Oil", size:"200ml", step:"oil", pack:"pump", color:"#E9D8A6", price:30, types:["oily","combination","pigment","acne"], concerns:["pores","dull"], key:"Light plant oils", note:"Melts sunscreen and sebum before your second cleanse." },
-  { id:"banila-zero", brand:"BANILA CO", name:"Clean it Zero Cleansing Balm Original", size:"100ml", step:"oil", pack:"jar", color:"#F3B7C3", price:33, types:["dry","sensitive","combination"], concerns:["dehydration"], key:"Sherbet-to-oil balm", note:"Turns to oil on contact and rinses off milky. Kind to dry patches." },
-  { id:"anua-foam", brand:"Anua", name:"Heartleaf Quercetinol Pore Deep Cleansing Foam", size:"150ml", step:"cleanse", pack:"tube", color:"#D7E7C9", price:22, types:["oily","acne","combination"], concerns:["pores","breakouts"], key:"Heartleaf + quercetinol", note:"Dense foam that clears pores without a squeaky finish." },
-  { id:"roundlab-cleanser", brand:"ROUND LAB", name:"1025 Dokdo Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#CFE4F2", price:20, types:["combination","pigment","dry","oily"], concerns:["dull"], key:"Deep-sea minerals", note:"Low-foam and mildly acidic. An everyday pick for most skin." },
-  { id:"cosrx-gel", brand:"COSRX", name:"Low pH Good Morning Gel Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#EFEBDD", price:16, types:["sensitive","acne","dry"], concerns:["redness","breakouts"], key:"Low pH + tea tree", note:"A gentle gel that leaves your barrier intact." },
-  { id:"roundlab-toner", brand:"ROUND LAB", name:"1025 Dokdo Toner", size:"200ml", step:"tone", pack:"bottle", color:"#BBD9EC", price:22, types:["combination","oily","pigment"], concerns:["dull","pores"], key:"Deep-sea water + mild exfoliation", note:"Smooths and preps without stripping.", award:"OY Awards 2025 · #1 toner" },
+  { id:"banila-zero", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240322771", brand:"BANILA CO", name:"Clean it Zero Cleansing Balm Original", size:"100ml", step:"oil", pack:"jar", color:"#F3B7C3", price:33, types:["dry","sensitive","combination"], concerns:["dehydration"], key:"Sherbet-to-oil balm", note:"Turns to oil on contact and rinses off milky. Kind to dry patches." },
+  { id:"anua-foam", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240724586", brand:"Anua", name:"Heartleaf Quercetinol Pore Deep Cleansing Foam", size:"150ml", step:"cleanse", pack:"tube", color:"#D7E7C9", price:22, types:["oily","acne","combination"], concerns:["pores","breakouts"], key:"Heartleaf + quercetinol", note:"Dense foam that clears pores without a squeaky finish." },
+  { id:"roundlab-cleanser", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA211213057", brand:"ROUND LAB", name:"1025 Dokdo Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#CFE4F2", price:20, types:["combination","pigment","dry","oily"], concerns:["dull"], key:"Deep-sea minerals", note:"Low-foam and mildly acidic. An everyday pick for most skin." },
+  { id:"cosrx-gel", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210000384", brand:"COSRX", name:"Low pH Good Morning Gel Cleanser", size:"150ml", step:"cleanse", pack:"tube", color:"#EFEBDD", price:16, types:["sensitive","acne","dry"], concerns:["redness","breakouts"], key:"Low pH + tea tree", note:"A gentle gel that leaves your barrier intact." },
+  { id:"roundlab-toner", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210002228", brand:"ROUND LAB", name:"1025 Dokdo Toner", size:"200ml", step:"tone", pack:"bottle", color:"#BBD9EC", price:22, types:["combination","oily","pigment"], concerns:["dull","pores"], key:"Deep-sea water + mild exfoliation", note:"Smooths and preps without stripping.", award:"OY Awards 2025 · #1 toner" },
   { id:"anua-toner", brand:"Anua", name:"Heartleaf 77% Soothing Toner", size:"350ml", step:"tone", pack:"bottle", color:"#E2EDD4", price:41, types:["sensitive","acne","oily","combination"], concerns:["redness","breakouts"], key:"77% heartleaf extract", note:"Calms heat-flushed skin. Light enough for humid days.", award:"OY Awards 2025 · #2 toner" },
-  { id:"isntree-toner", brand:"Isntree", name:"Hyaluronic Acid Toner", size:"400ml", step:"tone", pack:"bottle", color:"#D3E6F1", price:29, types:["dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid", note:"A watery hydration layer for air-con-dried skin." },
-  { id:"cosrx-propolis", brand:"COSRX", name:"Full Fit Propolis Synergy Toner", size:"280ml", step:"tone", pack:"bottle", color:"#EFC35A", price:38, types:["dry","sensitive","acne"], concerns:["dehydration","dull"], key:"Propolis + honey", note:"A bouncy, nourishing toner for dry and reactive skin." },
-  { id:"bringgreen-toner", brand:"BRING GREEN", name:"Tea Tree Cica Soothing Toner", size:"500ml", step:"tone", pack:"bottle", color:"#B9D7AE", price:39, types:["acne","oily"], concerns:["breakouts","redness"], key:"Tea tree + cica", note:"A big-bottle calming toner for breakout-prone skin." },
-  { id:"torriden-serum", brand:"Torriden", name:"DIVE-IN Low Molecular Hyaluronic Acid Serum", size:"50ml", step:"serum", role:"hydrate", pack:"dropper", color:"#A6D6EC", price:34, types:["dry","sensitive","combination","oily"], concerns:["dehydration"], key:"5 types of hyaluronic acid", note:"Weightless hydration that sinks in fast in the heat." },
-  { id:"skin1004-ampoule", brand:"SKIN1004", name:"Madagascar Centella Ampoule", size:"55ml", step:"serum", role:"soothe", pack:"dropper", color:"#E7DCC4", price:25, types:["sensitive","acne","oily","combination"], concerns:["redness","breakouts"], key:"Centella asiatica extract", note:"A single-hero calmer for red, reactive days." },
+  { id:"isntree-toner", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210001957", brand:"Isntree", name:"Hyaluronic Acid Toner", size:"400ml", step:"tone", pack:"bottle", color:"#D3E6F1", price:29, types:["dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid", note:"A watery hydration layer for air-con-dried skin." },
+  { id:"cosrx-propolis", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210001964", brand:"COSRX", name:"Full Fit Propolis Synergy Toner", size:"280ml", step:"tone", pack:"bottle", color:"#EFC35A", price:38, types:["dry","sensitive","acne"], concerns:["dehydration","dull"], key:"Propolis + honey", note:"A bouncy, nourishing toner for dry and reactive skin." },
+  { id:"bringgreen-toner", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240222300", brand:"BRING GREEN", name:"Tea Tree Cica Soothing Toner", size:"500ml", step:"tone", pack:"bottle", color:"#B9D7AE", price:39, types:["acne","oily"], concerns:["breakouts","redness"], key:"Tea tree + cica", note:"A big-bottle calming toner for breakout-prone skin." },
+  { id:"torriden-serum", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA260540586", brand:"Torriden", name:"DIVE-IN Low Molecular Hyaluronic Acid Serum", size:"50ml", step:"serum", role:"hydrate", pack:"dropper", color:"#A6D6EC", price:34, types:["dry","sensitive","combination","oily"], concerns:["dehydration"], key:"5 types of hyaluronic acid", note:"Weightless hydration that sinks in fast in the heat." },
+  { id:"skin1004-ampoule", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220113363", brand:"SKIN1004", name:"Madagascar Centella Ampoule", size:"55ml", step:"serum", role:"soothe", pack:"dropper", color:"#E7DCC4", price:25, types:["sensitive","acne","oily","combination"], concerns:["redness","breakouts"], key:"Centella asiatica extract", note:"A single-hero calmer for red, reactive days." },
   { id:"iunik-betaglucan", brand:"iUNIK", name:"Beta-Glucan Power Moisture Serum", size:"50ml", step:"serum", role:"hydrate", pack:"dropper", color:"#ECE8DC", price:27, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Beta-glucan", note:"Plumps dry skin and eases tightness." },
-  { id:"aestura-ampoule", brand:"AESTURA", name:"Atobarrier365 Hydro Cera-HA Ampoule", step:"serum", role:"hydrate", pack:"dropper", color:"#DCE7F2", price:39, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramides + hyaluronic acid", note:"Barrier-first hydration from a derma brand." },
+  { id:"aestura-ampoule", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240925567", brand:"AESTURA", name:"Atobarrier365 Hydro Cera-HA Ampoule", step:"serum", role:"hydrate", pack:"dropper", color:"#DCE7F2", price:39, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramides + hyaluronic acid", note:"Barrier-first hydration from a derma brand." },
   { id:"goodal-vitac", brand:"Goodal", name:"Green Tangerine Vita C Dark Spot Care Serum", size:"40ml", step:"serum", role:"treat", pack:"dropper", color:"#B5D36A", price:33, types:["pigment","combination","dry","oily"], concerns:["spots","dull"], key:"Green tangerine + vitamin C", note:"Fades marks gradually and brightens dull skin.", award:"OY Awards 2024 · #1 serum" },
   { id:"anua-niacinamide", brand:"Anua", name:"Niacinamide 10% + TXA 4% Serum", size:"30ml", step:"serum", role:"treat", pack:"dropper", color:"#EDEDE6", price:35, strong:true, types:["pigment","oily","combination","acne"], concerns:["spots","pores","dull"], key:"Niacinamide + tranexamic acid", note:"Targets post-acne marks and uneven tone." },
-  { id:"bringgreen-zinc", brand:"BRING GREEN", name:"Zinc Teca Trouble Serum", step:"serum", role:"treat", pack:"dropper", color:"#C5DFA8", price:28, types:["oily","acne"], concerns:["breakouts","pores"], key:"Zinc + centella", note:"Keeps shine down and calms active breakouts." },
-  { id:"medicube-pdrn", brand:"medicube", name:"PDRN Pink Peptide Serum", size:"30ml", step:"serum", role:"treat", pack:"dropper", color:"#F4B9C8", price:32, types:["dry","combination","pigment"], concerns:["dull","dehydration"], key:"PDRN + peptides", note:"A glow-boosting serum for tired-looking skin." },
-  { id:"aestura-cream", brand:"AESTURA", name:"Atobarrier 365 Cream", size:"80ml", step:"moist", pack:"jar", color:"#E2EAF4", price:54, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramide capsules", note:"Repairs a stressed barrier without feeling heavy.", award:"OY Awards 2024–25 · #1 cream" },
-  { id:"drg-red", brand:"Dr.G", name:"R.E.D Blemish Clear Soothing Cream", size:"70ml", step:"moist", pack:"jar", color:"#F2C9C4", price:30, types:["acne","sensitive","oily","combination"], concerns:["breakouts","redness"], key:"Cica + madecassoside", note:"A gel-cream that soothes without clogging." },
-  { id:"torriden-cream", brand:"Torriden", name:"DIVE-IN Soothing Cream", size:"100ml", step:"moist", pack:"jar", color:"#CDE7F3", price:30, types:["combination","dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid + panthenol", note:"Light cream that hydrates without adding shine." },
-  { id:"isntree-gel", brand:"Isntree", name:"Hyaluronic Acid Aqua Gel Cream", size:"100ml", step:"moist", pack:"jar", color:"#CFE9F0", price:27, types:["oily","combination","acne"], concerns:["pores","dehydration"], key:"Hyaluronic acid gel", note:"A water-gel texture made for humid weather." },
-  { id:"roundlab-birch-cream", brand:"ROUND LAB", name:"Birch Juice Moisturizing Cream", size:"80ml", step:"moist", pack:"jar", color:"#E5EEDF", price:30, types:["dry","combination","pigment"], concerns:["dehydration","dull"], key:"Birch sap", note:"A comfortable everyday cream with a dewy finish." },
-  { id:"boj-relief", brand:"Beauty of Joseon", name:"Relief Sun: Rice + Probiotics", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#F1E7CF", price:24, types:["dry","combination","pigment","sensitive"], concerns:["spots","dull"], key:"Rice extract + probiotics", note:"Creamy with no white cast. Daily defence against new marks." },
+  { id:"bringgreen-zinc", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA241227075", brand:"BRING GREEN", name:"Zinc Teca Trouble Serum", step:"serum", role:"treat", pack:"dropper", color:"#C5DFA8", price:28, types:["oily","acne"], concerns:["breakouts","pores"], key:"Zinc + centella", note:"Keeps shine down and calms active breakouts." },
+  { id:"medicube-pdrn", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240825058", brand:"medicube", name:"PDRN Pink Peptide Serum", size:"30ml", step:"serum", role:"treat", pack:"dropper", color:"#F4B9C8", price:32, types:["dry","combination","pigment"], concerns:["dull","dehydration"], key:"PDRN + peptides", note:"A glow-boosting serum for tired-looking skin." },
+  { id:"aestura-cream", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240121573", brand:"AESTURA", name:"Atobarrier 365 Cream", size:"80ml", step:"moist", pack:"jar", color:"#E2EAF4", price:54, types:["dry","sensitive"], concerns:["dehydration","redness"], key:"Ceramide capsules", note:"Repairs a stressed barrier without feeling heavy.", award:"OY Awards 2024–25 · #1 cream" },
+  { id:"drg-red", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA240222331", brand:"Dr.G", name:"Red Blemish Clear Soothing Cream", size:"70ml", step:"moist", pack:"jar", color:"#F2C9C4", price:30, types:["acne","sensitive","oily","combination"], concerns:["breakouts","redness"], key:"Cica + madecassoside", note:"A gel-cream that soothes without clogging." },
+  { id:"torriden-cream", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220715332", brand:"Torriden", name:"DIVE-IN Soothing Cream", size:"100ml", step:"moist", pack:"jar", color:"#CDE7F3", price:30, types:["combination","dry","sensitive"], concerns:["dehydration"], key:"Hyaluronic acid + panthenol", note:"Light cream that hydrates without adding shine." },
+  { id:"isntree-gel", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA230518829", brand:"Isntree", name:"Hyaluronic Acid Aqua Gel Cream", size:"100ml", step:"moist", pack:"jar", color:"#CFE9F0", price:27, types:["oily","combination","acne"], concerns:["pores","dehydration"], key:"Hyaluronic acid gel", note:"A water-gel texture made for humid weather." },
+  { id:"roundlab-birch-cream", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210003865", brand:"ROUND LAB", name:"Birch Juice Moisturizing Cream", size:"80ml", step:"moist", pack:"jar", color:"#E5EEDF", price:30, types:["dry","combination","pigment"], concerns:["dehydration","dull"], key:"Birch sap", note:"A comfortable everyday cream with a dewy finish." },
+  { id:"boj-relief", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220816046", brand:"Beauty of Joseon", name:"Relief Sun: Rice + Probiotics", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#F1E7CF", price:24, types:["dry","combination","pigment","sensitive"], concerns:["spots","dull"], key:"Rice extract + probiotics", note:"Creamy with no white cast. Daily defence against new marks." },
   { id:"roundlab-birch-sun", brand:"ROUND LAB", name:"Birch Juice Moisturizing Sun Cream", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#E3EDDA", price:27, types:["dry","combination"], concerns:["dehydration"], key:"Birch sap", note:"A hydrating SPF that sits well under makeup." },
-  { id:"torriden-sun", brand:"Torriden", name:"DIVE-IN Mild Sun Cream", size:"60ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D7ECF6", price:30, types:["sensitive","dry"], concerns:["redness"], key:"Gentle formula + hyaluronic acid", note:"Made for reactive skin. Comfortable around the eyes." },
-  { id:"isntree-sungel", brand:"Isntree", name:"Hyaluronic Acid Watery Sun Gel", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D6ECF5", price:25, types:["oily","combination","acne"], concerns:["pores"], key:"Watery gel texture", note:"A sheer gel that stays fresh through sweaty afternoons." },
-  { id:"drg-mildup", brand:"Dr.G", name:"Green Mild Up Sun+", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#CFE6C8", price:28, types:["sensitive","acne"], concerns:["redness","breakouts"], key:"Mineral filters", note:"A mineral SPF for skin that reacts to chemical filters." },
-  { id:"skin1004-sunserum", brand:"SKIN1004", name:"Hyalu-Cica Water-fit Sun Serum", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#E9E1CB", price:25, types:["oily","combination","acne"], concerns:["pores","redness"], key:"Hyaluronic acid + centella", note:"Serum-light SPF that leaves no greasy film." },
-  { id:"cosrx-patch", brand:"COSRX", name:"Acne Pimple Master Patch", size:"24 patches", step:"spot", pack:"pouch", color:"#F4D8CF", price:8, types:["acne"], concerns:["breakouts"], key:"Hydrocolloid", note:"Overnight patch for active spots. Stops you picking." },
+  { id:"torriden-sun", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220213662", brand:"Torriden", name:"DIVE-IN Mild Sun Cream", size:"60ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D7ECF6", price:30, types:["sensitive","dry"], concerns:["redness"], key:"Gentle formula + hyaluronic acid", note:"Made for reactive skin. Comfortable around the eyes." },
+  { id:"isntree-sungel", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220815815", brand:"Isntree", name:"Hyaluronic Acid Watery Sun Gel", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#D6ECF5", price:25, types:["oily","combination","acne"], concerns:["pores"], key:"Watery gel texture", note:"A sheer gel that stays fresh through sweaty afternoons." },
+  { id:"drg-mildup", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA230518787", brand:"Dr.G", name:"Green Mild Up Sun+", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#CFE6C8", price:28, types:["sensitive","acne"], concerns:["redness","breakouts"], key:"Mineral filters", note:"A mineral SPF for skin that reacts to chemical filters." },
+  { id:"skin1004-sunserum", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA220715346", brand:"SKIN1004", name:"Hyalu-Cica Water-fit Sun Serum", size:"50ml", step:"spf", spf:"SPF50+ PA++++", pack:"tube", color:"#E9E1CB", price:25, types:["oily","combination","acne"], concerns:["pores","redness"], key:"Hyaluronic acid + centella", note:"Serum-light SPF that leaves no greasy film." },
+  { id:"cosrx-patch", url:"https://global.oliveyoung.com/product/detail?prdtNo=GA210000525", brand:"COSRX", name:"Acne Pimple Master Patch", size:"24 patches", step:"spot", pack:"pouch", color:"#F4D8CF", price:8, types:["acne"], concerns:["breakouts"], key:"Hydrocolloid", note:"Overnight patch for active spots. Stops you picking." },
   /* Inner care: real supplement listings from Olive Young Global (Supplements category). Prices change often, so they link out instead of showing a figure. */
   { id:"vitalbeautie-28", brand:"VITALBEAUTIE", name:"Super Collagen", size:"28 vials · 28 days", step:"supp", pack:"dropper", color:"#F2C6CF", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA260439714", types:["dry","combination","pigment","sensitive"], concerns:["dull","dehydration"], key:"Drinkable collagen", note:"A one-a-day drinkable collagen vial. Easy to keep up with alongside your AM routine." },
   { id:"bblab-white", brand:"BB LAB", name:"White Collagen", size:"30 packs · 30 days", step:"supp", pack:"pouch", color:"#F4EEE6", price:null, url:"https://global.oliveyoung.com/product/detail?prdtNo=GA260237587", types:["pigment","combination","oily"], concerns:["spots","dull"], key:"Collagen powder stick", note:"A daily collagen stick from one of Olive Young's best-selling inner-beauty brands." },
@@ -622,12 +687,11 @@ const TWINS = {
   pigment:     { initial: "P", title: "The Pigmentation Twin" }
 };
 
-const DEMO = { shine: 71, redness: 39, texture: 46, uneven: 52, blemish: 58, tzone: 66 };
 const EXAMPLE = { primary: "combination", secondary: "acne", metrics: { shine: 72, redness: 38, texture: 44, uneven: 51 }, concerns: ["breakouts", "pores"], example: true };
 
 /* ---------- State ---------- */
 const state = {
-  metrics: null, source: null, light: null,
+  metrics: null, scan: null,
   answers: { feel: null, concerns: [], react: null, length: null },
   result: null, tab: "am", mode: "full", swap: {}, refill: 8,
   format: "video", slot: null,
@@ -643,8 +707,9 @@ function toast(msg) {
 }
 function packHTML(p) { return `<div class="pack pack-${p.pack}" style="--c:${p.color}" aria-hidden="true"><i class="cap"></i><i class="body"></i></div>`; }
 function typeName(t) { return TYPES[t].label; }
+const oyUrl = p => p.url || oySearch(`${p.brand} ${p.name}`);
 const priced = p => typeof p.price === "number";
-function priceHTML(p) { return priced(p) ? `≈S$${p.price}` : `<a href="${p.url}" target="_blank" rel="noopener">See price</a>`; }
+function priceHTML(p) { return priced(p) ? `≈S$${p.price}` : `<a href="${oyUrl(p)}" target="_blank" rel="noopener">See price</a>`; }
 const sumPrice = list => list.reduce((s, p) => s + (priced(p) ? p.price : 0), 0);
 
 /* ---------- Report card ---------- */
@@ -669,102 +734,266 @@ function cardHTML(d) {
   </article>`;
 }
 
-/* ---------- Image analysis (runs on this device) ---------- */
-const ZDEF = [
-  { key: "forehead", label: "Forehead", x: .28, y: .08, w: .44, h: .17 },
-  { key: "nose",     label: "T-zone",   x: .41, y: .36, w: .18, h: .26 },
-  { key: "lcheek",   label: "Cheek",    x: .11, y: .46, w: .23, h: .22 },
-  { key: "rcheek",   label: "Cheek",    x: .66, y: .46, w: .23, h: .22 },
-  { key: "chin",     label: "Chin",     x: .37, y: .80, w: .26, h: .13 }
-];
-const sig = (x, mid, sc) => 100 / (1 + Math.exp(-(x - mid) / sc));
-const clampScore = v => Math.round(Math.min(94, Math.max(6, v)));
+/* ---------- Face model (MediaPipe Face Landmarker, runs on this device) ---------- */
+const MP = "vendor/mediapipe/";
+const absUrl = p => new URL(p, location.href).href;
+let landmarker = null, lmPromise = null;
+function loadLandmarker() {
+  if (!lmPromise) lmPromise = (async () => {
+    const { FaceLandmarker, FilesetResolver } = await import(absUrl(MP + "vision_bundle.mjs"));
+    const files = await FilesetResolver.forVisionTasks(absUrl(MP + "wasm"));
+    landmarker = await FaceLandmarker.createFromOptions(files, {
+      baseOptions: { modelAssetPath: absUrl(MP + "face_landmarker.task"), delegate: "CPU" },
+      runningMode: "IMAGE", numFaces: 2
+    });
+    return landmarker;
+  })().catch(e => { lmPromise = null; throw e; });
+  return lmPromise;
+}
+function detectFaces(cv) { const r = landmarker.detect(cv); return r && r.faceLandmarks ? r.faceLandmarks : []; }
 
-function analyze(cv) {
-  const W = cv.width, H = cv.height;
-  const d = cv.getContext("2d", { willReadFrequently: true }).getImageData(0, 0, W, H).data;
-  const N = W * H;
-  const L = new Float32Array(N), RED = new Float32Array(N), SAT = new Float32Array(N), M = new Uint8Array(N);
-  let n = 0, sx = 0, sy = 0, sxx = 0, syy = 0, sr = 0, sb = 0;
-  const ax0 = W * .08, ax1 = W * .92, ay0 = H * .04, ay1 = H * .96;
-  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-    const p = y * W + x, i = p * 4, r = d[i], g = d[i + 1], b = d[i + 2];
-    const Y = .299 * r + .587 * g + .114 * b;
-    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-    L[p] = Y; RED[p] = (r - g) / (r + g + 1); SAT[p] = (mx - mn) / (mx + 1);
-    if (x < ax0 || x > ax1 || y < ay0 || y > ay1) continue;
-    const cb = 128 - .168736 * r - .331264 * g + .5 * b;
-    const cr = 128 + .5 * r - .418688 * g - .081312 * b;
-    if (cb >= 74 && cb <= 135 && cr >= 132 && cr <= 182 && Y > 35 && r >= g) {
-      M[p] = 1; n++; sx += x; sy += y; sxx += x * x; syy += y * y; sr += r; sb += b;
-    }
-  }
-  if (n < N * .04) return { error: "noface" };
-  const cx = sx / n, cy = sy / n;
-  const stdx = Math.sqrt(Math.max(0, sxx / n - cx * cx)), stdy = Math.sqrt(Math.max(0, syy / n - cy * cy));
-  if (stdx < W * .05 || stdy < H * .05) return { error: "noface" };
-  const fw = Math.min(W * .95, Math.max(W * .28, stdx * 3.3));
-  const fh = Math.min(H * .95, Math.max(H * .28, stdy * 3.1));
-  const fx = Math.min(W - fw, Math.max(0, cx - fw / 2));
-  const fy = Math.min(H - fh, Math.max(0, cy - fh * .52));
-  const box = { x: fx, y: fy, w: fw, h: fh };
-  const zones = ZDEF.map(z => ({ ...z, px: fx + z.x * fw, py: fy + z.y * fh, pw: z.w * fw, ph: z.h * fh }));
+/* Landmark indices from the 478-point face mesh */
+const LM = { eyeR: 33, eyeL: 263, nose: 1, top: 10, chin: 152, mouthR: 61, mouthL: 291, lipLow: 14, edgeR: 234, edgeL: 454, browR: 105, browL: 334 };
+/* Quality gates. D = distance between the outer eye corners, in pixels. */
+const Q = { minD: 100, targetD: 128, minFaceFrac: .28, maxYaw: .22, maxRoll: 14, pitchLo: .28, pitchHi: .5, minSharp: 3, maxSpread: 18 };
 
-  const stats = {};
-  for (const z of zones) {
-    const xs = Math.max(0, Math.round(z.px)), xe = Math.min(W - 2, Math.round(z.px + z.pw));
-    const ys = Math.max(0, Math.round(z.py)), ye = Math.min(H - 2, Math.round(z.py + z.ph));
-    let c = 0, sL = 0, sL2 = 0, sR = 0, sR2 = 0;
-    for (let y = ys; y <= ye; y++) for (let x = xs; x <= xe; x++) {
-      const p = y * W + x; if (!M[p]) continue;
-      c++; sL += L[p]; sL2 += L[p] * L[p]; sR += RED[p]; sR2 += RED[p] * RED[p];
-    }
-    if (c < 25) { stats[z.key] = null; continue; }
-    const mL = sL / c, dL = Math.sqrt(Math.max(0, sL2 / c - mL * mL));
-    const mR = sR / c, dR = Math.sqrt(Math.max(0, sR2 / c - mR * mR));
-    const thr = Math.max(mL + 1.6 * dL, mL * 1.16);
-    let tot = 0, spec = 0, blem = 0, g = 0, gn = 0, nn = 0, nL = 0, nL2 = 0;
-    for (let y = ys; y <= ye; y++) for (let x = xs; x <= xe; x++) {
-      const p = y * W + x;
-      const bright = L[p] > thr && SAT[p] < .32;
-      if (!M[p] && !bright) continue;
-      tot++;
-      if (bright) { spec++; continue; }
-      if (RED[p] > mR + 2.2 * dR && L[p] < mL) blem++;
-      nn++; nL += L[p]; nL2 += L[p] * L[p];
-      if (M[p + 1]) { g += Math.abs(L[p] - L[p + 1]); gn++; }
-      if (M[p + W]) { g += Math.abs(L[p] - L[p + W]); gn++; }
-    }
-    const m2 = nn ? nL / nn : mL;
-    stats[z.key] = {
-      mL, mR, spec: tot ? spec / tot : 0, blem: nn ? blem / nn : 0,
-      tex: gn ? (g / gn) / Math.max(1, mL) : 0,
-      cv: nn ? Math.sqrt(Math.max(0, nL2 / nn - m2 * m2)) / Math.max(1, m2) : 0
-    };
-  }
-  const avg = (keys, f) => { const v = keys.map(k => stats[k]).filter(Boolean).map(f); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
-  const all = ["forehead", "nose", "lcheek", "rcheek", "chin"];
-  const shineT = avg(["forehead", "nose"], s => s.spec);
-  const shineC = avg(["lcheek", "rcheek"], s => s.spec);
-  const redC = avg(["lcheek", "rcheek"], s => s.mR);
-  const redF = avg(["forehead"], s => s.mR);
-  if (shineT == null || redC == null) return { error: "noface" };
-  const tex = avg(all, s => s.tex), toneCV = avg(["forehead", "lcheek", "rcheek"], s => s.cv), blem = avg(all, s => s.blem);
-  const meanL = avg(all, s => s.mL);
-
-  const metrics = {
-    shine: clampScore(sig(shineT, .025, .012)),
-    redness: clampScore(.5 * sig(redC, .20, .03) + .5 * sig(redC - (redF == null ? redC : redF), .008, .012)),
-    texture: clampScore(sig(tex, .03, .01)),
-    uneven: clampScore(sig(toneCV, .10, .025)),
-    blemish: clampScore(sig(blem, .014, .006)),
-    tzone: clampScore(sig(shineT - (shineC == null ? shineT : shineC), .01, .01))
+/* Face-aligned coordinates: u runs across the face, v runs down it, both in units of D, origin between the eyes */
+function faceFrame(lm, W, H) {
+  const P = i => ({ x: lm[i].x * W, y: lm[i].y * H });
+  const a = P(LM.eyeR), b = P(LM.eyeL);
+  const D = Math.max(1, Math.hypot(b.x - a.x, b.y - a.y));
+  const ux = (b.x - a.x) / D, uy = (b.y - a.y) / D;
+  const o = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  let vx = -uy, vy = ux;
+  const c = P(LM.chin);
+  if ((c.x - o.x) * vx + (c.y - o.y) * vy < 0) { vx = -vx; vy = -vy; }
+  const to = p => ({ u: ((p.x - o.x) * ux + (p.y - o.y) * uy) / D, v: ((p.x - o.x) * vx + (p.y - o.y) * vy) / D });
+  const from = (u, v) => ({ x: o.x + (u * ux + v * vx) * D, y: o.y + (u * uy + v * vy) * D });
+  const q = {}; for (const k in LM) q[k] = to(P(LM[k]));
+  return { D, o, ux, uy, vx, vy, from, q };
+}
+function poseCheck(fr, W) {
+  const q = fr.q, half = Math.abs(q.edgeL.u - q.edgeR.u) / 2, mid = (q.edgeL.u + q.edgeR.u) / 2;
+  return {
+    yaw: Math.abs(q.nose.u - mid) / Math.max(.01, half),
+    roll: Math.atan2(Math.abs(fr.uy), Math.abs(fr.ux)) * 180 / Math.PI,
+    pitch: q.nose.v / Math.max(.01, q.chin.v),
+    faceFrac: half * 2 * fr.D / W
   };
-  let light = { warn: false, note: "Good light. Readings should be reliable." };
-  if (meanL < 75) light = { warn: true, note: "Low light. Texture and tone may read higher than they are. Try facing a window." };
-  else if (meanL > 215) light = { warn: true, note: "Very bright light. Shine may read higher than it is." };
-  else if (sb / n > (sr / n) * .92) light = { warn: true, note: "Cool, bluish light. Redness may read lower than it is." };
-  return { metrics, light, box, zones };
+}
+function zoneDefs(q) {
+  const browV = Math.min(q.browR.v, q.browL.v), mouthV = Math.min(q.mouthR.v, q.mouthL.v);
+  const edge = Math.min(Math.abs(q.edgeR.u), Math.abs(q.edgeL.u));
+  const out = Math.min(.66, edge - .14);
+  return [
+    { key: "forehead", label: "Forehead", u0: -.42, u1: .42, v0: q.top.v + .35 * (browV - q.top.v), v1: browV - .1 },
+    { key: "nose", label: "T-zone", u0: q.nose.u - .12, u1: q.nose.u + .12, v0: .18, v1: q.nose.v - .06 },
+    { key: "cheekA", label: "Cheek", u0: -out, u1: -.28, v0: .4, v1: mouthV - .04 },
+    { key: "cheekB", label: "Cheek", u0: .28, u1: out, v0: .4, v1: mouthV - .04 },
+    { key: "chin", label: "Chin", u0: q.chin.u - .26, u1: q.chin.u + .26, v0: q.lipLow.v + .14, v1: q.chin.v - .12 }
+  ];
+}
+
+/* sRGB to CIELAB (D65) */
+const LIN = new Float32Array(256);
+for (let i = 0; i < 256; i++) { const c = i / 255; LIN[i] = c <= .04045 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4); }
+const fLab = t => t > .008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+
+/* Masked box mean via integral images */
+function boxMean(src, M, W, H) {
+  const W1 = W + 1, S = new Float64Array(W1 * (H + 1)), C = new Float64Array(W1 * (H + 1));
+  for (let y = 0; y < H; y++) {
+    let rs = 0, rc = 0;
+    for (let x = 0; x < W; x++) {
+      const p = y * W + x; if (M[p]) { rs += src[p]; rc++; }
+      const i = (y + 1) * W1 + x + 1; S[i] = S[i - W1] + rs; C[i] = C[i - W1] + rc;
+    }
+  }
+  return (x, y, r) => {
+    const x0 = Math.max(0, x - r), y0 = Math.max(0, y - r), x1 = Math.min(W, x + r + 1), y1 = Math.min(H, y + r + 1);
+    const a = y0 * W1 + x0, b = y0 * W1 + x1, c = y1 * W1 + x0, d = y1 * W1 + x1;
+    const n = C[d] - C[b] - C[c] + C[a];
+    return n ? (S[d] - S[b] - S[c] + S[a]) / n : NaN;
+  };
+}
+
+const fail = (reason, info) => ({ ok: false, reason, info });
+const FAIL = {
+  none: "No face found. Fill the oval with your face and look at the camera.",
+  multi: "More than one face is in the frame. Make sure only you are in the photo.",
+  small: "Your face is too small in the frame for an accurate reading. Move closer, or use a sharper, higher-resolution photo.",
+  pose: "Look straight at the camera with your head level. A turned or tilted face skews the readings.",
+  blocked: "Part of your face is covered by hair, glasses, a hand or deep shadow. Clear your forehead and cheeks and try again.",
+  dark: "It's too dark for an accurate reading. Face a window or a bright, even light.",
+  bright: "The photo is overexposed. Move out of direct sunlight and turn off the flash.",
+  blur: "The photo is too blurry to read skin texture. Hold still, wipe the lens and try again.",
+  sidelight: "Light is hitting one side of your face much more than the other. Turn to face the light directly.",
+  unstable: "Your readings changed too much between frames. Hold still for a second while it captures.",
+  lowconf: "The photo passed the basic checks, but the light isn't good enough for readings you can rely on. Face a window in daylight and try again."
+};
+const WARN = {
+  lowlight: "Dim light. Texture and tone can read slightly high.",
+  brightlight: "Very bright light. Shine can read slightly high.",
+  cool: "Cool, bluish light. Redness can read slightly low.",
+  sideish: "Light is a little stronger on one side. Tone can read slightly high.",
+  soft: "The photo is a little soft. Texture can read slightly low."
+};
+
+/* Scores map raw measurements onto 0–100. Midpoints sit near typical values for clear, evenly lit selfies. */
+const sig = (x, mid, sc) => 100 / (1 + Math.exp(-(x - mid) / sc));
+const clampScore = v => Math.round(Math.min(97, Math.max(3, v)));
+
+function analyzeFrame(src, lm) {
+  const fr = faceFrame(lm, src.width, src.height), pose = poseCheck(fr, src.width);
+  if (fr.D < Q.minD) return fail("small", { D: fr.D });
+  if (pose.yaw > Q.maxYaw || pose.roll > Q.maxRoll || pose.pitch < Q.pitchLo || pose.pitch > Q.pitchHi) return fail("pose", pose);
+
+  /* Crop the face and rescale it so every face is measured at the same size */
+  const s = Q.targetD / fr.D;
+  const cs = [[-1.2, -1.4], [1.2, -1.4], [1.2, 2], [-1.2, 2]].map(([u, v]) => fr.from(u, v));
+  const x0 = Math.max(0, Math.floor(Math.min(...cs.map(p => p.x)))), x1 = Math.min(src.width, Math.ceil(Math.max(...cs.map(p => p.x))));
+  const y0 = Math.max(0, Math.floor(Math.min(...cs.map(p => p.y)))), y1 = Math.min(src.height, Math.ceil(Math.max(...cs.map(p => p.y))));
+  const W = Math.max(16, Math.round((x1 - x0) * s)), H = Math.max(16, Math.round((y1 - y0) * s)), N = W * H;
+  const wk = document.createElement("canvas"); wk.width = W; wk.height = H;
+  const wx = wk.getContext("2d", { willReadFrequently: true });
+  wx.imageSmoothingEnabled = true; wx.imageSmoothingQuality = "high";
+  wx.drawImage(src, x0, y0, x1 - x0, y1 - y0, 0, 0, W, H);
+  const d = wx.getImageData(0, 0, W, H).data;
+  const ox = (fr.o.x - x0) * s, oy = (fr.o.y - y0) * s, D = Q.targetD;
+
+  /* Measurements use log luminance (T) and log colour ratios (RG, BG) in linear light.
+     These don't change when the whole photo is brighter or darker, so exposure doesn't shift the scores. */
+  const L = new Float32Array(N), T = new Float32Array(N), RG = new Float32Array(N), BG = new Float32Array(N), SAT = new Float32Array(N), U = new Float32Array(N), V = new Float32Array(N), CL = new Uint8Array(N);
+  const e = 1e-4;
+  for (let y = 0, p = 0; y < H; y++) for (let x = 0; x < W; x++, p++) {
+    const i = p * 4, r = d[i], g = d[i + 1], b = d[i + 2];
+    const R = LIN[r], G = LIN[g], Bl = LIN[b], Y = .2126 * R + .7152 * G + .0722 * Bl;
+    L[p] = 116 * fLab(Y) - 16; T[p] = Math.log(Y + e);
+    RG[p] = Math.log((R + e) / (G + e)); BG[p] = Math.log((Bl + e) / (G + e));
+    const mx = Math.max(R, G, Bl); SAT[p] = mx > 0 ? (mx - Math.min(R, G, Bl)) / mx : 0;
+    CL[p] = (r >= 250 || g >= 250 || b >= 250) ? 1 : 0;
+    U[p] = ((x - ox) * fr.ux + (y - oy) * fr.uy) / D; V[p] = ((x - ox) * fr.vx + (y - oy) * fr.vy) / D;
+  }
+  const Z = zoneDefs(fr.q);
+  const ZI = new Int8Array(N).fill(-1);
+  for (let p = 0; p < N; p++) for (let k = 0; k < Z.length; k++) { const z = Z[k]; if (U[p] >= z.u0 && U[p] <= z.u1 && V[p] >= z.v0 && V[p] <= z.v1) { ZI[p] = k; break; } }
+
+  /* Reference skin colour from all five zones, trimmed to drop hair, shadow and highlights */
+  let n = 0, rT = 0, rRG = 0, rBG = 0, rS = 0;
+  for (let p = 0; p < N; p++) if (ZI[p] >= 0 && !CL[p]) { n++; rT += T[p]; rRG += RG[p]; rBG += BG[p]; rS += SAT[p]; }
+  if (n < 200) return fail("blocked");
+  rT /= n; rRG /= n; rBG /= n; rS /= n;
+  let n2 = 0, tT = 0, tR = 0, tB = 0, tS = 0;
+  for (let p = 0; p < N; p++) if (ZI[p] >= 0 && !CL[p] && Math.abs(T[p] - rT) < .6 && Math.abs(RG[p] - rRG) < .2 && Math.abs(BG[p] - rBG) < .25) { n2++; tT += T[p]; tR += RG[p]; tB += BG[p]; tS += SAT[p]; }
+  if (n2 < 150) return fail("blocked");
+  rT = tT / n2; rRG = tR / n2; rBG = tB / n2; rS = tS / n2;
+
+  const SP = new Uint8Array(N), M = new Uint8Array(N);
+  for (let p = 0; p < N; p++) {
+    if (ZI[p] < 0 && (U[p] < -.9 || U[p] > .9 || V[p] < -.6 || V[p] > 1.7)) continue;
+    SP[p] = (T[p] > rT + .5 && SAT[p] < rS * .75) ? 1 : 0;
+    /* redness is allowed well above the reference so flushed or blemished skin still counts as skin */
+    M[p] = (!SP[p] && !CL[p] && Math.abs(T[p] - rT) < .9 && RG[p] - rRG > -.3 && RG[p] - rRG < .7 && Math.abs(BG[p] - rBG) < .45) ? 1 : 0;
+  }
+  const mT = boxMean(T, M, W, H), mR = boxMean(RG, M, W, H);
+
+  /* Sharpness: Laplacian variance relative to overall contrast, so dim or side-lit photos aren't mistaken for blur */
+  let ln = 0, ls = 0, ls2 = 0, lv = 0, lv2 = 0;
+  for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+    const p = y * W + x; if (U[p] < -.8 || U[p] > .8 || V[p] < -.5 || V[p] > 1.5) continue;
+    const lap = 4 * L[p] - L[p - 1] - L[p + 1] - L[p - W] - L[p + W];
+    ln++; ls += lap; ls2 += lap * lap; lv += L[p]; lv2 += L[p] * L[p];
+  }
+  const sharp = ln ? (ls2 / ln - (ls / ln) ** 2) / Math.max(1, lv2 / ln - (lv / ln) ** 2) * 100 : 0;
+
+  const st = Z.map(() => ({ tot: 0, spec: 0, clip: 0, c: 0, sL: 0, sT: 0, sR: 0, tex: 0, b1: 0, b2: 0, dark: 0, red: 0 }));
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const p = y * W + x, k = ZI[p]; if (k < 0) continue;
+    const z = st[k]; z.tot++;
+    if (CL[p]) z.clip++;
+    if (SP[p]) { z.spec++; continue; }
+    if (!M[p]) continue;
+    const m1 = mT(x, y, 1), m2 = mT(x, y, 2), m8 = mT(x, y, 8), r2 = mR(x, y, 2), r8 = mR(x, y, 8);
+    if (!(m8 === m8)) continue;
+    z.c++; z.sL += L[p]; z.sT += T[p]; z.sR += RG[p];
+    z.tex += Math.abs(T[p] - m1);
+    const band = m2 - m8; z.b1 += band; z.b2 += band * band;
+    if (band < -.06) z.dark++;
+    if (r2 - r8 > .05) z.red++;
+  }
+  const zs = {};
+  Z.forEach((z, k) => {
+    const t = st[k], skinShare = t.c / Math.max(1, t.tot - t.spec);
+    const usable = t.tot > 120 && skinShare > .45;
+    zs[z.key] = usable ? {
+      L: t.sL / t.c, T: t.sT / t.c, RG: t.sR / t.c, spec: t.spec / t.tot, clip: t.clip / t.tot, tex: 100 * t.tex / t.c,
+      band: 100 * Math.sqrt(Math.max(0, t.b2 / t.c - (t.b1 / t.c) ** 2)), dark: t.dark / t.c, red: t.red / t.c
+    } : null;
+  });
+  const cheeks = [zs.cheekA, zs.cheekB].filter(Boolean);
+  const upper = [zs.forehead, zs.nose].filter(Boolean);
+  const used = Object.values(zs).filter(Boolean);
+  if (!cheeks.length || !upper.length || used.length < 3) return fail("blocked");
+
+  const avg = (arr, f) => arr.reduce((a, z) => a + f(z), 0) / arr.length;
+  const meanL = avg(used, z => z.L), clip = avg(used, z => z.clip);
+  if (meanL < 28) return fail("dark");
+  if (clip > .1) return fail("bright");
+  if (sharp < Q.minSharp) return fail("blur", { sharp });
+  const warnings = [];
+  if (cheeks.length === 2) {
+    const ratio = Math.exp(Math.abs(cheeks[0].T - cheeks[1].T));
+    if (ratio > 1.9) return fail("sidelight", { ratio });
+    if (ratio > 1.4) warnings.push("sideish");
+  }
+  if (meanL < 40) warnings.push("lowlight");
+  if (meanL > 84) warnings.push("brightlight");
+  if (rBG > -.1) warnings.push("cool");
+  if (sharp < Q.minSharp * 2) warnings.push("soft");
+
+  const specT = avg(upper, z => z.spec), specC = avg(cheeks, z => z.spec);
+  const cheekR = avg(cheeks, z => z.RG);
+  const refZ = zs.forehead || zs.chin || zs.nose;
+  const toneZ = [zs.forehead, ...cheeks].filter(Boolean);
+  const raw = {
+    specT, specC, cheekR, cheekRel: cheekR - refZ.RG,
+    tex: avg(used, z => z.tex), band: avg(toneZ, z => z.band), dark: avg(toneZ, z => z.dark),
+    red: avg(used, z => z.red), sharp, meanL, refBG: rBG
+  };
+  const metrics = {
+    shine: clampScore(sig(specT, .08, .03)),
+    redness: clampScore(.5 * sig(raw.cheekRel, .18, .06) + .5 * sig(raw.red, .08, .02)),
+    texture: clampScore(sig(raw.tex, 3.6, .8)),
+    uneven: clampScore(.6 * sig(raw.band, 9, 1.8) + .4 * sig(raw.dark, .2, .04)),
+    blemish: clampScore(sig(raw.red, .08, .02)),
+    tzone: clampScore(sig(specT - specC, .06, .03))
+  };
+  const zones = Z.filter(z => zs[z.key]).map(z => ({ key: z.key, label: z.label, pts: [fr.from(z.u0, z.v0), fr.from(z.u1, z.v0), fr.from(z.u1, z.v1), fr.from(z.u0, z.v1)] }));
+  return { ok: true, metrics, raw, warnings, zones, usedZones: used.length };
+}
+
+/* Combine several frames: median of each score, and refuse when frames disagree */
+function combine(results) {
+  const ok = results.filter(r => r.ok);
+  const commonFail = () => {
+    const c = {}; results.filter(r => !r.ok).forEach(r => { c[r.reason] = (c[r.reason] || 0) + 1; });
+    return Object.entries(c).sort((a, b) => b[1] - a[1])[0][0];
+  };
+  if (!ok.length) return fail(commonFail());
+  if (ok.length < Math.ceil(results.length / 2)) return fail(commonFail());
+  const keys = Object.keys(ok[0].metrics), metrics = {};
+  let spread = 0;
+  keys.forEach(k => {
+    const v = ok.map(r => r.metrics[k]).sort((a, b) => a - b);
+    metrics[k] = v.length % 2 ? v[(v.length - 1) / 2] : Math.round((v[v.length / 2 - 1] + v[v.length / 2]) / 2);
+    if (METRICS.some(m => m.k === k)) spread = Math.max(spread, v[v.length - 1] - v[0]);
+  });
+  if (spread > Q.maxSpread) return fail("unstable");
+  const wc = {}; ok.forEach(r => r.warnings.forEach(w => { wc[w] = (wc[w] || 0) + 1; }));
+  const warnings = Object.keys(wc).filter(w => wc[w] * 2 >= ok.length);
+  const level = warnings.length === 0 && spread <= 10 ? "High" : warnings.length <= 1 && spread <= 14 ? "Medium" : "Low";
+  if (level === "Low") return { ...fail("lowconf"), warnings };
+  return { ok: true, metrics, warnings, spread, level, frames: ok.length, total: results.length };
 }
 
 /* ---------- Overlay drawing ---------- */
@@ -772,27 +1001,21 @@ function vfColors() {
   const cs = getComputedStyle(document.documentElement);
   return { line: cs.getPropertyValue("--vf-line").trim() || "rgba(182,220,51,.9)", ink: cs.getPropertyValue("--vf-ink").trim() || "#E6EEDA" };
 }
-function drawOverlay(cv, res, upto, schematic) {
-  const ctx = cv.getContext("2d"), W = cv.width, H = cv.height, c = vfColors();
-  ctx.clearRect(0, 0, W, H);
-  const u = Math.max(1, W / 220);
-  if (schematic) {
-    ctx.save(); ctx.strokeStyle = c.line; ctx.lineWidth = 2 * u; ctx.setLineDash([6 * u, 6 * u]);
-    ctx.beginPath(); ctx.ellipse(res.box.x + res.box.w / 2, res.box.y + res.box.h / 2, res.box.w / 2, res.box.h / 2, 0, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
-  } else {
-    ctx.save(); ctx.strokeStyle = c.line; ctx.globalAlpha = .55; ctx.lineWidth = 1.2 * u; ctx.setLineDash([5 * u, 5 * u]);
-    ctx.strokeRect(res.box.x, res.box.y, res.box.w, res.box.h); ctx.restore();
-  }
+function drawOverlay(cv, zones, upto) {
+  const ctx = cv.getContext("2d"), W = cv.width, c = vfColors();
+  ctx.clearRect(0, 0, W, cv.height);
+  const u = Math.max(1, W / 320);
   ctx.font = `500 ${Math.round(7.5 * u)}px "IBM Plex Mono", ui-monospace, monospace`;
   ctx.textBaseline = "middle";
-  res.zones.slice(0, upto).forEach(z => {
+  zones.slice(0, upto).forEach(z => {
     ctx.save();
-    ctx.fillStyle = "rgba(182,220,51,.16)"; ctx.strokeStyle = c.line; ctx.lineWidth = 1.6 * u;
-    rr(ctx, z.px, z.py, z.pw, z.ph, 5 * u); ctx.fill(); ctx.stroke();
-    const label = z.label.toUpperCase(), tw = ctx.measureText(label).width + 8 * u, th = 12 * u;
-    const lx = z.px + z.pw / 2 - tw / 2, ly = z.py - th - 3 * u;
-    ctx.fillStyle = "rgba(7,10,4,.72)"; rr(ctx, lx, ly, tw, th, th / 2); ctx.fill();
-    ctx.fillStyle = c.ink; ctx.textAlign = "center"; ctx.fillText(label, z.px + z.pw / 2, ly + th / 2 + .5);
+    ctx.fillStyle = "rgba(182,220,51,.16)"; ctx.strokeStyle = c.line; ctx.lineWidth = 1.6 * u; ctx.lineJoin = "round";
+    ctx.beginPath(); z.pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)); ctx.closePath(); ctx.fill(); ctx.stroke();
+    const top = z.pts.reduce((a, p) => p.y < a.y ? p : a, z.pts[0]);
+    const cx = z.pts.reduce((a, p) => a + p.x, 0) / 4;
+    const label = z.label.toUpperCase(), tw = ctx.measureText(label).width + 8 * u, th = 12 * u, ly = top.y - th - 3 * u;
+    ctx.fillStyle = "rgba(7,10,4,.72)"; rr(ctx, cx - tw / 2, ly, tw, th, th / 2); ctx.fill();
+    ctx.fillStyle = c.ink; ctx.textAlign = "center"; ctx.fillText(label, cx, ly + th / 2 + .5);
     ctx.restore();
   });
 }
@@ -819,42 +1042,59 @@ function setView(name) {
 
 /* ---------- Scan ---------- */
 const video = $("#video"), photo = $("#photo"), overlay = $("#overlay");
-let stream = null, busy = false;
+let stream = null, busy = false, guideTimer = null, modelState = "idle";
 const coarse = matchMedia("(pointer: coarse)").matches;
 let canLive = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 
 function status(msg, warn) { const s = $("#scanStatus"); s.textContent = msg || ""; s.classList.toggle("warn", !!warn); }
 function hud(t) { $("#hudState").textContent = t; }
 function setupScanButtons() {
-  const live = !!stream;
+  const live = !!stream, ready = modelState === "ready";
   $("#btnLive").hidden = !canLive || live;
+  $("#btnLive").disabled = !ready;
   $("#btnCapture").hidden = !live;
   $("#lblSelfie").hidden = live || !coarse;
   const upPrimary = !canLive && !coarse;
   $("#lblUpload").classList.toggle("btn-primary", upPrimary);
   $("#lblUpload").classList.toggle("btn-ghost", !upPrimary);
-  if (!canLive && !coarse && !state.metrics) status("Live camera preview isn't available in this view. Upload a recent bare-skin selfie, or open this page on your phone to use the camera.");
+  ["#lblSelfie", "#lblUpload"].forEach(s => { $(s).classList.toggle("is-off", !ready); $(s).setAttribute("aria-disabled", String(!ready)); });
+  $("#fileSelfie").disabled = $("#fileUpload").disabled = !ready;
+}
+async function prepareModel() {
+  if (modelState === "ready" || modelState === "loading") return;
+  modelState = "loading"; setupScanButtons();
+  hud("Loading"); status("Loading the face-mapping model. This takes a few seconds the first time.");
+  try {
+    await loadLandmarker();
+    modelState = "ready"; hud("Ready");
+    status(!canLive && !coarse ? "Live camera isn't available in this browser. Upload a recent bare-skin selfie." : "");
+  } catch (e) {
+    modelState = "failed"; hud("Unavailable");
+    status("The face-mapping model couldn't load, so an accurate scan can't run here. Check your connection and reload the page.", true);
+  }
+  setupScanButtons();
 }
 function resetScan() {
   stopLive();
   photo.hidden = true; $("#readings").hidden = true; $("#scanActions").hidden = false;
   $("#vfEmpty").hidden = false; $("#oval").hidden = false; $("#sweep").hidden = true;
   overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
-  $("#hudMode").textContent = "Skin scan"; hud("Ready"); status("");
-  state.metrics = null; state.source = null;
-  setupScanButtons();
+  $("#hudMode").textContent = "Skin scan"; hud(modelState === "ready" ? "Ready" : "Loading"); status("");
+  state.metrics = null; state.scan = null;
+  setupScanButtons(); prepareModel();
 }
 async function startLive() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1920 }, height: { ideal: 1440 } }, audio: false });
     video.srcObject = stream; video.hidden = false;
     try { await video.play(); } catch (e) {}
     photo.hidden = true; $("#vfEmpty").hidden = true; $("#oval").hidden = false;
     overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
     $("#hudMode").textContent = "Live"; $("#hudMode").classList.add("live"); hud("Align face");
-    status("Fill the oval with your face, then tap Capture.");
+    $("#btnCapture").disabled = true;
+    status("Fill the oval with your face. Capture unlocks when you're in position.");
     setupScanButtons();
-    $("#btnCapture").focus();
+    clearInterval(guideTimer); guideTimer = setInterval(guideTick, 350);
   } catch (e) {
     stream = null; canLive = false; setupScanButtons();
     status(e && e.name === "NotAllowedError"
@@ -864,75 +1104,121 @@ async function startLive() {
   }
 }
 function stopLive() {
+  clearInterval(guideTimer); guideTimer = null;
   if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
   video.hidden = true; video.srcObject = null;
   $("#hudMode").textContent = "Skin scan"; $("#hudMode").classList.remove("live");
 }
-function capture() {
-  const vw = video.videoWidth, vh = video.videoHeight;
-  if (!vw) { status("The camera isn't ready yet. Wait a moment and try again.", true); return; }
-  const s = Math.min(1, 480 / Math.max(vw, vh));
-  photo.width = Math.round(vw * s); photo.height = Math.round(vh * s);
-  const ctx = photo.getContext("2d", { willReadFrequently: true });
-  ctx.save(); ctx.translate(photo.width, 0); ctx.scale(-1, 1); ctx.drawImage(video, 0, 0, photo.width, photo.height); ctx.restore();
-  stopLive(); runScan();
+const gcv = document.createElement("canvas");
+function guideTick() {
+  if (!stream || !landmarker || busy || !video.videoWidth) return;
+  const vw = video.videoWidth, vh = video.videoHeight, s = Math.min(1, 480 / Math.max(vw, vh));
+  gcv.width = Math.round(vw * s); gcv.height = Math.round(vh * s);
+  gcv.getContext("2d").drawImage(video, 0, 0, gcv.width, gcv.height);
+  let faces; try { faces = detectFaces(gcv); } catch (e) { return; }
+  let msg = null;
+  if (!faces.length) msg = "No face found";
+  else if (faces.length > 1) msg = "One face only";
+  else {
+    const fr = faceFrame(faces[0], gcv.width, gcv.height), pz = poseCheck(fr, gcv.width);
+    if (fr.D / s < Q.minD || pz.faceFrac < Q.minFaceFrac) msg = "Move closer";
+    else if (pz.yaw > Q.maxYaw) msg = "Face the camera";
+    else if (pz.roll > Q.maxRoll) msg = "Keep your head level";
+    else if (pz.pitch < Q.pitchLo || pz.pitch > Q.pitchHi) msg = "Look straight ahead";
+  }
+  hud(msg || "Hold still");
+  $("#btnCapture").disabled = !!msg;
+  status(msg ? `${msg}. Capture unlocks when your face is in position.` : "Looks good. Tap Capture and hold still for a second.");
+}
+function grabFrame() {
+  const vw = video.videoWidth, vh = video.videoHeight, s = Math.min(1, 1600 / Math.max(vw, vh));
+  const c = document.createElement("canvas"); c.width = Math.round(vw * s); c.height = Math.round(vh * s);
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.translate(c.width, 0); ctx.scale(-1, 1); ctx.drawImage(video, 0, 0, c.width, c.height);
+  return c;
+}
+async function capture() {
+  if (!video.videoWidth) { status("The camera isn't ready yet. Wait a moment and try again.", true); return; }
+  if (busy) return;
+  clearInterval(guideTimer); guideTimer = null;
+  $("#btnCapture").disabled = true; hud("Hold still"); status("Capturing 5 frames. Hold still…");
+  const frames = [];
+  for (let i = 0; i < 5; i++) { frames.push(grabFrame()); await new Promise(r => setTimeout(r, 180)); }
+  stopLive(); runScan(frames, "camera");
 }
 function loadFile(file) {
   if (!file) return;
   if (file.type && !file.type.startsWith("image/")) { status("That file isn't an image. Choose a JPG or PNG selfie.", true); return; }
   const url = URL.createObjectURL(file), img = new Image();
   img.onload = () => {
-    const s = Math.min(1, 480 / Math.max(img.naturalWidth, img.naturalHeight));
-    photo.width = Math.max(1, Math.round(img.naturalWidth * s)); photo.height = Math.max(1, Math.round(img.naturalHeight * s));
-    photo.getContext("2d", { willReadFrequently: true }).drawImage(img, 0, 0, photo.width, photo.height);
-    URL.revokeObjectURL(url); stopLive(); runScan();
+    const s = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(img.naturalWidth * s)); c.height = Math.max(1, Math.round(img.naturalHeight * s));
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.imageSmoothingQuality = "high"; ctx.drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url); stopLive(); runScan([c], "photo");
   };
   img.onerror = () => { URL.revokeObjectURL(url); status("That photo couldn't be opened. HEIC photos may need converting to JPG first.", true); };
   img.src = url;
 }
-async function runScan() {
+async function runScan(frames, kind) {
   if (busy) return; busy = true;
   $("#scanActions").hidden = true; $("#readings").hidden = true;
-  photo.hidden = false; $("#vfEmpty").hidden = true; $("#oval").hidden = true;
-  overlay.width = photo.width; overlay.height = photo.height;
-  overlay.getContext("2d").clearRect(0, 0, overlay.width, overlay.height);
+  $("#vfEmpty").hidden = true; $("#oval").hidden = true;
+  const show = f => { photo.width = f.width; photo.height = f.height; photo.getContext("2d").drawImage(f, 0, 0); photo.hidden = false; overlay.width = f.width; overlay.height = f.height; overlay.getContext("2d").clearRect(0, 0, f.width, f.height); };
+  const mid = Math.floor(frames.length / 2);
+  show(frames[mid]);
   $("#sweep").hidden = reduceMotion;
-  hud("Checking light"); status("Reading your photo on this device…");
-  await wait(550);
-  let res;
-  try { res = analyze(photo); } catch (e) { res = { error: "fail" }; }
-  if (res.error) {
-    $("#sweep").hidden = true; hud("No face found"); busy = false;
-    $("#scanActions").hidden = false; setupScanButtons();
-    status("We couldn't find enough skin in the frame. Face the light, fill the oval with your face, and try again. Or skip and use demo readings.", true);
+  hud("Mapping face"); status("Mapping 478 face points on this device…");
+  try { await loadLandmarker(); } catch (e) { modelState = "failed"; }
+  await wait(80);
+  let results = [];
+  if (landmarker) results = frames.map(f => {
+    try {
+      const faces = detectFaces(f);
+      if (!faces.length) return fail("none");
+      if (faces.length > 1) return fail("multi");
+      return analyzeFrame(f, faces[0]);
+    } catch (e) { return fail("none"); }
+  });
+  const out = landmarker ? combine(results) : fail("none");
+  if (!out.ok) {
+    $("#sweep").hidden = true; busy = false;
+    hud("Not accurate enough"); $("#scanActions").hidden = false; setupScanButtons();
+    const extra = out.warnings && out.warnings.length ? " " + out.warnings.map(w => WARN[w]).join(" ") : "";
+    status(landmarker ? FAIL[out.reason] + extra + " No readings were saved." : "The face-mapping model couldn't load, so an accurate scan can't run here. Check your connection and reload the page.", true);
     return;
   }
-  const phases = ["Mapping forehead", "Reading T-zone shine", "Reading left cheek", "Reading right cheek", "Reading chin"];
-  for (let i = 0; i < res.zones.length; i++) { drawOverlay(overlay, res, i + 1, false); hud(phases[i]); await wait(420); }
+  let pick = mid; if (!results[pick].ok) pick = results.findIndex(r => r.ok);
+  show(frames[pick]);
+  const zones = results[pick].zones;
+  const phases = { forehead: "Reading forehead", nose: "Reading T-zone shine", cheekA: "Reading cheek", cheekB: "Reading cheek", chin: "Reading chin" };
+  for (let i = 0; i < zones.length; i++) { drawOverlay(overlay, zones, i + 1); hud(phases[zones[i].key]); await wait(380); }
   $("#sweep").hidden = true; hud("Done");
-  state.metrics = res.metrics; state.source = "photo"; state.light = res.light;
+  state.metrics = out.metrics; state.scan = { ...out, kind };
   showReadings(); busy = false;
 }
-function useDemo() {
-  stopLive();
-  photo.hidden = true; $("#vfEmpty").hidden = true; $("#oval").hidden = true;
-  overlay.width = 360; overlay.height = 480;
-  const box = { x: 82, y: 78, w: 196, h: 290 };
-  const zones = ZDEF.map(z => ({ ...z, px: box.x + z.x * box.w, py: box.y + z.y * box.h, pw: z.w * box.w, ph: z.h * box.h }));
-  drawOverlay(overlay, { box, zones }, zones.length, true);
-  $("#hudMode").textContent = "Demo"; hud("No photo used");
-  state.metrics = { ...DEMO }; state.source = "demo"; state.light = { warn: false, note: "Demo readings for a combination-skin example. No photo was used." };
-  $("#scanActions").hidden = true; showReadings();
-}
 function showReadings() {
-  $("#readSrc").textContent = state.source === "demo" ? "Demo readings" : "From your photo";
+  const sc = state.scan;
+  $("#readSrc").textContent = `${sc.level} confidence`;
+  $("#readSrc").dataset.level = sc.level.toLowerCase();
   const ul = $("#readMeters");
   ul.innerHTML = METRICS.map(m => `<li><span>${m.long}</span><b class="bar" style="--v:0;--mc:${m.color}"></b><em>${state.metrics[m.k]}</em></li>`).join("");
   requestAnimationFrame(() => requestAnimationFrame(() => {
     $$("li", ul).forEach((li, i) => li.querySelector(".bar").style.setProperty("--v", state.metrics[METRICS[i].k]));
   }));
-  const ln = $("#lightNote"); ln.textContent = state.light.note; ln.classList.toggle("warn", !!state.light.warn);
-  status(state.source === "demo" ? "" : "Scan complete. Your photo stayed on this device.");
+  const checks = [
+    [true, "One face, facing the camera"],
+    [!sc.warnings.includes("soft"), "Sharp enough to read texture"],
+    [!sc.warnings.includes("lowlight") && !sc.warnings.includes("brightlight"), "Exposure in range"],
+    [!sc.warnings.includes("sideish"), "Even light on both cheeks"],
+    [!sc.warnings.includes("cool"), "Neutral light colour"],
+    [true, sc.kind === "camera" ? `${sc.frames} of ${sc.total} frames agreed (within ${sc.spread} points)` : "Single photo measured"]
+  ];
+  $("#qcList").innerHTML = checks.map(([ok, t]) => `<li class="${ok ? "" : "warn"}">${t}</li>`).join("");
+  $("#lightNote").textContent = sc.warnings.length ? sc.warnings.map(w => WARN[w]).join(" ") : "Good conditions. These readings are as reliable as a phone camera allows.";
+  $("#lightNote").classList.toggle("warn", sc.warnings.length > 0);
+  status("Scan complete. Your photo stayed on this device and was not uploaded.");
   $("#readings").hidden = false;
   $("#btnToQuiz").focus({ preventScroll: true });
 }
@@ -1089,9 +1375,7 @@ function showResults() {
   $("#resLede").textContent = COPY[ctx.primary].lede;
   $("#resHumid").textContent = COPY[ctx.primary].humid;
   $("#notes").innerHTML = METRICS.map(m => `<div style="--mc:${m.color}"><dt>${m.long}<b>${state.metrics[m.k]} · ${word(state.metrics[m.k])}</b></dt><dd>${noteFor(m.k, state.metrics[m.k])}</dd></div>`).join("");
-  $("#srcNote").textContent = state.source === "demo"
-    ? "Based on demo readings and your answers. Scan a real photo for a personal result."
-    : "Based on your photo and answers. A dermatologist Skin Check can confirm this.";
+  $("#srcNote").textContent = `Based on a ${state.scan.level.toLowerCase()}-confidence scan (${state.scan.kind === "camera" ? `${state.scan.frames} frames` : "1 photo"}) and your answers. Scan scores are relative indicators measured from your photo, not a medical diagnosis. A dermatologist Skin Check can confirm your result.`;
   renderRoutine(); renderBook(); renderShelf();
   setView("results");
 }
@@ -1117,7 +1401,7 @@ function renderRoutine() {
       <div style="min-width:0">
         <p class="step-k">${SLOT_LABEL(k, r)}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p>
         <p class="p-brand">${p.brand}</p>
-        <h4 class="p-name">${p.name}${p.size ? `<small>${p.size}</small>` : ""}</h4>
+        <h4 class="p-name"><a href="${oyUrl(p)}" target="_blank" rel="noopener">${p.name}</a>${p.size ? `<small>${p.size}</small>` : ""}</h4>
         <p class="p-note">${p.note}</p>
         <div class="why">${why.map(w => `<span>${w}</span>`).join("")}<span class="k">Key: ${p.key}</span></div>
         ${p.award ? `<span class="award">${p.award}</span>` : ""}
@@ -1125,7 +1409,7 @@ function renderRoutine() {
       <div class="step-side"><span class="price">${priceHTML(p)}</span>${list.length > 1 ? `<button class="swap" type="button" data-k="${k}" aria-label="Swap ${SLOT_LABEL(k, r).toLowerCase()} product, option ${at + 1} of ${list.length}">Swap · ${at + 1}/${list.length}</button>` : ""}</div>
     </li>`;
   }).join("");
-  renderBundle(); renderTwin();
+  renderBundle(); renderTwin(); renderRecs();
   state.mine = new Set(r.bundle.map(p => p.id));
   renderShelf();
 }
@@ -1133,9 +1417,9 @@ function renderBundle() {
   const r = state.routine, total = sumPrice(r.bundle);
   $("#bundle").innerHTML = `
     <div><p class="eyebrow" style="color:inherit;opacity:.7">One-click bundle</p><h3>Your ${state.mode === "full" ? "full" : "minimal"} routine</h3><p class="sub">${r.bundle.length} products cover both AM and PM.</p></div>
-    <ul>${r.bundle.map(p => `<li><span>${p.brand} ${p.name}</span><span>${priced(p) ? `≈S$${p.price}` : "Price on OY"}</span></li>`).join("")}</ul>
+    <ul>${r.bundle.map(p => `<li><a href="${oyUrl(p)}" target="_blank" rel="noopener">${p.brand} ${p.name}</a><span>${priced(p) ? `≈S$${p.price}` : "Price on OY"}</span></li>`).join("")}</ul>
     <div class="total"><span>Approx. total${r.bundle.some(p => !priced(p)) ? " excl. inner care" : ""}</span><b>S$${total}</b></div>
-    <button class="btn btn-primary" type="button" id="btnBag">Shop this routine</button>
+    <button class="btn btn-primary" type="button" id="btnBag">Checkout on Olive Young</button>
     <div class="refill">
       <h4>Routine Refill</h4>
       <p>The same products, delivered on your schedule. Includes a free dermatologist follow-up at week 8. Pause or cancel anytime.</p>
@@ -1180,6 +1464,53 @@ function renderBook() {
   $$("#segFormat button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.format)));
 }
 
+/* ---------- Recommended products + checkout ---------- */
+function productCard(p, mine, label) {
+  return `<article class="card${mine ? " mine" : ""}">
+      ${label ? `<span class="mine-tag">${label}</span>` : mine ? `<span class="mine-tag">In your routine</span>` : ""}
+      <div class="tile">${packHTML(p)}</div>
+      <div><p class="step-k">${STEP_LABEL[p.step]}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p><p class="p-brand">${p.brand}</p><h4 class="p-name"><a class="stretch" href="${oyUrl(p)}" target="_blank" rel="noopener">${p.name}</a>${p.size ? `<small>${p.size}</small>` : ""}</h4></div>
+      <p class="p-note">${p.note}</p>
+      ${p.award ? `<span class="award" style="margin-top:0">${p.award}</span>` : ""}
+      <div class="card-meta"><span>${p.types.map(t => TYPES[t].label).join(" · ")}</span><b class="price">${priceHTML(p)}</b></div>
+      <span class="oy-link" aria-hidden="true">View on Olive Young ↗</span>
+    </article>`;
+}
+function routineUse(r, id) {
+  const am = r.am.some(k => r.ch[k].id === id), pm = r.pm.some(k => r.ch[k].id === id);
+  return am && pm ? "AM + PM" : am ? "AM" : "PM";
+}
+function renderRecs() {
+  const r = state.routine;
+  $("#recsSub").textContent = `${r.bundle.length} products across your AM and PM routine. Tap any product to open it on Olive Young.`;
+  $("#recGrid").innerHTML = r.bundle.map(p => productCard(p, true, routineUse(r, p.id))).join("");
+}
+const opened = new Set();
+function renderCheckout() {
+  const r = state.routine;
+  $("#coList").innerHTML = r.bundle.map(p => `<li class="${opened.has(p.id) ? "done" : ""}">
+      <div class="shelf-tile">${packHTML(p)}</div>
+      <div style="min-width:0"><p class="p-brand">${p.brand} · ${routineUse(r, p.id)}</p><p class="co-name">${p.name}${p.size ? ` <small>${p.size}</small>` : ""}</p><p class="co-price">${priced(p) ? `≈S$${p.price}` : "Price on Olive Young"}</p></div>
+      <a class="btn btn-sm ${opened.has(p.id) ? "btn-ghost" : "btn-dark"}" href="${oyUrl(p)}" target="_blank" rel="noopener" data-id="${p.id}">${opened.has(p.id) ? "Opened ✓" : "Add on OY ↗"}</a>
+    </li>`).join("");
+  const n = r.bundle.filter(p => opened.has(p.id)).length;
+  $("#coProgress").textContent = `${n} of ${r.bundle.length} products opened on Olive Young`;
+}
+function openCheckout() {
+  if (!state.routine) return;
+  renderCheckout();
+  const d = $("#checkout");
+  if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+}
+$("#coList").addEventListener("click", e => { const a = e.target.closest("a[data-id]"); if (!a) return; opened.add(a.dataset.id); setTimeout(renderCheckout, 50); });
+$("#coClose").addEventListener("click", () => { const d = $("#checkout"); if (d.close) d.close(); else d.removeAttribute("open"); });
+$("#checkout").addEventListener("click", e => { if (e.target.id === "checkout" && e.target.close) e.target.close(); });
+$("#coCopy").addEventListener("click", async () => {
+  const text = state.routine.bundle.map(p => `${p.brand} ${p.name}${p.size ? ` (${p.size})` : ""} - ${oyUrl(p)}`).join("\n");
+  try { await navigator.clipboard.writeText(text); toast("Product list copied."); } catch (e) { toast("Copying isn't allowed in this browser."); }
+});
+$("#btnCheckoutTop").addEventListener("click", openCheckout);
+
 /* ---------- Shelf ---------- */
 function renderShelfFilters() {
   const tChips = [["all", "All"], ...Object.entries(TYPES).map(([k, v]) => [k, v.label])];
@@ -1192,17 +1523,7 @@ function renderShelfFilters() {
 function renderShelf() {
   const items = P.filter(p => (state.shelfType === "all" || p.types.includes(state.shelfType)) && (state.shelfStep === "all" || p.step === state.shelfStep));
   $("#shelfCount").textContent = `${items.length} of ${P.length} products`;
-  $("#grid").innerHTML = items.length ? items.map(p => {
-    const mine = state.mine.has(p.id);
-    return `<article class="card${mine ? " mine" : ""}">
-      ${mine ? `<span class="mine-tag">In your routine</span>` : ""}
-      <div class="tile">${packHTML(p)}</div>
-      <div><p class="step-k">${STEP_LABEL[p.step]}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p><p class="p-brand">${p.brand}</p><h4 class="p-name">${p.name}${p.size ? `<small>${p.size}</small>` : ""}</h4></div>
-      <p class="p-note">${p.note}</p>
-      ${p.award ? `<span class="award" style="margin-top:0">${p.award}</span>` : ""}
-      <div class="card-meta"><span>${p.types.map(t => TYPES[t].label).join(" · ")}</span><b class="price">${priceHTML(p)}</b></div>${p.url ? `<a class="oy-link" href="${p.url}" target="_blank" rel="noopener">View on Olive Young ↗</a>` : ""}
-    </article>`;
-  }).join("") : `<p class="empty">No products match both filters. Try another step or skin type.</p>`;
+  $("#grid").innerHTML = items.length ? items.map(p => productCard(p, state.mine.has(p.id), "")).join("") : `<p class="empty">No products match both filters. Try another step or skin type.</p>`;
 }
 
 /* ---------- Report card export ---------- */
@@ -1289,7 +1610,7 @@ async function saveCard() {
 $("#exampleCard").innerHTML = cardHTML(EXAMPLE);
 renderQuiz(); renderShelfFilters(); renderShelf(); setupScanButtons();
 
-const goScan = e => { if (e) e.preventDefault(); setView("scan"); if (!state.metrics) resetScan(); };
+const goScan = e => { if (e) e.preventDefault(); setView("scan"); if (!state.metrics) resetScan(); else prepareModel(); };
 $("#btnStart").addEventListener("click", goScan);
 $("#navScan").addEventListener("click", e => {
   e.preventDefault();
@@ -1301,7 +1622,6 @@ $("#btnCapture").addEventListener("click", capture);
 $("#fileSelfie").addEventListener("change", e => { loadFile(e.target.files[0]); e.target.value = ""; });
 $("#fileUpload").addEventListener("change", e => { loadFile(e.target.files[0]); e.target.value = ""; });
 $("#lblUpload").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("#fileUpload").click(); } });
-$("#btnDemo").addEventListener("click", useDemo);
 $("#btnRetake").addEventListener("click", resetScan);
 $("#btnToQuiz").addEventListener("click", () => { setView("quiz"); syncQuiz(); });
 $("#btnBackScan").addEventListener("click", () => setView("scan"));
@@ -1319,7 +1639,7 @@ $("#steps").addEventListener("click", e => {
 });
 $("#bundle").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
-  if (b.id === "btnBag") toast("Prototype: the bundle would go to your bag here. No order was placed.");
+  if (b.id === "btnBag") openCheckout();
   if (b.closest("#segRefill")) { state.refill = Number(b.dataset.v); $$("#segRefill button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); $("#refillConfirm").innerHTML = ""; }
   if (b.id === "btnRefill") {
     const total = sumPrice(state.routine.bundle);
