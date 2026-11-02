@@ -63,7 +63,7 @@ button{font:inherit;color:inherit}
 .wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
 .wordmark b{font-family:var(--f-display);font-stretch:125%;font-weight:850;font-size:19px;letter-spacing:.01em}
 .wordmark span{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--lime);color:var(--lime-ink);padding:4px 8px;border-radius:999px}
-.top nav{display:flex;gap:18px;margin-left:auto;align-items:center}
+.top nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-left:auto;align-items:center}
 .top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
 .top nav a:hover{text-decoration:underline;text-underline-offset:4px}
 .forecast{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:flex;gap:10px;border-left:1px solid var(--line);padding-left:16px}
@@ -380,6 +380,147 @@ main{padding-block:40px 56px}
 .price a{color:var(--olive);font-size:13px}
 .empty{padding:30px;text-align:center;color:var(--muted)}
 
+/* Hero extras */
+.hero-scan{margin-top:16px;font-size:15px;color:var(--muted)}
+.hero-scan .btn-link,.b-scan .btn-link{padding:0;color:var(--ink);font-weight:650}
+.er-list{list-style:none;margin:0;padding:14px 18px 4px;display:flex;flex-direction:column;gap:6px}
+.er-list li{display:grid;grid-template-columns:22px 40px minmax(0,1fr);gap:10px;align-items:center;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.er-list li:last-child{border-bottom:0}
+.er-n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.er-pack,.rv-tile{position:relative;width:40px;height:50px;border-radius:10px;background:var(--sunken);overflow:hidden}
+.er-pack .pack,.rv-tile .pack{position:absolute;left:50%;bottom:2px;transform:translateX(-50%) scale(.62);transform-origin:bottom center}
+.er-list small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive)}
+.er-list b{font-size:14px;line-height:1.25;display:block}
+
+/* Sections */
+.sec{border-top:1px solid var(--line)}
+.sec .wrap{padding-block:56px 64px}
+.sec-head{margin-bottom:24px}
+.sec-head h2{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(28px,3.6vw,42px);line-height:1.02;margin-top:12px;max-width:20ch}
+.sec-head p:not(.eyebrow){color:var(--muted);margin-top:12px;max-width:64ch;font-size:16.5px}
+.shelf .eyebrow{margin-bottom:10px}
+
+/* Step guide */
+.guide{margin-bottom:24px}
+.guide-title{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:10px}
+.guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.g-card{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0}
+.g-card:hover{border-color:var(--ink)}
+.g-n{font-family:var(--f-mono);font-size:12px;color:var(--olive)}
+.g-name{font-weight:750;font-size:16px}
+.g-line{font-size:13.5px;color:var(--muted);line-height:1.35}
+.g-meta{display:flex;gap:8px;align-items:center;margin-top:8px;font-family:var(--f-mono);font-size:11px;color:var(--muted);flex-wrap:wrap}
+.need{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;font-weight:500}
+.need-essential{background:var(--ink);color:var(--lime)}
+.need-optional{border:1px solid var(--line);color:var(--muted)}
+.need-extra{border:1px dashed var(--muted);color:var(--muted)}
+@media (max-width:900px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Routine builder */
+.builder{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:18px;scroll-margin-top:12px}
+.b-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap}
+.b-scan{font-size:14px;color:var(--muted)}
+.b-scan #bCount:not(:empty){font-family:var(--f-mono);font-size:12px;color:var(--ink);background:var(--lime-wash);padding:3px 8px;border-radius:999px;margin-right:6px}
+.b-progress{list-style:none;margin:0;padding:0 0 6px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+.b-progress button{display:flex;align-items:center;gap:7px;white-space:nowrap;border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 12px 5px 5px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.b-progress i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--sunken);font-family:var(--f-mono);font-size:11px;color:var(--ink)}
+.b-progress .done i{background:var(--lime);color:var(--lime-ink)}
+.b-progress .on{border-color:var(--ink);color:var(--ink);background:var(--lime-wash)}
+.b-step,.b-review{display:flex;flex-direction:column;gap:18px}
+.b-info{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:8px 32px;align-items:start}
+.b-info > :not(.b-tips){grid-column:1}
+.b-tips{grid-column:2;grid-row:1/span 3;margin:0;display:grid;gap:10px}
+.b-tips div{background:var(--sunken);border-radius:14px;padding:12px 14px}
+.b-tips dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive)}
+.b-tips dd{margin:4px 0 0;font-size:14.5px;line-height:1.45}
+.b-count{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.b-info h3,.b-review h3,.b-empty h3{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(26px,3vw,34px);line-height:1.05;outline:none}
+.b-what{font-size:16.5px;max-width:54ch}
+@media (max-width:760px){.b-info{grid-template-columns:1fr}.b-tips{grid-column:1;grid-row:auto}}
+.b-opts-head h4{font-size:17px}
+.b-opts-head p{font-size:13.5px;color:var(--muted);margin-top:2px}
+.b-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:10px}
+.pick{display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.pick.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--lime)}
+.pick-btn{display:grid;grid-template-columns:56px minmax(0,1fr) 26px;gap:12px;text-align:left;border:0;background:transparent;padding:14px;cursor:pointer;align-items:start;flex:1;color:var(--ink)}
+.pick-btn:hover{background:var(--sunken)}
+.pick.on .pick-btn{background:var(--lime-wash)}
+.pick-tile{width:56px;height:76px;border-radius:12px;background:var(--sunken);display:grid;place-items:end center}
+.pick-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pick-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:3px}
+.pick-tags span{font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+.suit{background:var(--ink);color:var(--lime)}
+.aw{border:1px solid var(--amber);color:var(--amber)}
+.pick-name{font-weight:700;font-size:15px;line-height:1.25}
+.pick-name small{font-weight:500;color:var(--muted);font-size:12.5px}
+.pick-note{font-size:13.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+.pick-meta{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font-size:12px;color:var(--muted)}
+.pick-meta b{font-family:var(--f-mono);font-size:13px;color:var(--ink);font-weight:500;white-space:nowrap}
+.pick-check{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:14px;font-weight:700}
+.pick.on .pick-check{background:var(--ink);border-color:var(--ink);color:var(--lime)}
+.pick-link{border-top:1px dashed var(--line);padding:9px 14px;font-size:13px;font-weight:600;color:var(--olive);text-decoration:none}
+.pick-link:hover{text-decoration:underline;text-underline-offset:3px}
+.b-nav{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+.b-nav .btn-primary{margin-left:auto}
+@media (max-width:560px){.b-nav .btn-primary{width:100%;order:-1;margin-left:0}}
+.rv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.rv-total{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.rv-total b{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:28px;color:var(--ink);font-variant-numeric:tabular-nums}
+.rv-missing{background:var(--sunken);border-left:4px solid var(--amber);padding:10px 14px;border-radius:0 12px 12px 0;font-size:14.5px}
+.rv-missing .btn-link{padding:0;color:var(--ink);font-weight:650}
+.rv-ok{font-size:14.5px;color:var(--olive);font-weight:600}
+.rv-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.rv-cols h4{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:8px}
+.rv-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.rv-list li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:2px 12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 10px}
+.rv-tile{grid-row:1/span 2}
+.rv-step{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive);align-self:end}
+.rv-p{grid-column:2;min-width:0;align-self:start;line-height:1.25}
+.rv-p .p-brand{margin:0;display:inline;margin-right:6px}
+.rv-p a{color:var(--ink);font-weight:700;font-size:14.5px;text-decoration:none}
+.rv-p a:hover{text-decoration:underline}
+.rv-edit{grid-column:3;grid-row:1/span 2;border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.rv-edit:hover{border-color:var(--ink)}
+.rv-none{color:var(--muted);font-size:14px}
+.rv-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+@media (max-width:760px){.rv-cols{grid-template-columns:1fr}}
+@media (max-width:560px){.rv-actions .btn{width:100%}}
+.b-empty{text-align:center;padding:24px 8px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.b-empty p{color:var(--muted)}
+.recs-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* #WhatsInYourBag */
+.bags{background:var(--ink);color:var(--paper);border-top:0}
+.bags .eyebrow,.bags .chip-k,.bags-fine{color:inherit;opacity:.75}
+.bags .sec-head p:not(.eyebrow){color:inherit;opacity:.8}
+.bags .chip{color:var(--ink)}
+.bags .chip[aria-pressed="true"]{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.bag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:14px;margin:18px 0 16px}
+.bag{background:var(--surface);color:var(--ink);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.bag-head{display:flex;gap:12px;align-items:center}
+.bag-head .av{width:48px;height:48px;font-size:20px}
+.bag-head h3{font-size:19px}
+.bag-head p{font-size:13px;color:var(--muted)}
+.bag-types{display:flex;gap:6px;flex-wrap:wrap}
+.bag blockquote{margin:0;font-size:15px;line-height:1.45;border-left:3px solid var(--lime);padding-left:12px}
+.bag-spill{display:flex;align-items:flex-end;justify-content:center;background:var(--sunken);border-radius:14px;padding:12px 10px 6px;min-height:86px;overflow:hidden}
+.bag-spill .pack{flex:0 0 auto;transform:scale(.8);transform-origin:bottom center;margin:0 -5px}
+.bag-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.bag-list li{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:8px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.bag-list .step-k{font-size:10.5px}
+.bag-list a{color:var(--ink);text-decoration:none;font-weight:600;line-height:1.3}
+.bag-list a:hover{text-decoration:underline}
+.bag-price{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+.bag-foot{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.bag-foot > span{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.bag-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Catalogue add-to-routine */
+.card-act{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.add-r{position:relative;z-index:2;border:1px solid var(--ink);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:650;cursor:pointer;color:var(--ink)}
+.add-r:hover{background:var(--sunken)}
+.add-r.on{background:var(--ink);color:var(--paper)}
+
 /* Footer */
 .foot .wrap{padding-block:36px 48px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;font-size:13.5px;color:var(--muted);line-height:1.55}
 .foot h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:500;margin-bottom:8px}
@@ -396,7 +537,7 @@ main{padding-block:40px 56px}
 
 <header class="top"><div class="wrap">
   <a class="wordmark" href="#top" aria-label="Olive Young Skin Check home"><b>OLIVE YOUNG</b><span>Skin Check</span></a>
-  <nav aria-label="Page"><a href="#top" id="navScan">Skin scan</a><a href="#shelf">The shelf</a></nav>
+  <nav aria-label="Page"><a href="#build">Build a routine</a><a href="#bags">#WhatsInYourBag</a><a href="#top" id="navScan">Skin scan</a><a href="#shelf">Shop</a></nav>
   <div class="forecast" aria-label="Singapore skin conditions"><span>SG avg humidity <b>84%</b></span><span>Midday UV <b>11+</b></span></div>
 </div></header>
 
@@ -410,20 +551,21 @@ main{padding-block:40px 56px}
   <!-- INTRO -->
   <section class="view intro" id="view-intro" aria-labelledby="introTitle">
     <div class="intro-copy">
-      <p class="eyebrow"><span class="dot"></span>Skin Check by OY · Curated for SG skin</p>
-      <h1 id="introTitle">Scan your skin. Get your <em>SG routine.</em></h1>
-      <p class="lede">One bare-skin selfie reads shine, redness, texture and tone. Four questions cover what a camera can't see. Then you get a routine from Olive Young's shelf, built for Singapore's humidity, and the skin twin whose skin is most like yours.</p>
+      <p class="eyebrow"><span class="dot"></span>Olive Young · Curated for SG skin</p>
+      <h1 id="introTitle">Your skin. Your routine. <em>Made by you.</em></h1>
+      <p class="lede">New to skincare? Discover what each step does, find products that suit your skin, and build a routine that's yours.</p>
       <div class="cta-row">
-        <button class="btn btn-primary" id="btnStart" type="button">Start my skin scan</button>
-        <a class="btn btn-ghost" href="#shelf">Browse the shelf</a>
+        <a class="btn btn-primary" href="#build">Build my routine</a>
+        <a class="btn btn-ghost" href="#guide">Explore skincare steps</a>
       </div>
+      <p class="hero-scan">Not sure what your skin type is? <button class="btn-link" id="btnStart" type="button">Take the 1-minute skin scan →</button></p>
       <dl class="facts">
-        <div><dt>Stays on your device</dt><dd>Your photo is read in this browser and never uploaded.</dd></div>
-        <div><dt>Six skin twins</dt><dd>Unfiltered creators, one for each skin type.</dd></div>
-        <div><dt>Dermatologist check</dt><dd>Book a free 20-minute Skin Check to confirm your result.</dd></div>
+        <div><dt>Learn each step</dt><dd>Plain-English guides to what every step does and when to use it.</dd></div>
+        <div><dt>Pick from Olive Young</dt><dd>Choose one product per step from bestsellers and Awards winners.</dd></div>
+        <div><dt>#WhatsInYourBag</dt><dd>See creators' routines and copy one in a tap.</dd></div>
       </dl>
     </div>
-    <div class="intro-card"><span class="example-tag">Example card</span><div id="exampleCard" style="width:100%;display:flex;justify-content:center"></div></div>
+    <div class="intro-card"><span class="example-tag">Example routine</span><div id="exampleRoutine" style="width:100%;display:flex;justify-content:center"></div></div>
   </section>
 
   <!-- SCAN -->
@@ -523,7 +665,7 @@ main{padding-block:40px 56px}
     <section class="recs" id="recs" aria-labelledby="recsTitle">
       <div class="recs-head">
         <div><h2 id="recsTitle">All your recommended products</h2><p id="recsSub"></p></div>
-        <button class="btn btn-primary" type="button" id="btnCheckoutTop">Shop this routine on Olive Young</button>
+        <div class="recs-actions"><button class="btn btn-ghost" type="button" id="btnEditBuilder">Edit in routine builder</button><button class="btn btn-primary" type="button" id="btnCheckoutTop">Shop this routine on Olive Young</button></div>
       </div>
       <div class="grid" id="recGrid"></div>
     </section>
@@ -558,14 +700,49 @@ main{padding-block:40px 56px}
   </section>
 </main>
 
+<section class="sec build" id="build" aria-labelledby="buildTitle"><div class="wrap">
+  <div class="sec-head">
+    <div>
+      <p class="eyebrow"><span class="dot"></span>Make your skincare routine</p>
+      <h2 id="buildTitle">Build your routine, one step at a time</h2>
+      <p>Each step explains what it does and when to use it. Pick one product for it from Olive Young, or skip the steps you don't need. Cleanser, moisturiser and sunscreen are the three essentials.</p>
+    </div>
+  </div>
+  <div class="guide" id="guide" aria-label="The skincare steps, explained">
+    <h3 class="guide-title">The skincare steps, explained</h3>
+    <div class="guide-grid" id="guideGrid"></div>
+  </div>
+  <div class="builder" id="builder">
+    <div class="b-top">
+      <div class="chips" id="bType" role="group" aria-label="My skin type"><span class="chip-k">My skin</span><button type="button" class="chip" data-v="none">Not sure</button></div>
+      <p class="b-scan"><span id="bCount"></span> Not sure of your skin type? <button class="btn-link" type="button" id="btnScanFromBuild">Take the skin scan</button></p>
+    </div>
+    <ol class="b-progress" id="bProgress" aria-label="Routine steps"></ol>
+    <div class="b-panel" id="bPanel"></div>
+  </div>
+</div></section>
+
+<section class="sec bags" id="bags" aria-labelledby="bagsTitle"><div class="wrap">
+  <div class="sec-head">
+    <div>
+      <p class="eyebrow"><span class="dot"></span>#WhatsInYourBag</p>
+      <h2 id="bagsTitle">See what's in their bag. Copy it in one tap.</h2>
+      <p>Creators with skin like yours share the exact routine they use. Copy one into the routine builder, swap anything you like, then shop it on Olive Young.</p>
+    </div>
+  </div>
+  <div class="chips" id="bagType"><span class="chip-k">Skin type</span></div>
+  <div class="bag-grid" id="bagGrid"></div>
+  <p class="fine bags-fine">Creators shown are placeholder concepts for this campaign proposal, not real people. Real creators would be cast and disclosed as paid partners.</p>
+</div></section>
+
 <section class="shelf" id="shelf" aria-labelledby="shelfTitle"><div class="wrap">
   <div class="shelf-head">
-    <div><h2 id="shelfTitle">The shelf</h2><p>Every product the Skin Check can recommend: skincare from Olive Young's bestseller lists and Awards, plus inner-care supplements from the Olive Young Global Supplements category. Each is tagged by the skin types and concerns it suits. Supplements don't replace sunscreen, and anyone pregnant, nursing or on medication should check with a doctor first.</p></div>
+    <div><p class="eyebrow"><span class="dot"></span>For K-skincare regulars</p><h2 id="shelfTitle">Shop K-skincare by category</h2><p>Everything in one place: Olive Young bestsellers and Awards winners, plus inner-care supplements. Filter by category or skin type, open any product on Olive Young, or add it straight to your routine. Supplements don't replace sunscreen, and anyone pregnant, nursing or on medication should check with a doctor first.</p></div>
     <span class="eyebrow" id="shelfCount"></span>
   </div>
   <div class="filters">
+    <div class="chips" id="fStep"><span class="chip-k">Category</span></div>
     <div class="chips" id="fType"><span class="chip-k">Skin type</span></div>
-    <div class="chips" id="fStep"><span class="chip-k">Step</span></div>
   </div>
   <div class="grid" id="grid"></div>
 </div></section>
@@ -573,7 +750,7 @@ main{padding-block:40px 56px}
 <footer class="foot"><div class="wrap">
   <div><h4>How the scan works</h4><p>A face-mapping model (MediaPipe Face Landmarker) places 478 points on your face in this browser. The scan resizes every face to the same scale, then reads five zones in CIELAB colour: specular highlights (shine), red balance and red spots (redness), fine luminance detail (texture) and mid-scale brightness variation and dark spots (tone). It won't give readings if the face is too small, turned, blurry, badly exposed or lit from one side, and live scans must agree across 5 frames. Scores are relative indicators, not clinical measurements. Light and camera still affect them. Not a medical or diagnostic tool.</p></div>
   <div><h4>About the products</h4><p>Products come from Olive Young's bestseller lists and the Olive Young Awards. Skincare prices are approximate Singapore-dollar figures from Olive Young Global listings and Singapore beauty press. Supplements link to their live Olive Young Global pages for current prices.</p></div>
-  <div><h4>About this prototype</h4><p>A concept for a student campaign proposal featuring Skin Check by OY and #UnfilteredRoutine. Not affiliated with or endorsed by CJ Olive Young. Skin twins are placeholder concepts, not real creators.</p></div>
+  <div><h4>About this prototype</h4><p>A concept for a student campaign proposal featuring Make Your Skincare Routine, #WhatsInYourBag, Skin Check by OY and #UnfilteredRoutine. Not affiliated with or endorsed by CJ Olive Young. Creators and skin twins are placeholder concepts, not real people.</p></div>
 </div></footer>
 
 <dialog class="checkout" id="checkout" aria-labelledby="coTitle">
@@ -696,7 +873,6 @@ const TWINS = {
   pigment:     { initial: "P", title: "The Pigmentation Twin" }
 };
 
-const EXAMPLE = { primary: "combination", secondary: "acne", metrics: { shine: 72, redness: 38, texture: 44, uneven: 51 }, concerns: ["breakouts", "pores"], example: true };
 
 /* ---------- State ---------- */
 const state = {
@@ -1386,6 +1562,7 @@ function showResults() {
   $("#notes").innerHTML = METRICS.map(m => `<div style="--mc:${m.color}"><dt>${m.long}<b>${state.metrics[m.k]} · ${word(state.metrics[m.k])}</b></dt><dd>${noteFor(m.k, state.metrics[m.k])}</dd></div>`).join("");
   $("#srcNote").textContent = `Based on a ${state.scan.level.toLowerCase()}-confidence scan (${state.scan.kind === "camera" ? `${state.scan.frames} frames` : "1 photo"}) and your answers. Scan scores are relative indicators measured from your photo, not a medical diagnosis. A dermatologist Skin Check can confirm your result.`;
   renderRoutine(); renderBook(); renderShelf();
+  if (!B.type) { B.type = ctx.primary; renderBuilder(); }
   setView("results");
 }
 function renderRoutine() {
@@ -1476,13 +1653,13 @@ function renderBook() {
 /* ---------- Recommended products + checkout ---------- */
 function productCard(p, mine, label) {
   return `<article class="card${mine ? " mine" : ""}">
-      ${label ? `<span class="mine-tag">${label}</span>` : mine ? `<span class="mine-tag">In your routine</span>` : ""}
+      ${label ? `<span class="mine-tag">${label}</span>` : mine ? `<span class="mine-tag">In my routine</span>` : ""}
       <div class="tile">${packHTML(p)}</div>
       <div><p class="step-k">${STEP_LABEL[p.step]}${p.spf ? ` · <span class="spf">${p.spf}</span>` : ""}</p><p class="p-brand">${p.brand}</p><h4 class="p-name"><a class="stretch" href="${oyUrl(p)}" target="_blank" rel="noopener">${p.name}</a>${p.size ? `<small>${p.size}</small>` : ""}</h4></div>
       <p class="p-note">${p.note}</p>
       ${p.award ? `<span class="award" style="margin-top:0">${p.award}</span>` : ""}
       <div class="card-meta"><span>${p.types.map(t => TYPES[t].label).join(" · ")}</span><b class="price">${priceHTML(p)}</b></div>
-      <span class="oy-link" aria-hidden="true">View on Olive Young ↗</span>
+      <div class="card-act"><button type="button" class="add-r${B.picks[p.step] === p.id ? " on" : ""}" data-add="${p.id}" aria-pressed="${B.picks[p.step] === p.id}">${B.picks[p.step] === p.id ? "In my routine ✓" : "+ Add to my routine"}</button><span class="oy-link" aria-hidden="true">View on Olive Young ↗</span></div>
     </article>`;
 }
 function routineUse(r, id) {
@@ -1495,24 +1672,31 @@ function renderRecs() {
   $("#recGrid").innerHTML = r.bundle.map(p => productCard(p, true, routineUse(r, p.id))).join("");
 }
 const opened = new Set();
+let coItems = [];
 function renderCheckout() {
-  const r = state.routine;
-  $("#coList").innerHTML = r.bundle.map(p => `<li class="${opened.has(p.id) ? "done" : ""}">
+  const items = coItems;
+  $("#coList").innerHTML = items.map(({ p, tag }) => `<li class="${opened.has(p.id) ? "done" : ""}">
       <div class="shelf-tile">${packHTML(p)}</div>
-      <div style="min-width:0"><p class="p-brand">${p.brand} · ${routineUse(r, p.id)}</p><p class="co-name">${p.name}${p.size ? ` <small>${p.size}</small>` : ""}</p><p class="co-price">${priced(p) ? `≈S$${p.price}` : "Price on Olive Young"}</p></div>
+      <div style="min-width:0"><p class="p-brand">${p.brand}${tag ? ` · ${tag}` : ""}</p><p class="co-name">${p.name}${p.size ? ` <small>${p.size}</small>` : ""}</p><p class="co-price">${priced(p) ? `≈S$${p.price}` : "Price on Olive Young"}</p></div>
       <a class="btn btn-sm ${opened.has(p.id) ? "btn-ghost" : "btn-dark"}" href="${oyUrl(p)}" target="_blank" rel="noopener" data-id="${p.id}">${opened.has(p.id) ? "Opened ✓" : "Add on OY ↗"}</a>
     </li>`).join("");
-  const n = r.bundle.filter(p => opened.has(p.id)).length, next = r.bundle.find(p => !opened.has(p.id));
+  const n = items.filter(({ p }) => opened.has(p.id)).length, ni = items.findIndex(({ p }) => !opened.has(p.id)), next = ni >= 0 ? items[ni].p : null;
   $("#coProgress").textContent = next
-    ? `${n} of ${r.bundle.length} products opened. Tap Add to Cart on each one.`
-    : `All ${r.bundle.length} products opened. Check they're in your Olive Young bag, then check out there.`;
+    ? `${n} of ${items.length} products opened. Tap Add to Cart on each one.`
+    : `All ${items.length} products opened. Check they're in your Olive Young bag, then check out there.`;
   const nb = $("#coNext"), go = $("#coGo");
   nb.hidden = !next;
-  if (next) { nb.href = oyUrl(next); nb.dataset.id = next.id; nb.textContent = `Open next product (${r.bundle.indexOf(next) + 1} of ${r.bundle.length}) ↗`; }
+  if (next) { nb.href = oyUrl(next); nb.dataset.id = next.id; nb.textContent = `Open next product (${ni + 1} of ${items.length}) ↗`; }
   go.classList.toggle("btn-primary", !next); go.classList.toggle("btn-ghost", !!next);
 }
-function openCheckout() {
-  if (!state.routine) return;
+function openCheckout(items, title) {
+  if (!items) {
+    if (!state.routine) return;
+    items = state.routine.bundle.map(p => ({ p, tag: routineUse(state.routine, p.id) }));
+  }
+  if (!items.length) return;
+  coItems = items;
+  $("#coTitle").textContent = title || "Add your routine to your Olive Young bag";
   renderCheckout();
   const d = $("#checkout");
   if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
@@ -1522,24 +1706,296 @@ $("#coList").addEventListener("click", e => { const a = e.target.closest("a[data
 $("#coClose").addEventListener("click", () => { const d = $("#checkout"); if (d.close) d.close(); else d.removeAttribute("open"); });
 $("#checkout").addEventListener("click", e => { if (e.target.id === "checkout" && e.target.close) e.target.close(); });
 $("#coCopy").addEventListener("click", async () => {
-  const text = state.routine.bundle.map(p => `${p.brand} ${p.name}${p.size ? ` (${p.size})` : ""} - ${oyUrl(p)}`).join("\n");
+  const text = coItems.map(({ p }) => `${p.brand} ${p.name}${p.size ? ` (${p.size})` : ""} - ${oyUrl(p)}`).join("\n");
   try { await navigator.clipboard.writeText(text); toast("Product list copied."); } catch (e) { toast("Copying isn't allowed in this browser."); }
 });
-$("#btnCheckoutTop").addEventListener("click", openCheckout);
+$("#btnCheckoutTop").addEventListener("click", () => openCheckout());
+$("#btnEditBuilder").addEventListener("click", () => {
+  const r = state.routine; if (!r) return;
+  const keys = new Set([...r.am, ...r.pm]);
+  const order = ["oil", "cleanse", "tone", r.needsTreat ? "serumPM" : "serumAM", "moist", "spf", "spot", "supp"];
+  loadIntoBuilder(order.filter(k => keys.has(k) && r.ch[k]).map(k => r.ch[k].id), state.result.primary, "Your scan routine is in the builder. Change any step you like.");
+});
+
+/* ---------- Make your skincare routine ---------- */
+const GUIDE = [
+  { k: "oil", name: "Oil cleanser", when: "PM", need: "optional", line: "Melts sunscreen and makeup",
+    what: "An oil or balm that melts sunscreen, makeup and excess oil, so your second cleanser can actually clean your skin.",
+    how: "Massage onto dry skin for about a minute, add a little water until it turns milky, then rinse.",
+    note: "Skip it on days you don't wear sunscreen or makeup." },
+  { k: "cleanse", name: "Cleanser", when: "AM + PM", need: "essential", line: "Washes off sweat and oil",
+    what: "Washes away sweat, oil and dirt. A gentle, low-pH cleanser does this without stripping your skin barrier.",
+    how: "Lather a small amount with water, massage for 30 seconds, then rinse with lukewarm water.",
+    note: "Skin should feel clean, not tight or squeaky. Tightness means the cleanser is too harsh." },
+  { k: "tone", name: "Toner", when: "AM + PM", need: "optional", line: "Rebalances and preps skin",
+    what: "A watery first layer that rebalances skin after cleansing and adds light hydration, so the next steps absorb better.",
+    how: "Pat a few drops in with clean hands, or swipe over your face with a cotton pad.",
+    note: "Optional for beginners. Add it once cleanser, moisturiser and sunscreen are a habit." },
+  { k: "serum", name: "Serum", when: "AM + PM", need: "optional", line: "Targets one main concern",
+    what: "A concentrated treatment for one main concern, such as dehydration, redness, dark marks or breakouts.",
+    how: "Two or three drops after toner. Start with one serum and give it four to six weeks.",
+    note: "Pick the one that matches your biggest concern. More serums isn't better." },
+  { k: "moist", name: "Moisturiser", when: "AM + PM", need: "essential", line: "Locks in hydration",
+    what: "Seals in hydration and supports your skin barrier. Oily skin needs it too, just in a lighter texture.",
+    how: "A pea-sized amount for your whole face. Gel-creams feel lightest in Singapore's humidity.",
+    note: "Skipping moisturiser can make oily skin produce even more oil." },
+  { k: "spf", name: "Sunscreen", when: "AM", need: "essential", line: "Blocks UV every morning",
+    what: "Protects you from UV, the biggest cause of dark spots, redness and early ageing. Singapore's midday UV index regularly reaches 11+.",
+    how: "The last step every morning. Use two finger-lengths for face and neck, and reapply every two to three hours outdoors.",
+    note: "Wear it on cloudy days and indoors near windows too." },
+  { k: "spot", name: "Spot care", when: "PM", need: "extra", line: "Overnight help for breakouts",
+    what: "Hydrocolloid patches that cover active spots overnight, absorb fluid and stop you picking.",
+    how: "Stick one on a clean, dry spot before bed and peel it off in the morning.",
+    note: "Only needed when you have an active breakout." },
+  { k: "supp", name: "Inner care", when: "Daily", need: "extra", line: "Optional supplements",
+    what: "Optional supplements from Olive Young's inner-beauty range, such as collagen and glutathione. They add to a routine. They don't replace one.",
+    how: "Follow the dose on the pack. Check with a doctor first if you're pregnant, nursing or on medication.",
+    note: "Completely optional. Sunscreen does more for your skin than any supplement." }
+];
+const NEED = { essential: "Essential", optional: "Optional", extra: "Extra" };
+const AM_ORDER = ["cleanse", "tone", "serum", "moist", "spf", "supp"], PM_ORDER = ["oil", "cleanse", "tone", "serum", "moist", "spot"];
+const byId = id => P.find(p => p.id === id);
+const guideFor = k => GUIDE.find(g => g.k === k);
+const B = { i: 0, type: null, picks: {} };
+
+function saveBuilder() { try { localStorage.setItem("oy-routine", JSON.stringify(B)); } catch (e) {} }
+function setPicks(ids) {
+  B.picks = {};
+  ids.map(byId).filter(Boolean).forEach(p => { if (guideFor(p.step)) B.picks[p.step] = p.id; });
+}
+function loadBuilder() {
+  try {
+    const q = new URLSearchParams(location.search), r = q.get("routine");
+    if (r) {
+      setPicks(r.split("."));
+      if (Object.keys(B.picks).length) { B.type = TYPES[q.get("skin")] ? q.get("skin") : null; B.i = GUIDE.length; return "shared"; }
+    }
+  } catch (e) {}
+  try {
+    const s = JSON.parse(localStorage.getItem("oy-routine") || "null");
+    if (s && s.picks) {
+      setPicks(Object.values(s.picks));
+      B.type = TYPES[s.type] ? s.type : null;
+      B.i = Math.min(Math.max(0, s.i | 0), GUIDE.length);
+    }
+  } catch (e) {}
+  return null;
+}
+const pickedList = () => GUIDE.map(g => byId(B.picks[g.k])).filter(Boolean);
+const useTag = p => {
+  const am = AM_ORDER.includes(p.step), pm = PM_ORDER.includes(p.step);
+  return p.step === "supp" ? "Daily" : am && pm ? "AM + PM" : am ? "AM" : "PM";
+};
+
+function renderGuide() {
+  $("#guideGrid").innerHTML = GUIDE.map((g, i) => `<button type="button" class="g-card" data-i="${i}">
+      <span class="g-n">${String(i + 1).padStart(2, "0")}</span>
+      <span class="g-name">${g.name}</span>
+      <span class="g-line">${g.line}</span>
+      <span class="g-meta"><span class="need need-${g.need}">${NEED[g.need]}</span><span>${g.when}</span></span>
+    </button>`).join("");
+}
+function pickHTML(p, fit, on) {
+  return `<div class="pick${on ? " on" : ""}">
+      <button type="button" class="pick-btn" data-pick="${p.id}" aria-pressed="${on}">
+        <span class="pick-tile">${packHTML(p)}</span>
+        <span class="pick-body">
+          ${fit || p.award ? `<span class="pick-tags">${fit ? `<span class="suit">Suits your skin</span>` : ""}${p.award ? `<span class="aw">Award winner</span>` : ""}</span>` : ""}
+          <span class="p-brand">${p.brand}</span>
+          <span class="pick-name">${p.name}${p.size ? ` <small>${p.size}</small>` : ""}</span>
+          <span class="pick-note">${p.note}</span>
+          <span class="pick-meta"><span>Key: ${p.key}</span><b>${priced(p) ? `≈S$${p.price}` : "Price on OY"}</b></span>
+        </span>
+        <span class="pick-check" aria-hidden="true">${on ? "✓" : ""}</span>
+      </button>
+      <a class="pick-link" href="${oyUrl(p)}" target="_blank" rel="noopener">View on Olive Young ↗</a>
+    </div>`;
+}
+function stepHTML(i) {
+  const g = GUIDE[i], sel = B.picks[g.k];
+  const opts = P.filter(p => p.step === g.k).map((p, j) => ({ p, j, fit: !!B.type && p.types.includes(B.type) }))
+    .sort((a, b) => (b.fit - a.fit) || (a.j - b.j));
+  const nFit = opts.filter(o => o.fit).length;
+  const nextName = i + 1 < GUIDE.length ? GUIDE[i + 1].name : "Review my routine";
+  return `<div class="b-step fade-in">
+      <div class="b-info">
+        <p class="b-count">Step ${i + 1} of ${GUIDE.length}<span class="need need-${g.need}">${NEED[g.need]}</span><span>${g.when}</span></p>
+        <h3 tabindex="-1">${g.name}</h3>
+        <p class="b-what">${g.what}</p>
+        <dl class="b-tips"><div><dt>How to use</dt><dd>${g.how}</dd></div><div><dt>Good to know</dt><dd>${g.note}</dd></div></dl>
+      </div>
+      <div class="b-opts-head"><h4>Pick your ${g.name.toLowerCase()}</h4><p>${opts.length} options from Olive Young${B.type ? ` · ${nFit} suit ${TYPES[B.type].label.toLowerCase()} skin and are shown first` : " · choose your skin type above to see your best matches first"}</p></div>
+      <div class="b-opts">${opts.map(({ p, fit }) => pickHTML(p, fit, sel === p.id)).join("")}</div>
+      <div class="b-nav">
+        <button class="btn btn-ghost btn-sm" type="button" data-nav="back"${i === 0 ? " disabled" : ""}>Back</button>
+        <button class="btn-link" type="button" data-nav="skip">${sel ? "Remove my pick" : g.need === "essential" ? "Skip (not recommended)" : "Skip this step"}</button>
+        <button class="btn btn-primary" type="button" data-nav="next">Next: ${nextName} →</button>
+      </div>
+    </div>`;
+}
+function reviewHTML() {
+  const list = pickedList();
+  if (!list.length) return `<div class="b-empty fade-in"><h3 tabindex="-1">Your routine is empty</h3><p>Start with the three essentials: cleanser, moisturiser and sunscreen.</p><button class="btn btn-primary" type="button" data-go="1">Start with a cleanser →</button></div>`;
+  const row = k => {
+    const p = byId(B.picks[k]); if (!p) return "";
+    const g = guideFor(k), gi = GUIDE.indexOf(g);
+    return `<li><span class="rv-tile">${packHTML(p)}</span><span class="rv-step">${g.name}</span><span class="rv-p"><span class="p-brand">${p.brand}</span><a href="${oyUrl(p)}" target="_blank" rel="noopener">${p.name}</a></span><button class="rv-edit" type="button" data-go="${gi}" aria-label="Change ${g.name.toLowerCase()}">Change</button></li>`;
+  };
+  const am = AM_ORDER.map(row).join(""), pm = PM_ORDER.map(row).join("");
+  const missing = GUIDE.filter(g => g.need === "essential" && !B.picks[g.k]);
+  return `<div class="b-review fade-in">
+      <div class="rv-head">
+        <div><p class="b-count">Your routine${B.type ? ` · for ${TYPES[B.type].label.toLowerCase()} skin` : ""}</p><h3 tabindex="-1">${list.length} product${list.length > 1 ? "s" : ""}, made by you</h3></div>
+        <div class="rv-total"><span>Approx. total${list.some(p => !priced(p)) ? " excl. inner care" : ""}</span><b>S$${sumPrice(list)}</b></div>
+      </div>
+      ${missing.length ? `<p class="rv-missing">Missing ${missing.length > 1 ? "essentials" : "an essential"}: ${missing.map(g => `<button class="btn-link" type="button" data-go="${GUIDE.indexOf(g)}">${g.name.toLowerCase()}</button>`).join(", ")}</p>` : `<p class="rv-ok">✓ All three essentials covered: cleanser, moisturiser and sunscreen.</p>`}
+      <div class="rv-cols">
+        <section><h4>Morning · in this order</h4>${am ? `<ol class="rv-list">${am}</ol>` : `<p class="rv-none">Nothing for the morning yet.</p>`}</section>
+        <section><h4>Night · in this order</h4>${pm ? `<ol class="rv-list">${pm}</ol>` : `<p class="rv-none">Nothing for the night yet.</p>`}</section>
+      </div>
+      <div class="rv-actions">
+        <button class="btn btn-primary" type="button" data-act="shop">Shop this routine on Olive Young</button>
+        <button class="btn btn-ghost" type="button" data-act="share">Share my routine</button>
+        <button class="btn-link" type="button" data-act="reset">Start over</button>
+      </div>
+    </div>`;
+}
+function renderBuilder() {
+  $$("#bType .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.v === (B.type || "none"))));
+  const steps = GUIDE.map((g, i) => [i, g.name, !!B.picks[g.k]]).concat([[GUIDE.length, "Review", false]]);
+  $("#bProgress").innerHTML = steps.map(([i, name, done]) => `<li><button type="button" data-i="${i}" class="${i === B.i ? "on" : ""}${done ? " done" : ""}"${i === B.i ? ' aria-current="step"' : ""}><i>${done ? "✓" : i < GUIDE.length ? i + 1 : "★"}</i>${name}</button></li>`).join("");
+  $("#bPanel").innerHTML = B.i < GUIDE.length ? stepHTML(B.i) : reviewHTML();
+  const n = pickedList().length;
+  $("#bCount").textContent = n ? `${n} product${n > 1 ? "s" : ""} in your routine` : "";
+  saveBuilder(); renderShelf();
+}
+function scrollToBuilder(force) {
+  const el = $("#builder"), top = el.getBoundingClientRect().top;
+  if (force || top < 0 || top > innerHeight * .6) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+}
+function goStep(i, focus) {
+  B.i = Math.min(Math.max(0, i), GUIDE.length); renderBuilder(); scrollToBuilder();
+  if (focus) { const h = $("#bPanel h3"); if (h) h.focus({ preventScroll: true }); }
+}
+function loadIntoBuilder(ids, type, msg) {
+  setPicks(ids); if (type) B.type = type; B.i = GUIDE.length; renderBuilder();
+  scrollToBuilder(true);
+  if (msg) toast(msg);
+}
+function routineItems() { return pickedList().map(p => ({ p, tag: useTag(p) })); }
+async function shareRoutine() {
+  const list = pickedList(); if (!list.length) return;
+  const url = new URL(location.href);
+  url.search = ""; url.hash = "build";
+  url.searchParams.set("routine", list.map(p => p.id).join("."));
+  if (B.type) url.searchParams.set("skin", B.type);
+  if (navigator.share && coarse) {
+    try { await navigator.share({ title: "My skincare routine", text: "Here's my routine, built on Olive Young. #WhatsInYourBag", url: url.href }); return; }
+    catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  try { await navigator.clipboard.writeText(url.href); toast("Link copied. Share your routine with #WhatsInYourBag."); }
+  catch (e) { toast("Copying isn't allowed in this browser."); }
+}
+$("#guideGrid").addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (b) { B.i = +b.dataset.i; renderBuilder(); scrollToBuilder(true); } });
+$("#btnScanFromBuild").addEventListener("click", e => { goScan(e); });
+$("#builder").addEventListener("click", e => {
+  const t = e.target.closest("[data-pick],[data-nav],[data-go],[data-i],[data-act],#bType .chip");
+  if (!t) return;
+  if (t.matches("#bType .chip")) { B.type = t.dataset.v === "none" ? null : t.dataset.v; renderBuilder(); return; }
+  if (t.dataset.pick) {
+    const g = GUIDE[B.i], id = t.dataset.pick;
+    if (B.picks[g.k] === id) delete B.picks[g.k]; else B.picks[g.k] = id;
+    renderBuilder();
+    const nb = $(`#bPanel [data-pick="${id}"]`); if (nb) nb.focus({ preventScroll: true });
+    return;
+  }
+  if (t.dataset.nav === "back") return goStep(B.i - 1, true);
+  if (t.dataset.nav === "next") return goStep(B.i + 1, true);
+  if (t.dataset.nav === "skip") { const g = GUIDE[B.i]; if (B.picks[g.k]) { delete B.picks[g.k]; renderBuilder(); } else goStep(B.i + 1, true); return; }
+  if (t.dataset.i != null) return goStep(+t.dataset.i, true);
+  if (t.dataset.go != null) return goStep(+t.dataset.go, true);
+  if (t.dataset.act === "shop") openCheckout(routineItems(), "Add your routine to your Olive Young bag");
+  if (t.dataset.act === "share") shareRoutine();
+  if (t.dataset.act === "reset") { B.picks = {}; B.i = 0; renderBuilder(); scrollToBuilder(); toast("Routine cleared."); }
+});
+
+/* ---------- #WhatsInYourBag ---------- */
+/* Placeholder creator concepts for the proposal. Real creators would be cast and disclosed as paid partners. */
+const BAGS = [
+  { id: "jia", name: "Jia", meta: "21 · Uni student", types: ["oily", "acne"], color: "#D7E7C9",
+    quote: "Lectures in air-con, lunch outside. My skin's shiny by noon, so everything I use is light.",
+    ids: ["anua-foam", "bringgreen-toner", "bringgreen-zinc", "isntree-gel", "skin1004-sunserum", "cosrx-patch"] },
+  { id: "aisyah", name: "Aisyah", meta: "24 · Nurse on rotating shifts", types: ["dry", "sensitive"], color: "#DCE7F2",
+    quote: "Twelve hours in hospital air-con dries me out. Barrier first, always.",
+    ids: ["banila-zero", "cosrx-gel", "isntree-toner", "aestura-ampoule", "aestura-cream", "torriden-sun"] },
+  { id: "ryan", name: "Ryan", meta: "26 · Runs at East Coast", types: ["combination"], color: "#CFE4F2",
+    quote: "Five steps that fit in my gym bag. Nothing heavy, nothing that stings when I sweat.",
+    ids: ["roundlab-cleanser", "roundlab-toner", "torriden-serum", "torriden-cream", "isntree-sungel"] },
+  { id: "priya", name: "Priya", meta: "23 · Marketing exec", types: ["pigment", "combination"], color: "#F2C6CF",
+    quote: "Old acne marks were my thing. Sunscreen every single day did more than any serum.",
+    ids: ["manyo-oil", "roundlab-cleanser", "roundlab-toner", "goodal-vitac", "roundlab-birch-cream", "boj-relief", "bblab-white"] },
+  { id: "weiling", name: "Wei Ling", meta: "29 · Office worker", types: ["sensitive"], color: "#E7DCC4",
+    quote: "My skin reacts to almost everything. Short routine, one new product at a time.",
+    ids: ["cosrx-gel", "anua-toner", "skin1004-ampoule", "torriden-cream", "drg-mildup"] },
+  { id: "marcus", name: "Marcus", meta: "20 · First routine ever", types: ["oily", "combination"], color: "#E9D8A6", beginner: true,
+    quote: "A month ago I didn't know what a toner was. I started with the three essentials and that's it.",
+    ids: ["cosrx-gel", "isntree-gel", "skin1004-sunserum"] }
+];
+let bagType = "all";
+function bagHTML(b) {
+  const items = b.ids.map(byId).filter(Boolean);
+  return `<article class="bag">
+      <header class="bag-head"><span class="av" style="background:${b.color};color:#17200E" aria-hidden="true">${b.name[0]}</span><div><h3>${b.name}</h3><p>${b.meta}</p></div></header>
+      <div class="bag-types">${b.types.map(t => `<span class="pill">${TYPES[t].label}</span>`).join("")}${b.beginner ? `<span class="pill pill-line">Beginner</span>` : ""}</div>
+      <blockquote>“${b.quote}”</blockquote>
+      <div class="bag-spill" aria-hidden="true">${items.map(packHTML).join("")}</div>
+      <ol class="bag-list">${items.map(p => `<li><span class="step-k">${guideFor(p.step).name}</span><a href="${oyUrl(p)}" target="_blank" rel="noopener">${p.brand} ${p.name}</a><span class="bag-price">${priced(p) ? `≈S$${p.price}` : "See OY"}</span></li>`).join("")}</ol>
+      <div class="bag-foot">
+        <span>${items.length} products · ≈S$${sumPrice(items)}${items.some(p => !priced(p)) ? " + inner care" : ""}</span>
+        <div class="bag-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="${b.id}">Copy this routine</button><button class="btn btn-ghost btn-sm" type="button" data-shop="${b.id}">Shop this bag</button></div>
+      </div>
+    </article>`;
+}
+function renderBags() {
+  const list = BAGS.filter(b => bagType === "all" || b.types.includes(bagType));
+  $$("#bagType .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.v === bagType)));
+  $("#bagGrid").innerHTML = list.length ? list.map(bagHTML).join("") : `<p class="empty">No creators for this skin type yet.</p>`;
+}
+$("#bagType").insertAdjacentHTML("beforeend", [["all", "All"], ...Object.entries(TYPES).map(([k, v]) => [k, v.label])].map(([k, v]) => `<button type="button" class="chip" data-v="${k}">${v}</button>`).join(""));
+$("#bagType").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; bagType = b.dataset.v; renderBags(); });
+$("#bagGrid").addEventListener("click", e => {
+  const c = e.target.closest("[data-copy]"), s = e.target.closest("[data-shop]");
+  if (c) { const b = BAGS.find(x => x.id === c.dataset.copy); loadIntoBuilder(b.ids, b.types[0], `Copied ${b.name}'s routine. Change any step to make it yours.`); }
+  if (s) { const b = BAGS.find(x => x.id === s.dataset.shop); openCheckout(b.ids.map(byId).filter(Boolean).map(p => ({ p, tag: useTag(p) })), `Add ${b.name}'s bag to your Olive Young bag`); }
+});
 
 /* ---------- Shelf ---------- */
 function renderShelfFilters() {
   const tChips = [["all", "All"], ...Object.entries(TYPES).map(([k, v]) => [k, v.label])];
-  const sChips = [["all", "All steps"], ["oil", "Oil cleanse"], ["cleanse", "Cleanse"], ["tone", "Tone"], ["serum", "Serum"], ["moist", "Moisturise"], ["spf", "Sunscreen"], ["spot", "Spot care"], ["supp", "Supplements"]];
+  const sChips = [["all", "All"], ["oil", "Oil cleansers"], ["cleanse", "Cleansers"], ["tone", "Toners"], ["serum", "Serums"], ["moist", "Moisturisers"], ["spf", "Sunscreens"], ["spot", "Spot care"], ["supp", "Supplements"]];
   $("#fType").insertAdjacentHTML("beforeend", tChips.map(([k, v]) => `<button type="button" class="chip" data-v="${k}" aria-pressed="${k === "all"}">${v}</button>`).join(""));
   $("#fStep").insertAdjacentHTML("beforeend", sChips.map(([k, v]) => `<button type="button" class="chip" data-v="${k}" aria-pressed="${k === "all"}">${v}</button>`).join(""));
   $("#fType").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.shelfType = b.dataset.v; $$("#fType .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); renderShelf(); });
   $("#fStep").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.shelfStep = b.dataset.v; $$("#fStep .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); renderShelf(); });
 }
+function toggleInRoutine(id) {
+  const p = byId(id); if (!p) return;
+  const g = guideFor(p.step), old = byId(B.picks[p.step]);
+  if (old && old.id === id) { delete B.picks[p.step]; renderBuilder(); toast(`Removed from your routine.`); return; }
+  B.picks[p.step] = id; renderBuilder();
+  toast(old ? `Swapped your ${g.name.toLowerCase()} for ${p.brand} ${p.name}.` : `Added as your ${g.name.toLowerCase()}. See it in Build a routine.`);
+}
+["#grid", "#recGrid"].forEach(sel => $(sel).addEventListener("click", e => {
+  const b = e.target.closest("[data-add]"); if (!b) return;
+  const id = b.dataset.add; toggleInRoutine(id);
+  if (sel === "#recGrid") renderRecs();
+  const nb = $(`${sel} [data-add="${id}"]`); if (nb) nb.focus({ preventScroll: true });
+}));
 function renderShelf() {
   const items = P.filter(p => (state.shelfType === "all" || p.types.includes(state.shelfType)) && (state.shelfStep === "all" || p.step === state.shelfStep));
   $("#shelfCount").textContent = `${items.length} of ${P.length} products`;
-  $("#grid").innerHTML = items.length ? items.map(p => productCard(p, state.mine.has(p.id), "")).join("") : `<p class="empty">No products match both filters. Try another step or skin type.</p>`;
+  const mine = new Set(Object.values(B.picks));
+  $("#grid").innerHTML = items.length ? items.map(p => productCard(p, mine.has(p.id), "")).join("") : `<p class="empty">No products match both filters. Try another step or skin type.</p>`;
 }
 
 /* ---------- Report card export ---------- */
@@ -1623,7 +2079,18 @@ async function saveCard() {
 }
 
 /* ---------- Wiring ---------- */
-$("#exampleCard").innerHTML = cardHTML(EXAMPLE);
+$("#exampleRoutine").innerHTML = (() => {
+  const ids = ["cosrx-gel", "anua-toner", "torriden-serum", "isntree-gel", "isntree-sungel"];
+  return `<article class="rcard" aria-label="Example morning routine">
+    <header class="rc-top"><b>MY ROUTINE</b><span>AM · ${ids.length} steps</span></header>
+    <ol class="er-list">${ids.map(byId).map((p, i) => `<li><span class="er-n">0${i + 1}</span><span class="er-pack">${packHTML(p)}</span><span><small>${guideFor(p.step).name}</small><b>${p.brand} ${p.name}</b></span></li>`).join("")}</ol>
+    <footer class="rc-foot"><span>#WhatsInYourBag</span><span>Made by you</span></footer>
+  </article>`;
+})();
+$("#bType").insertAdjacentHTML("beforeend", Object.entries(TYPES).map(([k, v]) => `<button type="button" class="chip" data-v="${k}">${v.label}</button>`).join(""));
+const sharedRoutine = loadBuilder();
+renderGuide(); renderBuilder(); renderBags();
+if (sharedRoutine) setTimeout(() => { $("#build").scrollIntoView(); toast("You're viewing a shared routine. Change any step to make it yours."); }, 300);
 renderQuiz(); renderShelfFilters(); renderShelf(); setupScanButtons();
 
 const goScan = e => { if (e) e.preventDefault(); setView("scan"); if (!state.metrics) resetScan(); else prepareModel(); };
